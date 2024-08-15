@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import DoctorProfiles from './pages/doctorProfile/DoctorProfiles';
 import DoctorDetailedView from './pages/doctorProfile/DoctorDetailedView';
 import MainLayout from './components/layout/MainLayout';
+import Media from './pages/Media';
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
             {/* Doctor Profile part */}
             <Route path='/doctor-profiles' element={<DoctorProfiles />} />
             <Route path='/doctor-profiles/:id' element={<DoctorDetailedView />} />
+
+            {/*cpntent management media */}
+            <Route path='/contentmanagement/media' element={<Media />} />
 
 
           </Routes>
