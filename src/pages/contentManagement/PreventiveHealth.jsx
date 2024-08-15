@@ -3,11 +3,14 @@ import { FiSearch } from 'react-icons/fi';
 import PreventiveHealthCard from '../../components/contentManagement/PreventiveHealthCard';
 import Breadcrumbs from '../../components/common/Breadcrumbs';
 import AddModal from '../../components/contentManagement/PreventiveHealthAddModal';
-
+import DeleteModal from '../../components/contentManagement/PreventiveHealthDeleteModal';
 
 const PreventiveHealth = () => {
-  const [showModal, setShowModal] = useState(false);
-  const healthItems = [
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [editItemIndex, setEditItemIndex] = useState(null);
+  const [deleteItemIndex, setDeleteItemIndex] = useState(null);
+  const [healthItems, setHealthItems] = useState([
     {
       title: 'Cardiac Health Screening',
       details: [
@@ -53,38 +56,68 @@ const PreventiveHealth = () => {
       price: '2499/-',
     },
     // Add more items here if needed
-  ];
+  ]);
+
   const breadcrumbsItems = [
     { label: 'Content management', href: '/content-management' },
     { label: 'Preventive health', href: '/preventive-health' },
   ];
 
   const handleAddClick = () => {
-    setShowModal(true);
+    setEditItemIndex(null);
+    setShowAddModal(true);
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
+  const handleEditClick = (index) => {
+    setEditItemIndex(index);
+    setShowAddModal(true);
+  };
+
+  const handleDeleteClick = (index) => {
+    setDeleteItemIndex(index);
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseAddModal = () => {
+    setShowAddModal(false);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
   };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    // const newHealthItem = {
-    //   title: event.target.title.value,
-    //   details: event.target.content.value.split(','),
-    //   price: `${event.target.price.value}/-`,
-    // };
-    
-    handleCloseModal();
+    const newHealthItem = {
+      title: event.target.title.value,
+      details: event.target.content.value.split(',').map(detail => detail.trim()),
+      price: `${event.target.price.value}/-`,
+    };
+
+    if (editItemIndex !== null) {
+      const updatedItems = [...healthItems];
+      updatedItems[editItemIndex] = newHealthItem;
+      setHealthItems(updatedItems);
+    } else {
+      setHealthItems([...healthItems, newHealthItem]);
+    }
+
+    handleCloseAddModal();
+  };
+
+  const handleDeleteConfirm = () => {
+    const updatedItems = healthItems.filter((_, index) => index !== deleteItemIndex);
+    setHealthItems(updatedItems);
+    handleCloseDeleteModal();
   };
 
   return (
     <div className="h-screen w-full overflow-hidden"> 
       <div className="p-4 sm:p-6 md:p-10 overflow-y-auto h-full"> 
         <div className="flex flex-col mb-6">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
-            <div className="relative w-full max-w-xs"> 
+            <div className="relative w-full max-w-xs mt-3 sm:mt-0"> 
               <input
                 type="text"
                 placeholder="Search"
@@ -97,26 +130,36 @@ const PreventiveHealth = () => {
           </div>
           <button
             onClick={handleAddClick}
-            className="mt-3 bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800  text-lg font-medium px-4 py-2 rounded-lg self-end"
+            className="mt-3 bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 text-lg font-medium px-4 py-2 rounded-lg self-end"
           >
             + Add
           </button>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {healthItems.map((item, index) => (
             <PreventiveHealthCard
               key={index}
               title={item.title}
               details={item.details}
               price={item.price}
+              onEditClick={() => handleEditClick(index)}
+              onDeleteClick={() => handleDeleteClick(index)} 
             />
           ))}
         </div>
-        <AddModal show={showModal} onClose={handleCloseModal} onSubmit={handleFormSubmit} />
+        <AddModal
+          show={showAddModal}
+          onClose={handleCloseAddModal}
+          onSubmit={handleFormSubmit}
+          editItem={editItemIndex !== null ? healthItems[editItemIndex] : null}
+        />
+        <DeleteModal
+          show={showDeleteModal}
+          onClose={handleCloseDeleteModal}
+          onConfirm={handleDeleteConfirm}
+        />
       </div>
     </div>
   );
 };
-
-
 export default PreventiveHealth;
