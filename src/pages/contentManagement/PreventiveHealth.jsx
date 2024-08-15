@@ -79,41 +79,44 @@ const PreventiveHealth = () => {
   };
 
   return (
-    <div className="p-10 h-full">
-      <div className="flex flex-col mb-6">
-        <div className="flex justify-between items-center">
-          <Breadcrumbs items={breadcrumbsItems} />
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search"
-              className="border rounded-lg pl-10 pr-5 py-3 text-sm"
-            />
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-              <FiSearch className="w-5 h-5 text-gray-400" />
+    <div className="h-screen w-full overflow-hidden"> 
+      <div className="p-4 sm:p-6 md:p-10 overflow-y-auto h-full"> 
+        <div className="flex flex-col mb-6">
+          <div className="flex justify-between items-center">
+            <Breadcrumbs items={breadcrumbsItems} />
+            <div className="relative w-full max-w-xs"> 
+              <input
+                type="text"
+                placeholder="Search"
+                className="border rounded-lg pl-10 pr-5 py-3 text-sm w-full"
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                <FiSearch className="w-5 h-5 text-gray-400" />
+              </div>
             </div>
           </div>
+          <button
+            onClick={handleAddClick}
+            className="mt-3 bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800  text-lg font-medium px-4 py-2 rounded-lg self-end"
+          >
+            + Add
+          </button>
         </div>
-        <button
-          onClick={handleAddClick}
-          className="mt-3 bg-white border border-[#9C2677] text-[#9C2677] text-lg font-medium px-4 py-2 rounded-lg self-end"
-        >
-          + Add
-        </button>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {healthItems.map((item, index) => (
+            <PreventiveHealthCard
+              key={index}
+              title={item.title}
+              details={item.details}
+              price={item.price}
+            />
+          ))}
+        </div>
+        <AddModal show={showModal} onClose={handleCloseModal} onSubmit={handleFormSubmit} />
       </div>
-      <div className="grid grid-cols-1 pt-10 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {healthItems.map((item, index) => (
-          <PreventiveHealthCard
-            key={index}
-            title={item.title}
-            details={item.details}
-            price={item.price}
-          />
-        ))}
-      </div>
-      <AddModal show={showModal} onClose={handleCloseModal} onSubmit={handleFormSubmit} />
     </div>
   );
 };
+
 
 export default PreventiveHealth;

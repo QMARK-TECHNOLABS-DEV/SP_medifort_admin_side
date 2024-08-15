@@ -43,14 +43,14 @@ const AddModal = ({ show, onClose, onSubmit }) => {
           <div className="flex justify-end space-x-4">
           <button
              type="submit"
-              className="bg-white text-[#9C2677] border  hover:border-[#9C2677] hover:text-black font-medium py-2 px-4 rounded-md"
+              className="bg-white  border-[#9C2677] text-[#9C2677] border hover:text-gray-800 font-medium py-2 px-4 rounded-md"
             >
             Add
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="bg-white hover:border-[#9C2677] border text-gray-800 font-medium py-2 px-4 rounded-md"
+              className="bg-white border-[#9C2677] text-[#9C2677] border hover:text-gray-800 font-medium py-2 px-4 rounded-md"
             >
               Reset
             </button>
