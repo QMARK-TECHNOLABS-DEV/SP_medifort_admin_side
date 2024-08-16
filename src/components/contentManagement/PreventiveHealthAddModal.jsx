@@ -25,7 +25,7 @@ const AddModal = ({ show, onClose, onSubmit, editItem }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3">
       <div className="bg-white text-left p-6 rounded-lg shadow-lg w-96">
         <h2 className="text-xl text-left font-semibold mb-4">{editItem ? 'Edit' : 'Add'} Health Item</h2>
         <form onSubmit={onSubmit}>
@@ -34,7 +34,7 @@ const AddModal = ({ show, onClose, onSubmit, editItem }) => {
             <input
               type="text"
               name="title"
-              className="mt-1 block w-full rounded-md bg-[#B0BAC366] border-gray-300 shadow-sm"
+              className="mt-1 block w-full rounded-md bg-[#B0BAC366] border-gray-300 shadow-sm p-2"
               placeholder="General health checkup"
               value={formData.title}
               onChange={handleChange}
@@ -46,7 +46,7 @@ const AddModal = ({ show, onClose, onSubmit, editItem }) => {
             <textarea
               name="content"
               rows="4"
-              className="mt-1 block w-full rounded-md border border-gray-300 bg-[#B0BAC366] text-gray-900 shadow-sm focus:border-[#9C2677] focus:ring-[#9C2677]"
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-[#B0BAC366] text-gray-900 shadow-sm focus:border-[#9C2677] focus:ring-[#9C2677] p-2"
               placeholder="MBBS, MS (Gen. Surgery), FMAS"
               value={formData.content}
               onChange={handleChange}
@@ -58,7 +58,7 @@ const AddModal = ({ show, onClose, onSubmit, editItem }) => {
             <input
               type="text"
               name="price"
-              className="mt-1 block w-full rounded-md bg-[#B0BAC366] border-gray-300 shadow-sm"
+              className="mt-1 block w-full rounded-md bg-[#B0BAC366] border-gray-300 shadow-sm p-2"
               placeholder="1499"
               value={formData.price}
               onChange={handleChange}
