@@ -6,6 +6,8 @@ import DoctorDetailedView from './pages/doctorProfile/DoctorDetailedView';
 import BannerCo from './pages/bannerComp/BannerCo';
 import BannComp from './pages/bann.Comp/BannComp';
 import MainLayout from './components/layout/MainLayout';
+import ContentManagementPage from './pages/contentManagement/ContentManagementPage';
+import PreventiveHealth from './pages/contentManagement/PreventiveHealth';
 
 function App() {
   return (
@@ -20,6 +22,10 @@ function App() {
             {/* Doctor Profile part */}
             <Route path='/doctor-profiles' element={<DoctorProfiles />} />
             <Route path='/doctor-profiles/:id' element={<DoctorDetailedView />} />
+
+             {/*Content Management part */}
+            <Route path='/content-management' element={<ContentManagementPage/>} />
+            <Route path='/preventive-health' element={<PreventiveHealth/>} />
 
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />
