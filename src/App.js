@@ -8,6 +8,8 @@ import BannComp from './pages/bann.Comp/BannComp';
 import MainLayout from './components/layout/MainLayout';
 import ContentManagementPage from './pages/contentManagement/ContentManagementPage';
 import PreventiveHealth from './pages/contentManagement/PreventiveHealth';
+import TestiComp from './pages/testiComp/TestiComp';
+
 
 function App() {
   return (
@@ -31,6 +33,9 @@ function App() {
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
 
+            {/*Testimonial*/}
+            <Route path='/testimonial' element={<TestiComp />} />
+           
 
 
 
