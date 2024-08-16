@@ -5,7 +5,7 @@ import DoctorEditContent from '../../components/doctorsEdit/DoctorEditContent'
 
 const DoctorsEditPage = () => {
   return (
-    <div className='ml-10 mb-20'>
+    <div className='ml-10 pb-20'>
         <DoctorsEditTop title={"Doctor profile"} type={{ name: "search" }}/>
       <section className='mt-10'>
         <DoctorEditContent/>

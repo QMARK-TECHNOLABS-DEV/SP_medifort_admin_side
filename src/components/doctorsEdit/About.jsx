@@ -2,10 +2,11 @@ import React from 'react'
 
 const About = () => {
   return (
-    <div>
-      <div className='mb-8'>
+    <div className='h-screen overflow-hidden'>
+      <div className="h-full overflow-y-auto"> 
+      <div className='mb-8 p-4 '>
         <h1 className='text-left mb-2 ml-4'>About</h1>
-        <p className='ml-4 bg-[#B0BAC3] bg-opacity-40 w-full p-6 rounded-lg text-justify text-sm'>Dr Cherian M Thomas is an experienced orthopaedic surgeon in Mumbai, with over<br/>
+        <p className='ml-4 bg-[#B0BAC3] bg-opacity-40 w-500 p-6 rounded-lg text-justify text-sm'>Dr Cherian M Thomas is an experienced orthopaedic surgeon in Mumbai, with over<br/>
          32 years of experience overall. He specialises in hip and knee replacement surgeries,<br/>
           foot injury treatment, and lower extremity wound care. His extensive experience has<br/> made him one of the best orthopaedic surgeons in Mumbai.</p>
       </div>
@@ -33,6 +34,7 @@ const About = () => {
           </div>
           </form>
       </div>
+</div>
 </div>
   )
 }

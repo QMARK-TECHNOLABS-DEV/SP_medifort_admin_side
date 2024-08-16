@@ -5,7 +5,7 @@ import Sidebar from "../common/Sidebar";
 
 const MainLayout = ({ children }) => {
   return (
-    <main className="w-screen h-screen overflow-visible">
+    <main className="w-screen h-screen overflow-hidden">
       <nav className="border-b-2">
         <Navbar />
       </nav>

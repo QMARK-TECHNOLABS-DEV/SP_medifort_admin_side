@@ -6,7 +6,7 @@ import DoctorsPhotos from '../../components/doctors/DoctorsPhotos'
 
 const DoctorsPage = () => {
   return (
-    <div>
+    <div className='ml-10 pb-20'>
      <header>
         <TopPart title={"Doctor profile"} type={{ name: "search" }} />
       </header>
