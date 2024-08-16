@@ -1,16 +1,16 @@
 export const NavData = [
     {
-        "id": 1,
-        "name": "Home",
-        "link": "/",
-        "list": []
+        id: 1,
+        name: "Home",
+        link: "/",
+        list: []
     },
-    // {
-    //     "id": 2,
-    //     "title": "About",
-    //     "link": "/user/about",
-    //     "list": []
-    // },
+    {
+        id: 2,
+        name: "Content Management",
+        link: "/content-management",
+        list: []
+    },
     // {
     //     "id": 3,
     //     "title": "Media",
