@@ -6,6 +6,9 @@ import DoctorDetailedView from './pages/doctorProfile/DoctorDetailedView';
 import MainLayout from './components/layout/MainLayout';
 import ContentManagementPage from './pages/contentManagement/ContentManagementPage';
 import PreventiveHealth from './pages/contentManagement/PreventiveHealth';
+import HealthTalkPage from './pages/healthTalk/HealthTalkPage';
+import ArticlePage from './pages/healthTalk/ArticlePage';
+import NewArticlePage from './pages/healthTalk/NewArticlePage';
 
 function App() {
   return (
@@ -24,6 +27,12 @@ function App() {
              {/*Content Management part */}
             <Route path='/content-management' element={<ContentManagementPage/>} />
             <Route path='/preventive-health' element={<PreventiveHealth/>} />
+
+            {/*Health Talk  */}
+            <Route path='/health-talk' element={<HealthTalkPage/>} />
+            <Route path='/article' element={<ArticlePage/>} />
+            <Route path='/new-article' element={<NewArticlePage/>} />
+
 
 
           </Routes>
