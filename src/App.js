@@ -9,6 +9,8 @@ import PreventiveHealth from './pages/contentManagement/PreventiveHealth';
 import HealthTalkPage from './pages/healthTalk/HealthTalkPage';
 import ArticlePage from './pages/healthTalk/ArticlePage';
 import NewArticlePage from './pages/healthTalk/NewArticlePage';
+import NewsPage from './pages/news/NewsPage';
+import AddNewsPage from './pages/news/AddNewsPage';
 
 function App() {
   return (
@@ -32,6 +34,12 @@ function App() {
             <Route path='/health-talk' element={<HealthTalkPage/>} />
             <Route path='/article' element={<ArticlePage/>} />
             <Route path='/new-article' element={<NewArticlePage/>} />
+
+            {/*News */}
+            <Route path='/news' element={<NewsPage/>} />
+            <Route path='/new-news' element={<AddNewsPage/>} />
+
+
 
 
 

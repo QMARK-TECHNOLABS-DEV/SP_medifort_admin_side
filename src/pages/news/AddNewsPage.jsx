@@ -6,11 +6,11 @@ import Article1 from "../../assets/article/images.png";
 import { FaTrashAlt } from "react-icons/fa";
 
 const breadcrumbsItems = [
-  { label: "Health Talk", href: "/health-talk" },
-  { label: "New Article", href: "/new-article" },
+  { label: "Content management", href: "/content-management"},
+  { label: "New news", href: "/new-news" },
 ];
 
-const NewArticlePage = () => {
+const AddNewsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [image, setImage] = useState(Article1);
@@ -43,7 +43,7 @@ const NewArticlePage = () => {
       content,
       imageUrl: image,
       author: "Reo George",
-      date: new Date().toLocaleDateString(), // Current date
+      date: new Date().toLocaleDateString(),
     };
 
     if (isEdit) {
@@ -51,7 +51,7 @@ const NewArticlePage = () => {
     } else {
       console.log("Adding new article...", newArticle);
     }
-    navigate("/article");
+    navigate("/new-news");
   };
 
   return (
@@ -60,9 +60,9 @@ const NewArticlePage = () => {
         <div className="flex flex-col mb-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
-            <div className="flex flex-row gap-4 mt-4 sm:mt-0">
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-4 mt-4 sm:mt-0">
               <button
-                className="py-2 lg:w-[150px] inline-flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+                className=" py-2 lg:w-[150px] inline-flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
                 onClick={handleSubmit}
               >
                 Save and submit
@@ -75,12 +75,12 @@ const NewArticlePage = () => {
           </div>
         </div>
         <div className="p-6">
-          <div className="flex flex-col lg:flex-row mb-6 gap-4">
-            <div className="relative w-[300px] h-[300px]">
+          <div className="flex flex-col lg:flex-row gap-6 mb-6">
+            <div className="relative lg:w-1/2">
               <img
                 src={image}
                 alt="Article"
-                className="w-full h-full object-cover rounded-2xl"
+                className="w-full h-[200px] bg-[#B0BAC366] object-cover rounded-lg"
               />
               <div className="absolute inset-0 flex items-center justify-center">
                 <label htmlFor="image-upload" className="cursor-pointer">
@@ -95,13 +95,13 @@ const NewArticlePage = () => {
                 />
               </div>
             </div>
-            <div className="lg:flex-1 flex flex-col justify-end">
+            <div className="lg:w-1/2 mt-32">
               <label className="block text-sm text-left font-medium text-gray-700 mb-2">
                 Title
               </label>
               <input
                 type="text"
-                className="w-1/2 h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
                 placeholder="Nourishing Recovery Amidst Medical Challenges"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -131,4 +131,4 @@ const NewArticlePage = () => {
   );
 };
 
-export default NewArticlePage;
+export default AddNewsPage;
