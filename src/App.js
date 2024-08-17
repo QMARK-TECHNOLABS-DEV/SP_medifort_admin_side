@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import DoctorProfiles from './pages/doctorProfile/DoctorProfiles';
 import DoctorDetailedView from './pages/doctorProfile/DoctorDetailedView';
+import BannerCo from './pages/bannerComp/BannerCo';
+import BannComp from './pages/bann.Comp/BannComp';
 import MainLayout from './components/layout/MainLayout';
 import DoctorsPage from './pages/doctors/DoctorsPage';
 import DoctorsEditPage from './pages/doctorsEdit/DoctorsEditPage';
@@ -10,6 +12,8 @@ import TestimonialsHomePage from './pages/testimonials/TestimonialsHomePage';
 import TestimonialsPatientContentPage from './pages/testimonialsPatient/TestimonialsPatientContentPage';
 import ContentManagementPage from './pages/contentManagement/ContentManagementPage';
 import PreventiveHealth from './pages/contentManagement/PreventiveHealth';
+import TestiComp from './pages/testiComp/TestiComp';
+
 
 function App() {
   return (
@@ -34,6 +38,16 @@ function App() {
              {/*Content Management part */}
             <Route path='/content-management' element={<ContentManagementPage/>} />
             <Route path='/preventive-health' element={<PreventiveHealth/>} />
+
+            {/* Banner */}
+            <Route path='/banner' element={<BannerCo />} />
+            <Route path='/add-banner' element={<BannComp />} />
+
+            {/*Testimonial*/}
+            <Route path='/testimonial' element={<TestiComp />} />
+           
+
+
 
 
           </Routes>
