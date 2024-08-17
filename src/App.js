@@ -12,6 +12,11 @@ import TestimonialsHomePage from './pages/testimonials/TestimonialsHomePage';
 import TestimonialsPatientContentPage from './pages/testimonialsPatient/TestimonialsPatientContentPage';
 import ContentManagementPage from './pages/contentManagement/ContentManagementPage';
 import PreventiveHealth from './pages/contentManagement/PreventiveHealth';
+import HealthTalkPage from './pages/healthTalk/HealthTalkPage';
+import ArticlePage from './pages/healthTalk/ArticlePage';
+import NewArticlePage from './pages/healthTalk/NewArticlePage';
+import NewsPage from './pages/news/NewsPage';
+import AddNewsPage from './pages/news/AddNewsPage';
 import TestiComp from './pages/testiComp/TestiComp';
 
 
@@ -39,10 +44,19 @@ function App() {
             <Route path='/content-management' element={<ContentManagementPage/>} />
             <Route path='/preventive-health' element={<PreventiveHealth/>} />
 
+            {/*Health Talk  */}
+            <Route path='/health-talk' element={<HealthTalkPage/>} />
+            <Route path='/article' element={<ArticlePage/>} />
+            <Route path='/new-article' element={<NewArticlePage/>} />
+
+            {/*News */}
+            <Route path='/news' element={<NewsPage/>} />
+            <Route path='/new-news' element={<AddNewsPage/>} />
+
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
-
+              
             {/*Testimonial*/}
             <Route path='/testimonial' element={<TestiComp />} />
            
