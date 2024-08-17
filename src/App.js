@@ -28,13 +28,13 @@ function App() {
 
           <Routes>
             {/* Dashboard */}
-            <Route path='' element={<Home />} />
+            <Route exact  path='/' element={<Home />} />
 
             {/* Doctor Profile part */}
             <Route path='/doctor-profiles' element={<DoctorProfiles />} />
             <Route path='/doctor-profiles/:id' element={<DoctorDetailedView />} />
             <Route path='/doctors' element={<DoctorsPage />} />
-            <Route path='/doctorsedit' element={<DoctorsEditPage />} />
+            <Route path='/doctors/doctor-edit' element={<DoctorsEditPage />} />
 
             {/* Testimonials part */}
             <Route path='/testimonials' element={<TestimonialsHomePage />} />
