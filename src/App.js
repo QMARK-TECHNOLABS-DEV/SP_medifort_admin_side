@@ -8,8 +8,8 @@ import DoctorsPage from './pages/doctors/DoctorsPage';
 import DoctorsEditPage from './pages/doctorsEdit/DoctorsEditPage';
 import TestimonialsHomePage from './pages/testimonials/TestimonialsHomePage';
 import TestimonialsPatientContentPage from './pages/testimonialsPatient/TestimonialsPatientContentPage';
-
-
+import ContentManagementPage from './pages/contentManagement/ContentManagementPage';
+import PreventiveHealth from './pages/contentManagement/PreventiveHealth';
 
 function App() {
   return (
@@ -27,9 +27,14 @@ function App() {
             <Route path='/doctors' element={<DoctorsPage />} />
             <Route path='/doctorsedit' element={<DoctorsEditPage />} />
 
-          {/* Testimonials part */}
-          <Route path='/testimonials' element={<TestimonialsHomePage />} />
-          <Route path='/testimonials-patient' element={<TestimonialsPatientContentPage/>} />
+            {/* Testimonials part */}
+            <Route path='/testimonials' element={<TestimonialsHomePage />} />
+            <Route path='/testimonials-patient' element={<TestimonialsPatientContentPage/>} />
+
+             {/*Content Management part */}
+            <Route path='/content-management' element={<ContentManagementPage/>} />
+            <Route path='/preventive-health' element={<PreventiveHealth/>} />
+
 
           </Routes>
         </MainLayout>
