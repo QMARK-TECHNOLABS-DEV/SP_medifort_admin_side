@@ -1,87 +1,88 @@
 import React, { useEffect, useState } from 'react';
 import Breadcrumbs from '../../components/common/Breadcrumbs';
 import CommonCard from '../../components/healthTalk/CommonCard';
-import News1 from '../../assets/news/News 1.jpeg';
-import News2 from '../../assets/news/News 2.jpeg';
-import News3 from '../../assets/news/News 3.jpeg';
+import Research1 from '../../assets/research/Research 1.jpeg';
+import Research2 from '../../assets/research/Research 2.jpeg';
+import Research3 from '../../assets/research/Research 3.jpeg';
+import Research4 from '../../assets/research/Research 4.jpeg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DeleteModal from '../../components/common/DeleteModal';
 
 const breadcrumbsItems = [
-  { label: "Content Management", href: "/content-management" },
-  { label: "News", href: "/news" },
+  { label: "Health Talk", href: "/health-talk" },
+  { label: "Research", href: "/research" },
 ];
 
-const NewsPage = () => {
+const ResearchPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [newsItems, setNewsItems] = useState([
+  const [researchItems, setResearchItems] = useState([
     {
       id: 1,
-      title: "Medical Breakthrough: New Treatment for Chronic Conditions",
-      imageUrl: News1,
-      author: "Reo George",
+      title: "Advancements in Gene Therapy for Rare Diseases",
+      imageUrl: Research1,
+      author: "Dr. Emily Green",
       date: "03/01/24",
-      content: "Detailed news content here.",
+      content: "Detailed research content here.",
     },
     {
       id: 2,
-      title: "Health Tips: Staying Active During the Winter",
-      imageUrl: News2,
-      author: "John Doe",
+      title: "Nanotechnology in Cancer Treatment",
+      imageUrl: Research2,
+      author: "Dr. John Smith",
       date: "04/02/24",
-      content: "Detailed news content here.",
+      content: "Detailed research content here.",
     },
     {
       id: 3,
-      title: "Community Health Fair Scheduled for June",
-      imageUrl: News3,
-      author: "Jane Smith",
+      title: "AI in Early Diagnosis of Alzheimer’s",
+      imageUrl: Research3,
+      author: "Dr. Sarah Lee",
       date: "05/03/24",
-      content: "Detailed news content here.",
+      content: "Detailed research content here.",
     },
     {
       id: 4,
-      title: "Community Health Fair Scheduled for June",
-      imageUrl: News3,
-      author: "Jane Smith",
-      date: "05/03/24",
-      content: "Detailed news content here.",
+      title: "Breakthrough in Diabetes Management",
+      imageUrl: Research4,
+      author: "Dr. Jane Brown",
+      date: "06/04/24",
+      content: "Detailed research content here.",
     },
   ]);
 
   useEffect(() => {
-    if (location.state?.updatedNews) {
-      setNewsItems(location.state.updatedNews);
+    if (location.state?.updatedResearch) {
+      setResearchItems(location.state.updatedResearch);
     }
-  }, [location.state?.updatedNews]);
+  }, [location.state?.updatedResearch]);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedNews, setSelectedNews] = useState(null);
+  const [selectedResearch, setSelectedResearch] = useState(null);
 
   const handleAddNewClick = () => {
-    navigate('/new-news', { state: { isEdit: false, newsItems } });
+    navigate('/new-research', { state: { isEdit: false, researchItems } });
   };
 
-  const handleEditClick = (news) => {
-    navigate('/new-news', { state: { isEdit: true, news, newsItems } });
+  const handleEditClick = (research) => {
+    navigate('/new-research', { state: { isEdit: true, research, researchItems } });
   };
 
-  const handleDeleteClick = (news) => {
-    setSelectedNews(news);
+  const handleDeleteClick = (research) => {
+    setSelectedResearch(research);
     setShowDeleteModal(true);
   };
 
   const handleDeleteConfirm = () => {
-    const updatedNews = newsItems.filter(item => item.id !== selectedNews.id);
-    setNewsItems(updatedNews);
+    const updatedResearch = researchItems.filter(item => item.id !== selectedResearch.id);
+    setResearchItems(updatedResearch);
     setShowDeleteModal(false);
-    setSelectedNews(null);
+    setSelectedResearch(null);
   };
 
   const handleCloseModal = () => {
     setShowDeleteModal(false);
-    setSelectedNews(null);
+    setSelectedResearch(null);
   };
 
   return (
@@ -101,7 +102,7 @@ const NewsPage = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2">
-          {newsItems.map((item) => (
+          {researchItems.map((item) => (
             <CommonCard
               key={item.id}
               imageUrl={item.imageUrl}
@@ -123,4 +124,4 @@ const NewsPage = () => {
   );
 };
 
-export default NewsPage;
+export default ResearchPage;
