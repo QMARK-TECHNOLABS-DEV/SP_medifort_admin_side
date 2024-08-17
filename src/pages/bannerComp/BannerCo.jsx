@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Import images
-import Homecare from '../../assets/banners/Homecare.png';
-import Testimonials from '../../assets/banners/Testimonials.png';
-
+import Homecare from "../../assets/banners/Homecare.png";
+import Testimonials from "../../assets/banners/Testimonials.png";
 
 const ImageCard = ({ image, label, onDelete }) => {
   return (
-    <div className="relative rounded-lg shadow-md overflow-hidden h-32 w-full">
+    <div className="relative rounded-lg shadow-md overflow-hidden h-40 w-full ">
       <img src={image} alt={label} className="w-full h-full object-cover" />
       <div className="absolute bottom-2 left-2 bg-white text-gray-700 text-sm px-3 py-1 rounded">
         {label}
@@ -38,28 +37,30 @@ const ImageCard = ({ image, label, onDelete }) => {
 
 const BannerCo = () => {
   const [images, setImages] = useState([
-    { "id": 1, "src": Homecare, "label": "Homecare.png" },
-    { "id": 2, "src": Testimonials, "label": "Testimonials.png" },
-    { "id": 3, "src": Homecare, "label": "Homecare.png" }
+    { id: 1, src: Homecare, label: "Homecare.png" },
+    { id: 2, src: Testimonials, label: "Testimonials.png" },
+    { id: 3, src: Homecare, label: "Homecare.png" },
+    { id: 3, src: Homecare, label: "Homecare.png" },
+    { id: 3, src: Homecare, label: "Homecare.png" },
   ]);
 
   const navigate = useNavigate();
 
   const handleDelete = (id) => {
-    setImages(images.filter(image => image.id !== id));
+    setImages(images.filter((image) => image.id !== id));
   };
 
   const handleAddBanner = () => {
-    navigate('/add-banner');
+    navigate("/add-banner");
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 w-full h-screen overflow-hidden">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-lg font-semibold text-gray-800">
           Content management &gt; Banner
         </h1>
-      
+
         <button
           onClick={handleAddBanner}
           className="bg-pink-500 text-white text-sm px-4 py-2 mx-4 rounded-full hover:bg-pink-600"
@@ -67,15 +68,17 @@ const BannerCo = () => {
           Add Banner
         </button>
       </div>
-      <div className="grid grid-cols-1 gap-4">
-        {images.map((image) => (
-          <ImageCard
-            key={image.id}
-            image={image.src}
-            label={image.label}
-            onDelete={() => handleDelete(image.id)}
-          />
-        ))}
+      <div className="w-full h-screen overflow-y-scroll pb-56">
+        <div className="grid grid-cols-1 gap-4 ">
+          {images.map((image) => (
+            <ImageCard
+              key={image.id}
+              image={image.src}
+              label={image.label}
+              onDelete={() => handleDelete(image.id)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
