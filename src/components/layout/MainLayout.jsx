@@ -10,10 +10,10 @@ const MainLayout = ({ children }) => {
         <Navbar />
       </nav>
       <section className="flex w-full">
-        <div className="border-r-2 h-screen p-5 lg:w-1/4">
+        <div className="border-r-2 h-screen p-5 w-1/3">
           <Sidebar />
         </div>
-        <div className="p-3 lg:p-5 w-full bg-[#DFE3E7] flex flex-col items-start">
+        <div className="p-3 lg:p-5 w-full bg-[#F5F5F5] flex flex-col items-start">
           {children}
         </div>
       </section>
