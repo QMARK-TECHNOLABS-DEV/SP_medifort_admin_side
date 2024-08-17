@@ -4,7 +4,7 @@ import PatientContent from '../../components/testimonialsPatientContent/PatientC
 
 const TestimonialsPatientContentPage = () => {
   return (
-    <div className='mb-20 ml-12'>
+    <div className='mb-20 w-full'>
       <PatientContentTopPart title={'Testimonials'}/>
       <section>
         <PatientContent className='mb-20'/>
