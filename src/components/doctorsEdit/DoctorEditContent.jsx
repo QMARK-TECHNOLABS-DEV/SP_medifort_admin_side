@@ -3,10 +3,10 @@ import { FiEdit } from "react-icons/fi";
 
 const DoctorEditContent = () => {
   return (
-    <div className='p-4'>
+    <div className='p-4 w-full'>
       <div className='flex flex-col md:flex-row gap-4 md:ml-4 sm:flex-col h-full overflow-hidden'>
       <div className="relative inline-block">
-      <img src='/doctorEditimage.png' width={300} height={300} alt="Doctor" />
+      <img src='/doctorEditimage.png' width={360} height={300} alt="Doctor" />
       <FiEdit className='absolute inset-0 m-auto  text-white' size={50} />
     </div>
         <form className="max-w-lg mx-auto">  {/* Updated max-w-sm to max-w-lg for a wider form */}
