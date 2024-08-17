@@ -46,10 +46,6 @@ function App() {
             {/*Testimonial*/}
             <Route path='/testimonial' element={<TestiComp />} />
            
-
-
-
-
           </Routes>
         </MainLayout>
       </Router>
