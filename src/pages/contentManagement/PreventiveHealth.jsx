@@ -3,7 +3,8 @@ import { FiSearch } from "react-icons/fi";
 import PreventiveHealthCard from "../../components/contentManagement/PreventiveHealthCard";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import AddModal from "../../components/contentManagement/PreventiveHealthAddModal";
-import DeleteModal from "../../components/contentManagement/PreventiveHealthDeleteModal";
+import DeleteModal from "../../components/common/DeleteModal";
+
 
 const PreventiveHealth = () => {
   const [showAddModal, setShowAddModal] = useState(false);
