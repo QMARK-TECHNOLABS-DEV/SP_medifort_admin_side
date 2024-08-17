@@ -43,7 +43,7 @@ const Media = () => {
       <div className="flex items-center justify-between p-4 border-b">
         <div className="text-gray-600 text-[35px]">
           <span>content management</span>
-          <span className="mx-2">></span>
+          <span className="mx-2"></span>
           <span className="font-semibold">media</span>
         </div>
         <button
