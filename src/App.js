@@ -22,6 +22,7 @@ import EnquiryHomePage from './pages/enquiry/EnquiryHomePage';
 import HomeCareEnquiryPage from './pages/enquiry/HomeCareEnquiryPage';
 import ResearchPage from './pages/research/ResearchPage';
 import NewResarchPage from './pages/research/NewResarchPage';
+import VideoPage from './pages/video/VideoPage';
 
 
 function App() {
@@ -65,7 +66,9 @@ function App() {
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
-              
+            
+             {/*Video */}
+             <Route path='/video' element={<VideoPage />} />
            
 
             {/*Enquiry*/}
