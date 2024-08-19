@@ -17,6 +17,18 @@ export const NavData = [
         link: "/content-management",
         list: []
     },
+    {
+        id: 4,
+        name: "Testimonials",
+        link: "/testimonials",
+        list: []
+    },
+    {
+        id: 5,
+        name: "Enquiries",
+        link: "/enquiry",
+        list: []
+    },
     // {
     //     "id": 3,
     //     "title": "Media",

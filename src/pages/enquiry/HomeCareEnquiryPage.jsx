@@ -11,7 +11,7 @@ const HomeCareEnquiryPage = () => {
     })
   );
   return (
-    <div className='ml-10 mr-10'>
+    <div className='w-full'>
         <EnquiryHomeCareTop title={"Enquiries"} type={{ name: "search" }}/>
       <section>
         <EnquiryTableFilter/>
