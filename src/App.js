@@ -18,6 +18,7 @@ import NewArticlePage from './pages/healthTalk/NewArticlePage';
 import NewsPage from './pages/news/NewsPage';
 import AddNewsPage from './pages/news/AddNewsPage';
 import TestiComp from './pages/testiComp/TestiComp';
+import LoginPage from './pages/loginPage/LoginPage';
 
 
 function App() {
@@ -59,6 +60,9 @@ function App() {
               
             {/*Testimonial*/}
             <Route path='/testimonial' element={<TestiComp />} />
+
+            {/*Login Page*/}
+            <Route path='/login' element={<LoginPage />} />
            
           </Routes>
         </MainLayout>
