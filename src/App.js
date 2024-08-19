@@ -18,6 +18,8 @@ import NewArticlePage from './pages/healthTalk/NewArticlePage';
 import NewsPage from './pages/news/NewsPage';
 import AddNewsPage from './pages/news/AddNewsPage';
 import TestiComp from './pages/testiComp/TestiComp';
+import ResearchPage from './pages/research/ResearchPage';
+import NewResarchPage from './pages/research/NewResarchPage';
 
 
 function App() {
@@ -52,6 +54,10 @@ function App() {
             {/*News */}
             <Route path='/news' element={<NewsPage/>} />
             <Route path='/new-news' element={<AddNewsPage/>} />
+
+            {/*Research*/}
+            <Route path='/research' element={<ResearchPage/>} />
+            <Route path='/new-research' element={<NewResarchPage/>} />
 
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />

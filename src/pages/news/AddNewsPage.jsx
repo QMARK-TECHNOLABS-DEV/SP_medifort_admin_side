@@ -2,28 +2,29 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import { HiPencilAlt } from "react-icons/hi";
-import Article1 from "../../assets/article/images.png";
+import NewsPlaceholder from "../../assets/article/images.png"; 
 import { FaTrashAlt } from "react-icons/fa";
 
 const breadcrumbsItems = [
-  { label: "Content management", href: "/content-management"},
+  { label: "Content Management", href: "/content-management"},
   { label: "New news", href: "/new-news" },
 ];
 
 const AddNewsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [image, setImage] = useState(Article1);
+  const [image, setImage] = useState(NewsPlaceholder);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isEdit, setIsEdit] = useState(false);
+  const [newsItems, setNewsItems] = useState(location.state?.newsItems || []);
 
   useEffect(() => {
     if (location.state && location.state.isEdit) {
-      const { article } = location.state;
-      setTitle(article.title);
-      setContent(article.content);
-      setImage(article.imageUrl);
+      const { news } = location.state;
+      setTitle(news.title);
+      setContent(news.content);
+      setImage(news.imageUrl);
       setIsEdit(true);
     }
   }, [location]);
@@ -38,20 +39,25 @@ const AddNewsPage = () => {
   };
 
   const handleSubmit = () => {
-    const newArticle = {
+    const newNews = {
+      id: isEdit ? location.state.news.id : Date.now(),
       title,
       content,
-      imageUrl: image,
+      imageUrl: image || NewsPlaceholder,
       author: "Reo George",
       date: new Date().toLocaleDateString(),
     };
 
+    let updatedNews;
     if (isEdit) {
-      console.log("Updating article...", newArticle);
+      updatedNews = newsItems.map(item => 
+        item.id === newNews.id ? newNews : item
+      );
     } else {
-      console.log("Adding new article...", newArticle);
+      updatedNews = [...newsItems, newNews];
     }
-    navigate("/new-news");
+
+    navigate("/news", { state: { updatedNews } });
   };
 
   return (
@@ -67,10 +73,15 @@ const AddNewsPage = () => {
               >
                 Save and submit
               </button>
-              <button className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg">
-                <FaTrashAlt className="mr-2" />
-                Delete
-              </button>
+              {isEdit && (
+                <button
+                  className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+                  onClick={() => navigate("/news")}
+                >
+                  <FaTrashAlt className="mr-2" />
+                  Cancel
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -79,7 +90,7 @@ const AddNewsPage = () => {
             <div className="relative lg:w-1/2">
               <img
                 src={image}
-                alt="Article"
+                alt="News"
                 className="w-full h-[200px] bg-[#B0BAC366] object-cover rounded-lg"
               />
               <div className="absolute inset-0 flex items-center justify-center">
@@ -102,7 +113,7 @@ const AddNewsPage = () => {
               <input
                 type="text"
                 className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                placeholder="Nourishing Recovery Amidst Medical Challenges"
+                placeholder="Enter news title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -114,15 +125,12 @@ const AddNewsPage = () => {
                 Content
               </label>
               <textarea
-                rows="5"
-                className="w-full p-4 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                placeholder="Content here..."
+                rows="10"
+                className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                placeholder="Enter news content"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-              ></textarea>
-            </div>
-            <div className="text-left text-sm text-gray-500">
-              + upload content as PDF
+              />
             </div>
           </div>
         </div>
