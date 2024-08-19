@@ -5,10 +5,6 @@ import { HiPencilAlt } from "react-icons/hi";
 import NewsPlaceholder from "../../assets/article/images.png";
 import { FaTrashAlt } from "react-icons/fa";
 
-const breadcrumbsItems = [
-  { label: "Content Management", href: "/content-management"},
-  { label: "New news", href: "/new-news" },
-];
 
 const AddNewsPage = () => {
   const navigate = useNavigate();
@@ -29,6 +25,12 @@ const AddNewsPage = () => {
       setIsEdit(true);
     }
   }, [location]);
+
+  const breadcrumbsItems = [
+    { label: "Health Talk", href: "/health-talk" },
+    { label: isEdit ? "Edit news" : "New news", href: "/new-news" },
+  ];
+
 
 
   const handleImageUpload = (event) => {

@@ -5,10 +5,6 @@ import { HiPencilAlt } from "react-icons/hi";
 import ResearchPlaceholder from "../../assets/article/images.png";
 import { FaTrashAlt } from "react-icons/fa";
 
-const breadcrumbsItems = [
-  { label: "Health Talk", href: "/health-talk" },
-  { label: "New Research", href: "/new-research" },
-];
 
 const NewResearchPage = () => {
   const navigate = useNavigate();
@@ -29,6 +25,11 @@ const NewResearchPage = () => {
       setIsEdit(true);
     }
   }, [location]);
+
+  const breadcrumbsItems = [
+    { label: "Health Talk", href: "/health-talk" },
+    { label: isEdit ? "Edit Research" : "New Research", href: "/new-research" },
+  ];
 
   
   const handleImageUpload = (event) => {
