@@ -22,6 +22,7 @@ import EnquiryHomePage from './pages/enquiry/EnquiryHomePage';
 import HomeCareEnquiryPage from './pages/enquiry/HomeCareEnquiryPage';
 import ResearchPage from './pages/research/ResearchPage';
 import NewResarchPage from './pages/research/NewResarchPage';
+import CaseStudyHomePage from './pages/caseStudies/CaseStudyHomePage';
 
 
 function App() {
@@ -65,12 +66,13 @@ function App() {
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
-              
-           
-
-            {/*Enquiry*/}
+               
+           {/*Enquiry*/}
             <Route path='/enquiry' element={<EnquiryHomePage />} />
             <Route path='/enquiry-homecare' element={<HomeCareEnquiryPage />} />
+
+            {/*Case Studies*/}
+            <Route path='/casestudies' element={<CaseStudyHomePage />} />
            
           </Routes>
         </MainLayout>
