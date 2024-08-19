@@ -18,6 +18,8 @@ import NewArticlePage from './pages/healthTalk/NewArticlePage';
 import NewsPage from './pages/news/NewsPage';
 import AddNewsPage from './pages/news/AddNewsPage';
 import TestiComp from './pages/testiComp/TestiComp';
+import EnquiryHomePage from './pages/enquiry/EnquiryHomePage';
+import HomeCareEnquiryPage from './pages/enquiry/HomeCareEnquiryPage';
 import ResearchPage from './pages/research/ResearchPage';
 import NewResarchPage from './pages/research/NewResarchPage';
 
@@ -65,6 +67,10 @@ function App() {
               
             {/*Testimonial*/}
             <Route path='/testimonial' element={<TestiComp />} />
+
+            {/*Enquiry*/}
+            <Route path='/enquiry' element={<EnquiryHomePage />} />
+            <Route path='/enquiry-homecare' element={<HomeCareEnquiryPage />} />
            
           </Routes>
         </MainLayout>
