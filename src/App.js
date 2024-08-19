@@ -42,7 +42,8 @@ function App() {
 
             {/* Testimonials part */}
             <Route path='/testimonials' element={<TestimonialsHomePage />} />
-            <Route path='/testimonials-patient' element={<TestimonialsPatientContentPage/>} />
+            <Route path='/testimonials/patient' element={<TestimonialsPatientContentPage/>} />
+             <Route path='/testimonials/video' element={<TestiComp />} />
 
              {/*Content Management part */}
             <Route path='/content-management' element={<ContentManagementPage/>} />
@@ -65,8 +66,7 @@ function App() {
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
               
-            {/*Testimonial*/}
-            <Route path='/testimonial' element={<TestiComp />} />
+           
 
             {/*Enquiry*/}
             <Route path='/enquiry' element={<EnquiryHomePage />} />

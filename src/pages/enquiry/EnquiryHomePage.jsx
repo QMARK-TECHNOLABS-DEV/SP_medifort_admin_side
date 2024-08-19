@@ -4,7 +4,7 @@ import EnquiriesCards from '../../components/enquiry/EnquiriesCards'
 
 const EnquiryHomePage = () => {
   return (
-    <div>
+    <div className='w-full'>
       <EnquiryTopPart title={'Enquiries'}/>
       <section>
         <EnquiriesCards/>
