@@ -28,6 +28,7 @@ import CaseStudyHomePage from './pages/caseStudies/CaseStudyHomePage';
 import VideoPage from './pages/video/VideoPage';
 import DepartmentPage from './pages/department/DepartmentPage';
 import AddDepartmentPage from './pages/department/AddDepartmentPage';
+import Media from './pages/media';
 
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
             {/*Content Management part */}
             <Route path='/content-management' element={<ContentManagementPage />} />
             <Route path='/preventive-health' element={<PreventiveHealth />} />
+            <Route path='/contentmanagement/media' element={<Media />} />
 
             {/*Health Talk  */}
             <Route path='/health-talk' element={<HealthTalkPage />} />
