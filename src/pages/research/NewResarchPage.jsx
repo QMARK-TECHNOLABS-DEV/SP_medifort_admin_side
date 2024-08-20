@@ -71,7 +71,7 @@ const NewResearchPage = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      <div className="pb-36 overflow-y-auto h-full px-6">
+      <div className="pb-36 overflow-y-auto h-full px-6 scrollbar-hide">
         <div className="flex flex-col mb-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
@@ -145,6 +145,9 @@ const NewResearchPage = () => {
                   onChange={(e) => setContent(e.target.value)}
                   required
                 />
+              </div>
+              <div className="text-left text-sm text-gray-500">
+                + upload content as PDF
               </div>
             </div>
           </div>

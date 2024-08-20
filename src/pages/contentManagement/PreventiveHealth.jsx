@@ -118,7 +118,7 @@ const PreventiveHealth = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      <div className="pb-36 overflow-y-auto h-full">
+      <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
         <div className="flex flex-col mb-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />

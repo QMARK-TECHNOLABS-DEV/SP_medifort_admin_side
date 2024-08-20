@@ -85,7 +85,7 @@ const VideoPage = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      <div className="pb-36 overflow-y-auto h-full">
+      <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
         <div className="flex flex-col mb-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
@@ -99,7 +99,7 @@ const VideoPage = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 p-2 md:p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-2 md:p-6">
           {videos.map((video) => (
             <VideoCard
               key={video.id}
