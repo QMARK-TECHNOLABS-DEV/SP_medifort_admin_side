@@ -26,7 +26,7 @@ const ContentManagementPage = () => {
   return (
     <div className="h-screen w-full overflow-hidden"> 
       <div className="flex-1 h-full pb-32 overflow-y-auto"> 
-        <h1 className="text-2xl text-left md:text-4xl text-[#424242] md:font-[350] font-medium my-5">Content Management</h1>
+        <h1 className="text-2xl text-left md:text-4xl text-[#424242] font-[500] ">Content Management</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"> 
           {contentItems.map((item, index) => (
             <ContentCard key={index} imageSrc={item.imageSrc} title={item.title}  url={item.url}  />
