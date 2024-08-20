@@ -37,6 +37,7 @@ function App() {
           {/*Login Page*/}
           <Route index path='/login' element={<LoginPage />} />
           <Route  element={<MainLayout />}>
+
             {/* Dashboard */}
             <Route exact path='/' element={<Home />} />
 
@@ -67,6 +68,7 @@ function App() {
             <Route path='/health-talk' element={<HealthTalkPage />} />
             <Route path='/article' element={<ArticlePage />} />
             <Route path='/new-article' element={<NewArticlePage />} />
+            <Route path='/video' element={<VideoPage />} />
 
             {/*News */}
             <Route path='/news' element={<NewsPage />} />
@@ -80,15 +82,9 @@ function App() {
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
 
-             {/*Video */}
-             <Route path='/video' element={<VideoPage />} />
-           
-            {/*Testimonial*/}
-            <Route path='/testimonial' element={<TestiComp />} />
-
             {/*Enquiry*/}
             <Route path='/enquiry' element={<EnquiryHomePage />} />
-            <Route path='/enquiry-homecare' element={<HomeCareEnquiryPage />} />
+            <Route path='/enquiry/homecare' element={<HomeCareEnquiryPage />} />
 
           </Route>
         </Routes>
