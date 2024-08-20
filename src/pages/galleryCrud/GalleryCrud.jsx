@@ -194,7 +194,14 @@ const Gallery = () => {
         </div>
       )}
 
-      <div className="flex-1 overflow-y-auto max-h-[70vh]">
+      <div
+        className="flex-1 overflow-y-auto scrollbar-hidden max-h-[70vh]"
+        style={{
+          overflowY: 'auto',
+          scrollbarWidth: 'none', // Firefox
+          msOverflowStyle: 'none', // IE and Edge
+        }}
+      >
         <div className="grid grid-cols-3 gap-4">
           {images.map((src, index) => (
             <div
@@ -213,7 +220,7 @@ const Gallery = () => {
               {index >= initialImages.length && (
                 <button
                   onClick={() => handleRemoveImage(index)}
-                  className="absolute top-2 right-2  text-white p-1 "
+                  className="absolute top-2 right-2 text-white p-1"
                 >
                   <TrashIcon />
                 </button>
