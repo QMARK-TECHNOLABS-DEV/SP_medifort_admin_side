@@ -68,14 +68,14 @@ const AddModal = ({ show, onClose, onSubmit, editItem }) => {
           <div className="flex justify-end space-x-4">
             <button
               type="submit"
-              className="bg-white border-[#9C2677] hover:text-[#9C2677] border text-gray-800 font-medium py-2 px-4 rounded-md"
+              className="bg-white hover:border-[#9C2677] hover:text-[#9C2677] border text-gray-800 font-medium py-2 px-4 rounded-md"
             >
               {editItem ? 'Update' : 'Add'}
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="bg-white border-[#9C2677] hover:text-[#9C2677] border text-gray-800 font-medium py-2 px-4 rounded-md"
+              className="bg-white hover:border-[#9C2677] hover:text-[#9C2677] border text-gray-800 font-medium py-2 px-4 rounded-md"
             >
               Cancel
             </button>

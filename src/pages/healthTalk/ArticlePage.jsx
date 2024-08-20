@@ -70,10 +70,10 @@ const ArticlePage = () => {
     return (
         <div className="h-screen w-full overflow-hidden">
           <div className="pb-36 overflow-y-auto h-full">
-            <div className="flex flex-col mb-6">
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+            <div className="flex flex-col ">
+              <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center mt-4">
                 <Breadcrumbs items={breadcrumbsItems} />
-                <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
+                <div className="flex flex-col lg:flex-row gap-2 lg:gap-2 mt-5 lg:mt-0 w-full lg:w-fit">
                   <button
                     className="p-2 px-4 mr-5 lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
                     onClick={handleAddNewClick}
@@ -83,7 +83,7 @@ const ArticlePage = () => {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 ">
+            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-5">
                 {articleItems.map((item, index) => (
                     <CommonCard
                       key={item.id}
