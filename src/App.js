@@ -24,6 +24,7 @@ import EnquiryHomePage from './pages/enquiry/EnquiryHomePage';
 import HomeCareEnquiryPage from './pages/enquiry/HomeCareEnquiryPage';
 import ResearchPage from './pages/research/ResearchPage';
 import NewResarchPage from './pages/research/NewResarchPage';
+import CaseStudyHomePage from './pages/caseStudies/CaseStudyHomePage';
 import VideoPage from './pages/video/VideoPage';
 import DepartmentPage from './pages/department/DepartmentPage';
 import AddDepartmentPage from './pages/department/AddDepartmentPage';
@@ -81,6 +82,9 @@ function App() {
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
+
+            {/*Case Studies*/}
+            <Route path='/casestudies' element={<CaseStudyHomePage />} />
 
             {/*Enquiry*/}
             <Route path='/enquiry' element={<EnquiryHomePage />} />
