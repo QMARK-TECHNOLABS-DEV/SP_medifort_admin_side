@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const EnquiriesCards = () => {
     const galleryItems = [
-        { id: 1, imageSrc: '/enquiries/enquiriescard1.png', title: 'Home care '},
-        { id: 2, imageSrc: '/enquiries/enquiriescard2.png', title: 'Insurance'},
-        { id: 1, imageSrc: '/enquiries/enquiriescard3.png', title: 'Contact Us '},
-        { id: 2, imageSrc: '/enquiries/enquiriescard4.png', title: 'International Patient Enquiry'}
+        { id: 1, imageSrc: '/enquiries/enquiriescard1.png', title: 'Home care ', path:"/enquiry/homecare"},
+        { id: 2, imageSrc: '/enquiries/enquiriescard2.png', title: 'Insurance', path:"/enquiry/insurance"},
+        { id: 1, imageSrc: '/enquiries/enquiriescard3.png', title: 'Contact Us ', path:"/enquiry/contact-us"},
+        { id: 2, imageSrc: '/enquiries/enquiriescard4.png', title: 'International Patient Enquiry', path:"/enquiry/international-patient-enquiry"}
       ];
       
   return (
@@ -13,7 +14,7 @@ const EnquiriesCards = () => {
       <div className="flex-1 h-full pb-32 overflow-y-auto">
     <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3">
       {galleryItems.map(item => (
-        <div key={item.id} className="relative " >
+        <Link to={item?.path} key={item.id} className="relative " >
           <img 
             src={item.imageSrc} 
             alt={item.title} 
@@ -22,7 +23,7 @@ const EnquiriesCards = () => {
           <div className="absolute inset-x-0 bottom-0 text-left pl-6  flex flex-col justify-end p-2  ">
             <h3 className=" text-md text-[#424242] pl-3 pt-1 ">{item.title}</h3>
         </div>
-        </div>
+        </Link>
       ))}
     </div>
     </div>

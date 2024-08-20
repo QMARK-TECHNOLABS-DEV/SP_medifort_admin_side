@@ -20,7 +20,7 @@ const ContentManagementPage = () => {
     { imageSrc: content6, title: 'Banners',url:"/banner" },
     { imageSrc: content7, title: 'Our speciality',url:"" },
     { imageSrc: content1, title: 'Doctor case studies',url:"" },
-    { imageSrc: content2, title: 'Departments',url:"" },
+    { imageSrc: content2, title: 'Departments',url:"/department" },
   ];
 
   return (
