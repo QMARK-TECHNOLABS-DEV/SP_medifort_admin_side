@@ -3,12 +3,12 @@ import React,{useState} from 'react';
 import { CiSearch } from "react-icons/ci";
 import Breadcrumbs from '../common/Breadcrumbs';
 
-const EnquiryHomeCareTop = ({ title, type, onSearchChange }) => {
+const InsuranceEnquiryTop = ({ title, type, onSearchChange }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const breadcrumbsItems = [
     { label: "Enquiries", href: "/enquiry" },
-    { label: isEdit ? "Edit Article" : "Home care enquiry", href: "/enquiry" },
+    { label: isEdit ? "Edit Article" : "Insurance enquiry", href: "/enquiry" },
   ];
 
   return (
@@ -28,5 +28,5 @@ const EnquiryHomeCareTop = ({ title, type, onSearchChange }) => {
   );
 }
 
-export default EnquiryHomeCareTop;
+export default InsuranceEnquiryTop;
 

@@ -15,7 +15,7 @@ const TopPart = ({ title }) => {
           type="text"
           name=""
           className="w-full rounded-lg text-sm bg-lightGray p-3 px-5 ps-12 placeholder:text-[#475467]
-             placeholder:font-[500] placeholder:text-xl focus:outline-none sm:min-w-full"
+             placeholder:font-[500] placeholder:text-xl focus:outline-none"
           placeholder="Search"
         />
         <CiSearch size={25} className="absolute top-2 left-3" />
