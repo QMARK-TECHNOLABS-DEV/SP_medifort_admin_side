@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Import images
-import Homecare from "../../assets/banners/Homecare.png";
-import Testimonials from "../../assets/banners/Testimonials.png";
+import Homecare from "../../assets/banners/Homecare1.png";
+import Testimonials from "../../assets/banners/Testimonials1.png";
 
 const ImageCard = ({ image, label, onDelete }) => {
   return (
@@ -40,8 +40,7 @@ const BannerCo = () => {
     { id: 1, src: Homecare, label: "Homecare.png" },
     { id: 2, src: Testimonials, label: "Testimonials.png" },
     { id: 3, src: Homecare, label: "Homecare.png" },
-    { id: 3, src: Homecare, label: "Homecare.png" },
-    { id: 3, src: Homecare, label: "Homecare.png" },
+
   ]);
 
   const navigate = useNavigate();
@@ -63,7 +62,7 @@ const BannerCo = () => {
 
         <button
           onClick={handleAddBanner}
-          className="bg-pink-500 text-white text-sm px-4 py-2 mx-4 rounded-full hover:bg-pink-600"
+          className="bg-pink-500 text-white text-sm px-4 py-2 mx-4 rounded-full text- hover:bg-pink-600"
         >
           Add Banner
         </button>

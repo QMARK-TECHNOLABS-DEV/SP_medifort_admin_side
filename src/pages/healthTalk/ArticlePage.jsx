@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Breadcrumbs from '../../components/common/Breadcrumbs';
 import CommonCard from '../../components/healthTalk/CommonCard';
 import Article1 from '../../assets/article/Article 1.jpeg';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import DeleteModal from '../../components/common/DeleteModal';
 
 const breadcrumbsItems = [
@@ -11,65 +11,61 @@ const breadcrumbsItems = [
 ];
 
 const ArticlePage = () => {
-    const navigate = useNavigate();
-    const [articleItems, setArticleItems] = useState([
-        {
-          title: "Nourishing Recovery Amidst Medical Challenges",
-          imageUrl: Article1,
-          author: "Reo George",
-          date: "03/01/24",
-          content: "Sample content for the article.",
-        },
-        {
-          title: "Nourishing Recovery Amidst Medical Challenges",
-          imageUrl: Article1,
-          author: "Reo George",
-          date: "03/01/24",
-          content: "Sample content for the article.",
-        },
-        {
-          title: "Nourishing Recovery Amidst Medical Challenges",
-          imageUrl: Article1,
-          author: "Reo George",
-          date: "03/01/24",
-          content: "Sample content for the article.",
-        },
-        {
-          title: "Nourishing Recovery Amidst Medical Challenges",
-          imageUrl: Article1,
-          author: "Reo George",
-          date: "03/01/24",
-          content: "Sample content for the article.",
-        },
-       
-    ]);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [articleItems, setArticleItems] = useState([
+    {
+      id: 1, 
+      title: "Nourishing Recovery Amidst Medical Challenges",
+      imageUrl: Article1,
+      author: "Reo George",
+      date: "03/01/24",
+      content: "Sample content for the article.",
+    },
+    {
+      id: 2,
+      title: "Another Article Title",
+      imageUrl: Article1,
+      author: "John Doe",
+      date: "04/02/24",
+      content: "Another sample content.",
+    },
+  ]);
 
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [selectedArticle, setSelectedArticle] = useState(null);
+  useEffect(() => {
+    if (location.state?.updatedArticles) {
+      setArticleItems(location.state.updatedArticles);
+    }
+  }, [location.state?.updatedArticles]);
 
-    const handleAddNewClick = () => {
-        navigate('/new-article'); 
-    };
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
-    const handleEditClick = (article) => {
-        navigate('/new-article', { state: { isEdit: true, article } });
-    };
+  const handleAddNewClick = () => {
+    navigate('/new-article', { state: { isEdit: false, articleItems } }); 
+  };
 
-    const handleDeleteClick = (article) => {
-        setSelectedArticle(article); 
-        setShowDeleteModal(true); 
-    };
+  const handleEditClick = (article) => {
+    navigate('/new-article', { state: { isEdit: true, article, articleItems } });
+  };
 
-    const handleDeleteConfirm = () => {
-        setArticleItems((prevItems) => prevItems.filter(item => item !== selectedArticle));
-        setShowDeleteModal(false); 
-        setSelectedArticle(null); 
-    };
+  const handleDeleteClick = (article) => {
+    setSelectedArticle(article); 
+    setShowDeleteModal(true); 
+  };
 
-    const handleCloseModal = () => {
-        setShowDeleteModal(false);
-        setSelectedArticle(null);
-    };
+  const handleDeleteConfirm = () => {
+    const updatedArticles = articleItems.filter(item => item.id !== selectedArticle.id);
+    setArticleItems(updatedArticles);
+    setShowDeleteModal(false); 
+    setSelectedArticle(null); 
+  };
+
+  const handleCloseModal = () => {
+    setShowDeleteModal(false);
+    setSelectedArticle(null);
+  };
+
 
     return (
         <div className="h-screen w-full overflow-hidden">
@@ -88,19 +84,18 @@ const ArticlePage = () => {
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 ">
-  {articleItems.map((item, index) => (
-    <CommonCard
-      key={index}
-      imageUrl={item.imageUrl}
-      title={item.title}
-      author={item.author}
-      date={item.date}
-      onEditClick={() => handleEditClick(item)}
-      onDeleteClick={() => handleDeleteClick(item)}
-    />
-  ))}
-</div>
-
+                {articleItems.map((item, index) => (
+                    <CommonCard
+                      key={item.id}
+                      imageUrl={item.imageUrl}
+                      title={item.title}
+                      author={item.author}
+                      date={item.date}
+                      onEditClick={() => handleEditClick(item)}
+                      onDeleteClick={() => handleDeleteClick(item)}
+                    />
+                ))}
+            </div>
           </div>
           <DeleteModal
             show={showDeleteModal}
@@ -109,6 +104,6 @@ const ArticlePage = () => {
           />
         </div>
       );
-    }
-    
+}
+
 export default ArticlePage;
