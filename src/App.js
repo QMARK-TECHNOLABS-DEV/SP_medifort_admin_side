@@ -28,6 +28,7 @@ import CaseStudyHomePage from './pages/caseStudies/CaseStudyHomePage';
 import VideoPage from './pages/video/VideoPage';
 import DepartmentPage from './pages/department/DepartmentPage';
 import AddDepartmentPage from './pages/department/AddDepartmentPage';
+import Gallery from './pages/galleryCrud/GalleryCrud';
 
 
 function App() {
@@ -89,6 +90,10 @@ function App() {
             {/*Enquiry*/}
             <Route path='/enquiry' element={<EnquiryHomePage />} />
             <Route path='/enquiry/homecare' element={<HomeCareEnquiryPage />} />
+             
+             {/*Gallery Crud */}
+             <Route path='/gallery' element={<Gallery/>} />
+
            
 
 

@@ -1,5 +1,24 @@
 import React, { useState, useRef } from "react";
 import gallery from "../../assets/Gallery/gallery.png";
+import Breadcrumbs from "../../components/common/Breadcrumbs";
+
+// SVG Trash Icon Component
+const TrashIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={2}
+    stroke="currentColor"
+    className="w-6 h-6"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M8 7V4a2 2 0 012-2h4a2 2 0 012 2v3"
+    />
+  </svg>
+);
 
 const initialImages = [
   gallery, gallery, gallery, gallery, gallery, gallery, gallery, gallery, gallery
@@ -14,7 +33,12 @@ const Gallery = () => {
   const [imageSize, setImageSize] = useState(0);
   const [showImageModal, setShowImageModal] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
-  const fileInputRef = useRef(null); // Reference to the file input element
+  const fileInputRef = useRef(null); 
+
+  const breadcrumbsItems = [
+    { label: "Content Management", href: "content-management" },
+    { label: "Gallery", href: "/gallery" },
+  ];
 
   const handleSelectImage = (index) => {
     setSelectedImage(index);
@@ -40,14 +64,14 @@ const Gallery = () => {
   const handleAddImage = () => {
     if (newImage) {
       setImages([...images, newImage]);
-      closeAddBox();  // Close the box after adding the image
+      closeAddBox();
     }
   };
 
-  const handleRemoveImage = () => {
-    setNewImage(null);
-    setImageName("");
-    setImageSize(0);
+  const handleRemoveImage = (index) => {
+    const updatedImages = [...images];
+    updatedImages.splice(index, 1);
+    setImages(updatedImages);
   };
 
   const closeAddBox = () => {
@@ -58,7 +82,7 @@ const Gallery = () => {
   };
 
   const handleBrowseClick = () => {
-    fileInputRef.current.click(); // Trigger the file input click programmatically
+    fileInputRef.current.click(); 
   };
 
   const handleViewImage = (src) => {
@@ -78,22 +102,21 @@ const Gallery = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col p-4">
+    <div className="min-h-screen flex flex-col">
       <div className="flex justify-between items-center mb-4">
         <div className="text-lg text-gray-500">
-          <span>Content management</span> &gt; <span className="text-black">Gallery</span>
+          <Breadcrumbs items={breadcrumbsItems} />
         </div>
         <button
           onClick={toggleAddBox}
-          className="border border-pink-500 text-pink-500 px-4 py-2 rounded"
+          className="border border-primaryColor text-primaryColor px-4 py-2 rounded"
         >
           + Add new
         </button>
       </div>
-
       {showAddBox && (
         <div className="fixed inset-0 flex items-center justify-center z-10">
-          <div className="bg-white p-6 rounded-md shadow-md relative w-80"> {/* Reduced width here */}
+          <div className="bg-white p-6 rounded-md shadow-md relative w-80">
             <h2 className="text-lg mb-4 text-left">Add New</h2>
             
             <div className="mb-4">
@@ -109,36 +132,30 @@ const Gallery = () => {
                   type="file"
                   onChange={handleImageChange}
                   className="absolute inset-0 opacity-0 cursor-pointer"
-                  ref={fileInputRef} // Set the reference
+                  ref={fileInputRef} 
                 />
               </div>
             </div>
 
             {newImage && (
-              <div className="mb-4 text-sm text-gray-600 flex items-center">
+              <div className="mb-4 text-sm text-gray-600">
                 <div>
                   <span>{imageName} ({imageSize} MB)</span>{" "}
-                  <span className="text-pink-500 cursor-pointer" onClick={() => handleViewImage(newImage)}>
+                  <span className="text-primaryColor cursor-pointer" onClick={() => handleViewImage(newImage)}>
                     View
                   </span>{" "}
                   {" "}
-                  <span className="text-gray-900 cursor-pointer" onClick={handleRemoveImage}>
+                  <span className="text-gray-900 cursor-pointer" onClick={handleReset}>
                     Remove
                   </span>
                 </div>
-                <button
-                  onClick={handleRemoveImage}
-                  className="ml-2 text-red-500 hover:text-red-700"
-                >
-                  <i className="fas fa-trash"></i>
-                </button>
               </div>
             )}
 
             <div className="flex justify-start space-x-4">
               <button
                 onClick={handleAddImage}
-                className="border border-pink-500 text-pink-500 px-4 py-2 rounded"
+                className="border border-primaryColor text-primaryColor px-4 py-2 rounded"
               >
                 Add
               </button>
@@ -183,7 +200,7 @@ const Gallery = () => {
             <div
               key={index}
               onClick={() => handleSelectImage(index)}
-              className={`border-2 ${
+              className={`relative border-2 ${
                 selectedImage === index ? "border-blue-400" : "border-transparent"
               } cursor-pointer`}
             >
@@ -191,8 +208,16 @@ const Gallery = () => {
                 src={src}
                 alt={`Gallery image ${index + 1}`}
                 className="w-[300px] h-[130px] object-cover"
-                onClick={() => handleViewImage(src)} // Open the image modal on click
+                onClick={() => handleViewImage(src)}
               />
+              {index >= initialImages.length && (
+                <button
+                  onClick={() => handleRemoveImage(index)}
+                  className="absolute top-2 right-2  text-white p-1 "
+                >
+                  <TrashIcon />
+                </button>
+              )}
             </div>
           ))}
         </div>

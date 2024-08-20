@@ -94,7 +94,7 @@ const TestiComp = () => {
           <h3 className="text-gray-700 text-xl font-semibold">Video</h3>
         </div>
         <button
-          className="border-2 border-pink-500 text-pink-500 py-2 px-4 rounded-lg hover:border-pink-600 hover:text-pink-600"
+          className="border-2  py-2 px-4 rounded-lg border-primaryColor"
           onClick={handleAddClick}
         >
           + Add Video
