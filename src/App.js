@@ -30,11 +30,12 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <MainLayout>
-
-          <Routes>
+        <Routes>
+          {/*Login Page*/}
+          <Route index path='/login' element={<LoginPage />} />
+          <Route  element={<MainLayout />}>
             {/* Dashboard */}
-            <Route exact  path='/' element={<Home />} />
+            <Route exact path='/' element={<Home />} />
 
             {/* Doctor Profile part */}
             <Route path='/doctor-profiles' element={<DoctorProfiles />} />
@@ -44,44 +45,41 @@ function App() {
 
             {/* Testimonials part */}
             <Route path='/testimonials' element={<TestimonialsHomePage />} />
-            <Route path='/testimonials/patient' element={<TestimonialsPatientContentPage/>} />
-             <Route path='/testimonials/video' element={<TestiComp />} />
+            <Route path='/testimonials/patient' element={<TestimonialsPatientContentPage />} />
+            <Route path='/testimonials/video' element={<TestiComp />} />
 
-             {/*Content Management part */}
-            <Route path='/content-management' element={<ContentManagementPage/>} />
-            <Route path='/preventive-health' element={<PreventiveHealth/>} />
+            {/*Content Management part */}
+            <Route path='/content-management' element={<ContentManagementPage />} />
+            <Route path='/preventive-health' element={<PreventiveHealth />} />
 
             {/*Health Talk  */}
-            <Route path='/health-talk' element={<HealthTalkPage/>} />
-            <Route path='/article' element={<ArticlePage/>} />
-            <Route path='/new-article' element={<NewArticlePage/>} />
+            <Route path='/health-talk' element={<HealthTalkPage />} />
+            <Route path='/article' element={<ArticlePage />} />
+            <Route path='/new-article' element={<NewArticlePage />} />
 
             {/*News */}
-            <Route path='/news' element={<NewsPage/>} />
-            <Route path='/new-news' element={<AddNewsPage/>} />
+            <Route path='/news' element={<NewsPage />} />
+            <Route path='/new-news' element={<AddNewsPage />} />
 
             {/*Research*/}
-            <Route path='/research' element={<ResearchPage/>} />
-            <Route path='/new-research' element={<NewResarchPage/>} />
+            <Route path='/research' element={<ResearchPage />} />
+            <Route path='/new-research' element={<NewResarchPage />} />
 
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
-              
+
             {/*Testimonial*/}
             <Route path='/testimonial' element={<TestiComp />} />
 
-            {/*Login Page*/}
-            <Route path='/login' element={<LoginPage />} />
-              
             {/*Enquiry*/}
             <Route path='/enquiry' element={<EnquiryHomePage />} />
             <Route path='/enquiry-homecare' element={<HomeCareEnquiryPage />} />
-           
-          </Routes>
-        </MainLayout>
+
+          </Route>
+        </Routes>
       </Router>
-    </div>
+    </div >
   );
 }
 
