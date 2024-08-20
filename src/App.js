@@ -24,6 +24,9 @@ import EnquiryHomePage from './pages/enquiry/EnquiryHomePage';
 import HomeCareEnquiryPage from './pages/enquiry/HomeCareEnquiryPage';
 import ResearchPage from './pages/research/ResearchPage';
 import NewResarchPage from './pages/research/NewResarchPage';
+import VideoPage from './pages/video/VideoPage';
+import DepartmentPage from './pages/department/DepartmentPage';
+import AddDepartmentPage from './pages/department/AddDepartmentPage';
 
 
 function App() {
@@ -48,6 +51,14 @@ function App() {
             <Route path='/testimonials/patient' element={<TestimonialsPatientContentPage />} />
             <Route path='/testimonials/video' element={<TestiComp />} />
 
+             {/*Content Management part */}
+            <Route path='/content-management' element={<ContentManagementPage/>} />
+            <Route path='/preventive-health' element={<PreventiveHealth/>} />
+            
+            {/*Department  */}
+            <Route path='/department' element={<DepartmentPage/>} />
+            <Route path='/add-department' element={<AddDepartmentPage/>} />
+
             {/*Content Management part */}
             <Route path='/content-management' element={<ContentManagementPage />} />
             <Route path='/preventive-health' element={<PreventiveHealth />} />
@@ -69,6 +80,9 @@ function App() {
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
 
+             {/*Video */}
+             <Route path='/video' element={<VideoPage />} />
+           
             {/*Testimonial*/}
             <Route path='/testimonial' element={<TestiComp />} />
 
