@@ -6,7 +6,7 @@ const Breadcrumbs = ({ items }) => {
   const currentPath = location.pathname;
 
   return (
-    <nav className="text-sm sm:text-md md:text-lg lg:text-4xl text-gray-500 mb-4">
+    <nav className="ext-2xl text-left md:text-4xl text-[#424242] md:font-[350] my-5">
       <ol className="list-none p-0 inline-flex flex-wrap">
         {items.map((item, index) => (
           <li key={index} className="flex items-center">
@@ -14,8 +14,8 @@ const Breadcrumbs = ({ items }) => {
             <a
               href={item.href}
               className={`${
-                currentPath === item.href ? 'text-[#424242] font-semibold' : 'text-gray-500'
-              } hover:text-black`}
+                currentPath === item.href ? 'text-[#424242] font-semibold' : 'text-[#848484] '
+              } hover:text-[#424242]`}
             >
               {item.label}
             </a>

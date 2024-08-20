@@ -20,6 +20,11 @@ import AddNewsPage from './pages/news/AddNewsPage';
 import TestiComp from './pages/testiComp/TestiComp';
 import LoginPage from './pages/loginPage/LoginPage';
 
+import EnquiryHomePage from './pages/enquiry/EnquiryHomePage';
+import HomeCareEnquiryPage from './pages/enquiry/HomeCareEnquiryPage';
+import ResearchPage from './pages/research/ResearchPage';
+import NewResarchPage from './pages/research/NewResarchPage';
+
 
 function App() {
   return (
@@ -39,7 +44,8 @@ function App() {
 
             {/* Testimonials part */}
             <Route path='/testimonials' element={<TestimonialsHomePage />} />
-            <Route path='/testimonials-patient' element={<TestimonialsPatientContentPage/>} />
+            <Route path='/testimonials/patient' element={<TestimonialsPatientContentPage/>} />
+             <Route path='/testimonials/video' element={<TestiComp />} />
 
              {/*Content Management part */}
             <Route path='/content-management' element={<ContentManagementPage/>} />
@@ -54,6 +60,10 @@ function App() {
             <Route path='/news' element={<NewsPage/>} />
             <Route path='/new-news' element={<AddNewsPage/>} />
 
+            {/*Research*/}
+            <Route path='/research' element={<ResearchPage/>} />
+            <Route path='/new-research' element={<NewResarchPage/>} />
+
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
@@ -63,6 +73,10 @@ function App() {
 
             {/*Login Page*/}
             <Route path='/login' element={<LoginPage />} />
+              
+            {/*Enquiry*/}
+            <Route path='/enquiry' element={<EnquiryHomePage />} />
+            <Route path='/enquiry-homecare' element={<HomeCareEnquiryPage />} />
            
           </Routes>
         </MainLayout>

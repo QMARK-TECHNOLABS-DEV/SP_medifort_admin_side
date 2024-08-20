@@ -6,7 +6,8 @@ import { FaPlus } from "react-icons/fa6";
 const DoctorFilter = () => {
   return (
     <main className="flex flex-col lg:flex-row md:items-center justify-between p-3">
-      <div className="flex flex-col lg:flex-row md:items-center md:justify-center md:gap-6">
+      <div className="flex flex-col lg:flex-row md:items-center md:justify-center 
+      md:gap-6 min:flex-row xs:flex-row sm:flex-row">
         <div className=" text-sm flex gap-6  flex-row">
           Department
           <div className=" flex">
@@ -33,7 +34,7 @@ const DoctorFilter = () => {
       <div className="flex items-end justify-end  ">
         <button
           className=" flex items-center border border-primaryColor justify-center gap-2  p-2  
-          lg:w-fit rounded-lg "
+          lg:w-fit rounded-lg sm:min-w-full xs:min-w-full min-w-full"
         >
           <FaPlus className="text-primaryColor text-xs" />{" "}
           <span className="text-sm text-primaryColor">Add a doctor</span>

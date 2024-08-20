@@ -2,29 +2,29 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import { HiPencilAlt } from "react-icons/hi";
-import Article1 from "../../assets/article/images.png";
+import ResearchPlaceholder from "../../assets/article/images.png"; 
 import { FaTrashAlt } from "react-icons/fa";
 
 const breadcrumbsItems = [
   { label: "Health Talk", href: "/health-talk" },
-  { label: "New Article", href: "/new-article" },
+  { label: "New Research", href: "/new-research" },
 ];
 
-const NewArticlePage = () => {
+const NewResearchPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(ResearchPlaceholder);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isEdit, setIsEdit] = useState(false);
-  const [articleItems, setArticleItems] = useState(location.state?.articleItems || []);
+  const [researchItems, setResearchItems] = useState(location.state?.researchItems || []);
 
   useEffect(() => {
     if (location.state && location.state.isEdit) {
-      const { article } = location.state;
-      setTitle(article.title);
-      setContent(article.content);
-      setImage(article.imageUrl);
+      const { research } = location.state;
+      setTitle(research.title);
+      setContent(research.content);
+      setImage(research.imageUrl);
       setIsEdit(true);
     }
   }, [location]);
@@ -39,33 +39,34 @@ const NewArticlePage = () => {
   };
 
   const handleSubmit = () => {
-    const newArticle = {
-      id: isEdit ? location.state.article.id : Date.now(),
+    const newResearch = {
+      id: isEdit ? location.state.research.id : Date.now(),
       title,
       content,
-      imageUrl: image || Article1,
+      imageUrl: image || ResearchPlaceholder,
       author: "Reo George",
       date: new Date().toLocaleDateString(),
     };
-  
-    let updatedArticles;
+
+    let updatedResearch;
     if (isEdit) {
-      updatedArticles = articleItems.map(item => 
-        item.id === newArticle.id ? newArticle : item
+      updatedResearch = researchItems.map(item => 
+        item.id === newResearch.id ? newResearch : item
       );
     } else {
-      updatedArticles = [...articleItems, newArticle];
+      updatedResearch = [...researchItems, newResearch];
     }
-  
-    navigate("/article", { state: { updatedArticles } });
+
+    navigate("/research", { state: { updatedResearch } });
   };
+
   return (
     <div className="h-screen w-full overflow-hidden">
       <div className="pb-36 overflow-y-auto h-full px-6">
         <div className="flex flex-col mb-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
-            <div className="flex flex-row gap-4 mt-4 sm:mt-0">
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-4 mt-4 sm:mt-0">
               <button
                 className="py-2 lg:w-[150px] inline-flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
                 onClick={handleSubmit}
@@ -75,7 +76,7 @@ const NewArticlePage = () => {
               {isEdit && (
                 <button
                   className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-                  onClick={() => navigate("/article")}
+                  onClick={() => navigate("/research")}
                 >
                   <FaTrashAlt className="mr-2" />
                   Cancel
@@ -85,12 +86,12 @@ const NewArticlePage = () => {
           </div>
         </div>
         <div className="p-6">
-          <div className="flex flex-col lg:flex-row mb-6 gap-4">
-            <div className="relative w-[300px] h-[300px]">
+          <div className="flex flex-col lg:flex-row gap-6 mb-6">
+            <div className="relative lg:w-1/2">
               <img
-                src={image || Article1}
-                alt="Article"
-                className="w-full h-full object-cover rounded-2xl"
+                src={image}
+                alt="Research"
+                className="w-full h-[200px] bg-[#B0BAC366] object-cover rounded-lg"
               />
               <div className="absolute inset-0 flex items-center justify-center">
                 <label htmlFor="image-upload" className="cursor-pointer">
@@ -105,14 +106,14 @@ const NewArticlePage = () => {
                 />
               </div>
             </div>
-            <div className="lg:flex-1 flex flex-col justify-end">
+            <div className="lg:w-1/2 mt-32">
               <label className="block text-sm text-left font-medium text-gray-700 mb-2">
                 Title
               </label>
               <input
                 type="text"
-                className="w-1/2 h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                placeholder="Nourishing Recovery Amidst Medical Challenges"
+                className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                placeholder="Enter research title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -124,15 +125,12 @@ const NewArticlePage = () => {
                 Content
               </label>
               <textarea
-                rows="5"
-                className="w-full p-4 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                placeholder="Content here..."
+                rows="10"
+                className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                placeholder="Enter research content"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-              ></textarea>
-            </div>
-            <div className="text-left text-sm text-gray-500">
-              + upload content as PDF
+              />
             </div>
           </div>
         </div>
@@ -141,5 +139,4 @@ const NewArticlePage = () => {
   );
 };
 
-
-export default NewArticlePage;
+export default NewResearchPage;
