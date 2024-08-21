@@ -8,7 +8,7 @@ const InternationalPatientEnquiryTop = ({ title, type, onSearchChange }) => {
 
   const breadcrumbsItems = [
     { label: "Enquiries", href: "/enquiry" },
-    { label: isEdit ? "Edit Article" : "International patient enquiry", href: "/enquiry" },
+    { label: isEdit ? "Edit Article" : "International patient enquiry", href: "/enquiry/international-patient-enquiry" },
   ];
 
   return (

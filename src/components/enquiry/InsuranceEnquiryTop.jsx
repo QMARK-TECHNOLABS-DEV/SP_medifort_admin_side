@@ -8,11 +8,11 @@ const InsuranceEnquiryTop = ({ title, type, onSearchChange }) => {
 
   const breadcrumbsItems = [
     { label: "Enquiries", href: "/enquiry" },
-    { label: isEdit ? "Edit Article" : "Insurance enquiry", href: "/enquiry" },
+    { label: isEdit ? "Edit Article" : "Insurance enquiry", href: "/enquiry/insurance" },
   ];
 
   return (
-    <main className="flex flex-col lg:flex-row justify-between my-2 p-3">
+    <main className="flex flex-col lg:flex-row justify-between ">
       <Breadcrumbs items={breadcrumbsItems} />
       <div className="relative flex items-end justify-end">
         <input

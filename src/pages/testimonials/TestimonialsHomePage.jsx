@@ -6,7 +6,7 @@ const TestimonialsHomePage = () => {
   return (
     <div>
       <TopPartTestimonial title={'Testimonials'}/>
-      <section>
+      <section className='mt-8'>
         <TestimonialsContent/>
       </section>
     </div>

@@ -8,7 +8,7 @@ const EnquiryHomeCareTop = ({ title, type, onSearchChange }) => {
 
   const breadcrumbsItems = [
     { label: "Enquiries", href: "/enquiry" },
-    { label: isEdit ? "Edit Article" : "Home care enquiry", href: "/enquiry" },
+    { label: isEdit ? "Edit Article" : "Home care enquiry", href: "/enquiry/homecare" },
   ];
 
   return (

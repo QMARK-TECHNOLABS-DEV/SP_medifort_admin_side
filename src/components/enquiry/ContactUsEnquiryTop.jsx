@@ -8,7 +8,7 @@ const ContactUsEnquiryTop = ({ title, type, onSearchChange }) => {
 
   const breadcrumbsItems = [
     { label: "Enquiries", href: "/enquiry" },
-    { label: isEdit ? "Edit Article" : "ContactUs enquiry", href: "/enquiry" },
+    { label: isEdit ? "Edit Article" : "ContactUs enquiry", href: "/enquiry/contact-us" },
   ];
 
   return (

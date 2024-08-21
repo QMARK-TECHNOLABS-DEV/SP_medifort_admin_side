@@ -12,7 +12,7 @@ const PatientContentTopPart = () => {
   ];
 
   return (
-    <main className="flex flex-col lg:flex-row justify-between  p-3 ">
+    <main className="flex flex-col lg:flex-row justify-between ">
       <Breadcrumbs items={breadcrumbsItems} />
     </main>
   )
