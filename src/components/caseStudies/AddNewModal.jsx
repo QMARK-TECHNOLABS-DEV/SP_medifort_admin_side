@@ -1,9 +1,21 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { IoLinkSharp, IoClose } from "react-icons/io5";
 
-const AddNewModal = ({ show, onClose }) => {
+const AddNewModal = ({ show, onClose, onAddNew }) => {
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+
   if (!show) return null;
+
+  const handleAdd = (e) => {
+    e.preventDefault();
+    if (title && author) {
+      onAddNew({ title, author, date: new Date().toLocaleDateString() });
+      setTitle(''); // Reset form fields
+      setAuthor('');
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -15,43 +27,43 @@ const AddNewModal = ({ show, onClose }) => {
           className="absolute top-4 right-4 text-[#475467] cursor-pointer"
         />
       
-        <form>
+        <form onSubmit={handleAdd}>
           <div className="mb-3">
-            <label htmlFor="uploadStudy" className="block text-sm pb-1 font-medium text-[#3C3C3C]">
-              Upload study
+            <label htmlFor="title" className="block text-sm pb-1 font-medium text-[#3C3C3C]">
+              Case Study Title
             </label>
-            <div className="relative flex items-center">
-              <IoLinkSharp className="absolute left-3 text-[#525252] w-8 h-8 text-sm pr-2" />
-              <input
-                type="text"
-                className="form-input block w-full h-10 text-[#424242] rounded-md border bg-[#B0BAC3] bg-opacity-40 pl-[45px]"
-                placeholder="browse computer"
-                id="uploadStudy"
-              />
-            </div>
-          </div>
-
-          <div className='mb-2 flex flex-row gap-2'>
-            <span className='text-sm'>Nourishing Reco-.pdf (30 mb)</span>
-            <span className='text-sm text-primaryColor'>view</span>
-            <span className='text-sm text-[#424242]'>remove</span>
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="form-input block w-full h-10 text-[#424242] rounded-md border bg-[#B0BAC3] bg-opacity-40 pl-3"
+              placeholder="Enter title"
+            />
           </div>
 
           <div className="mb-3">
-            <label htmlFor="doctorSelect" className="block text-sm font-medium pb-1 text-[#3C3C3C]">
-              Doctor
+            <label htmlFor="author" className="block text-sm font-medium pb-1 text-[#3C3C3C]">
+              Author
             </label>
             <select
-              id="doctorSelect"
+              id="author"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
               className="form-select block w-full h-10 rounded-md border bg-[#B0BAC3] bg-opacity-40 pl-3"
             >
-              <option value="" disabled>Select a doctor</option>
-              <option value="doctor1">Reo George</option>
+              <option value="" disabled>Select an Author</option>
+              <option value="Reo George">Reo George</option>
+              <option value="Alice Smith">Alice Smith</option>
+              <option value="Sam Patel">Sam Patel</option>
             </select>
           </div>
 
-          <div className='flex flex-row gap-8'>
-            <button type="submit" className="mt-4 block w-[100px] h-10 px-4 py-2 border rounded-md border-primaryColor text-primaryColor">Add</button>
+          <div className="flex flex-row gap-8">
+            <button type="submit" className="mt-4 block w-[100px] h-10 px-4 py-2 border rounded-md
+             border-primaryColor text-primaryColor">
+              Add
+            </button>
             <span className='text-[#424242] pt-6 cursor-pointer' onClick={onClose}>Reset</span>
           </div>
         </form>
@@ -61,3 +73,4 @@ const AddNewModal = ({ show, onClose }) => {
 };
 
 export default AddNewModal;
+

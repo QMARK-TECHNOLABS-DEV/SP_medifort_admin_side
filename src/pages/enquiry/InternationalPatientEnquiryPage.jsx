@@ -1,12 +1,13 @@
 
 
 import React, { useState } from 'react';
-import EnquiryHomeCareTop from '../../components/enquiry/EnquiryHomeCareTop';
 import EnquiryTableFilter from '../../components/enquiry/EnquiryTableFilter';
 import { TableData } from '../../data/TableData';
 import EnquiryTable from '../../components/enquiry/EnquiryTable';
+import InternationalPatientEnquiryTop from '../../components/enquiry/InternationalPatientEnquiryTop';
 
-const HomeCareEnquiryPage = () => {
+
+const InternationalPatientEnquiryPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -45,9 +46,7 @@ const HomeCareEnquiryPage = () => {
 
   return (
     <div className='w-full'>
-      <EnquiryHomeCareTop
-        title={"Enquiries"}
-        type={{ name: "search" }}
+      <InternationalPatientEnquiryTop
         onSearchChange={handleSearchChange}
       />
       <section>
@@ -64,6 +63,6 @@ const HomeCareEnquiryPage = () => {
   );
 };
 
-export default HomeCareEnquiryPage;
+export default InternationalPatientEnquiryPage;
 
 

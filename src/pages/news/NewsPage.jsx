@@ -86,7 +86,7 @@ const NewsPage = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden mx-auto">
-      <div className="pb-36 overflow-y-auto h-full">
+      <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
         <div className="flex flex-col">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
@@ -100,7 +100,7 @@ const NewsPage = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2">
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-5">
           {newsItems.map((item) => (
             <CommonCard
               key={item.id}

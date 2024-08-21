@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { MdOutlineDelete } from "react-icons/md";
+import '../../components/page.css'
+
 
 const EnquiryTable = ({data}) => {
     
     return (
         <div className=" w-full overflow-hidden h-screen pb-40">
-        <div className="flex-1 h-full pb-32 overflow-y-auto">
+        <div className="flex-1 h-full pb-32 overflow-y-auto scrollbar-hidden">
         <div className="border border-gray-200 overflow-hidden rounded-xl m-3 mb-10">
         <table className="w-full text-base min-w-[600px] sm:min-w-[800px] lg:min-w-[1000px] ">
       

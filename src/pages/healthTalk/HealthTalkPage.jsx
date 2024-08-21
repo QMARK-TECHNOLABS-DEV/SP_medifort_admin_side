@@ -16,8 +16,8 @@ function HealthTalkPage() {
     
       return (
         <div className="h-screen w-full overflow-hidden"> 
-          <div className="flex-1 h-full pb-32 overflow-y-auto"> 
-            <h1 className="text-2xl text-left md:text-4xl text-[#424242] md:font-[350] my-5">Health Talk</h1>
+          <div className="flex-1 h-full pb-32 overflow-y-auto scrollbar-hide"> 
+            <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Health Talk</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:gap-6"> 
               {contentItems.map((item, index) => (
                 <ContentCard key={index} imageSrc={item.imageSrc} title={item.title} url={item.url} />
