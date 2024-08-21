@@ -1,17 +1,19 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { MdChevronRight } from "react-icons/md";
+import Breadcrumbs from '../common/Breadcrumbs';
 
-const PatientContentTopPart = ({title}) => {
+const PatientContentTopPart = () => {
+
+  const [isEdit, setIsEdit] = useState(false);
+
+  const breadcrumbsItems = [
+    { label: "Testimonials", href: "/testimonials" },
+    { label: isEdit ? "Edit Article" : "Paitient", href: "/testimonials/patient" },
+  ];
+
   return (
     <main className="flex flex-col lg:flex-row justify-between  p-3 ">
-      <div className=" flex flex-row text-xl md:text-2xl  ">
-       <div className="flex flex-row gap-2 text-[#848484]">
-     {title}
-       </div>
-
-       <MdChevronRight className='w-10 h-10 text-gray-400'/>
-       <span className='text-2xl'>Patient</span>
-      </div>
+      <Breadcrumbs items={breadcrumbsItems} />
     </main>
   )
 }

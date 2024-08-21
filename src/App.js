@@ -28,6 +28,9 @@ import CaseStudyHomePage from './pages/caseStudies/CaseStudyHomePage';
 import VideoPage from './pages/video/VideoPage';
 import DepartmentPage from './pages/department/DepartmentPage';
 import AddDepartmentPage from './pages/department/AddDepartmentPage';
+import InsuranceEnquiryPage from './pages/enquiry/InsuranceEnquiryPage';
+import ContactUsEnquiryPage from './pages/enquiry/ContactUsEnquiryPage';
+import InternationalPatientEnquiryPage from './pages/enquiry/InternationalPatientEnquiryPage';
 import Gallery from './pages/galleryCrud/GalleryCrud';
 import Media from './pages/media';
 
@@ -94,10 +97,12 @@ function App() {
             {/*Enquiry*/}
             <Route path='/enquiry' element={<EnquiryHomePage />} />
             <Route path='/enquiry/homecare' element={<HomeCareEnquiryPage />} />
-             
+            <Route path='/enquiry/insurance' element={<InsuranceEnquiryPage />} />
+            <Route path='/enquiry/contact-us' element={<ContactUsEnquiryPage />} />
+            <Route path='/enquiry/international-patient-enquiry' element={<InternationalPatientEnquiryPage />} />
+              
              {/*Gallery Crud */}
              <Route path='/gallery' element={<Gallery/>} />
-
           </Route>
         </Routes>
       </Router>

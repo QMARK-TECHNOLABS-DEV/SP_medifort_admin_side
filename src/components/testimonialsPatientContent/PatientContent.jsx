@@ -1,4 +1,5 @@
 import React from "react";
+import '../../components/page.css'
 
 const PatientContent = () => {
   const data = (
