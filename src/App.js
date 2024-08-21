@@ -67,7 +67,7 @@ function App() {
             <Route path='/department' element={<DepartmentPage/>} />
             <Route path='/add-department' element={<AddDepartmentPage/>} />
 
-            <Route path='/contentmanagement/media' element={<Media />} />
+            <Route path='/media' element={<Media />} />
 
             {/*Health Talk  */}
             <Route path='/content-management/health-talk' element={<HealthTalkPage />} />
