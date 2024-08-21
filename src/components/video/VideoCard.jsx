@@ -4,14 +4,13 @@ const VideoCard = ({ video, onEditClick, onDeleteClick }) => {
   return (
     <div
       className="rounded-lg overflow-hidden shadow-lg bg-white border border-blue-200"
-      style={{ width: "80%" }} // Ensure it takes the full width of the grid cell
+      style={{ width: "full" }} 
     >
-      <div className="relative h-52"> {/* Adjust the height of the video container */}
+      <div className="relative h-52"> 
         {video.isYouTube ? (
           <iframe
             className="w-full h-full object-cover"
             src={video.src}
-            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             title={video.name}

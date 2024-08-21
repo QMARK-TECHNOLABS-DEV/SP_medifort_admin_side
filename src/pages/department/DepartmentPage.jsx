@@ -90,7 +90,7 @@ const DepartmentPage = () => {
 
     return (
         <div className="h-screen w-full overflow-hidden mx-auto">
-            <div className="pb-36 overflow-y-auto h-full">
+            <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
                 <div className="flex flex-col mb-6">
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
                         <Breadcrumbs items={breadcrumbsItems} />
@@ -104,7 +104,7 @@ const DepartmentPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 lg:gap-5">
                     {departmentItems.map((item, index) => (
                         <DepartmentCard
                             key={item.id}

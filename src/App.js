@@ -31,6 +31,8 @@ import AddDepartmentPage from './pages/department/AddDepartmentPage';
 import InsuranceEnquiryPage from './pages/enquiry/InsuranceEnquiryPage';
 import ContactUsEnquiryPage from './pages/enquiry/ContactUsEnquiryPage';
 import InternationalPatientEnquiryPage from './pages/enquiry/InternationalPatientEnquiryPage';
+import Gallery from './pages/galleryCrud/GalleryCrud';
+import Media from './pages/media';
 
 
 function App() {
@@ -67,20 +69,23 @@ function App() {
             {/*Content Management part */}
             <Route path='/content-management' element={<ContentManagementPage />} />
             <Route path='/preventive-health' element={<PreventiveHealth />} />
+            <Route path='/contentmanagement/media' element={<Media />} />
 
             {/*Health Talk  */}
             <Route path='/health-talk' element={<HealthTalkPage />} />
             <Route path='/article' element={<ArticlePage />} />
             <Route path='/new-article' element={<NewArticlePage />} />
             <Route path='/video' element={<VideoPage />} />
+              
+            {/*Research*/}
+            <Route path='/research' element={<ResearchPage />} />
+            <Route path='/new-research' element={<NewResarchPage />} />
+            {/*Health Talk part end  */}
 
             {/*News */}
             <Route path='/news' element={<NewsPage />} />
             <Route path='/new-news' element={<AddNewsPage />} />
 
-            {/*Research*/}
-            <Route path='/research' element={<ResearchPage />} />
-            <Route path='/new-research' element={<NewResarchPage />} />
 
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />
@@ -95,7 +100,9 @@ function App() {
             <Route path='/enquiry/insurance' element={<InsuranceEnquiryPage />} />
             <Route path='/enquiry/contact-us' element={<ContactUsEnquiryPage />} />
             <Route path='/enquiry/international-patient-enquiry' element={<InternationalPatientEnquiryPage />} />
-
+              
+             {/*Gallery Crud */}
+             <Route path='/gallery' element={<Gallery/>} />
           </Route>
         </Routes>
       </Router>

@@ -40,8 +40,8 @@ const CaseStudyHomePage = () => {
   };
 
   return (
-    <div className='ml-10 mr-4'>
-      <CaseStudyTopPart addNewCaseStudy={() => setIsModalOpen(true)} />
+    <div className='w-full'>
+      <CaseStudyTopPart title={'Content management'}/>
       <section>
         <CaseStudyCards caseStudies={caseStudies} onEdit={editCaseStudy} onDelete={deleteCaseStudy} />
       </section>
