@@ -12,7 +12,7 @@ const EnquiriesCards = () => {
   return (
     <div className=" w-full overflow-hidden h-screen pb-30">
       <div className="flex-1 h-full pb-32 overflow-y-auto">
-    <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3 mt-8">
       {galleryItems.map(item => (
         <Link to={item?.path} key={item.id} className="relative " >
           <img 

@@ -3,7 +3,7 @@ import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 const DepartmentCard = ({ imageUrl, name, onEditClick, onDeleteClick }) => {
   return (
-    <div className="flex flex-col bg-white rounded-2xl mt-10 shadow-lg overflow-hidden mx-auto w-full sm:w-[48%] lg:w-full xl:w-[350px]">
+    <div className="flex flex-col bg-white border rounded-2xl mt-10 shadow-lg overflow-hidden mx-auto w-full sm:w-[48%] lg:w-full xl:w-[350px]">
       <div className="relative h-[250px] rounded-t-2xl border-[15px] border-white overflow-hidden">
         <img 
           src={imageUrl} 

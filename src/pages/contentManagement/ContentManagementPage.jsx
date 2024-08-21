@@ -13,7 +13,7 @@ import content7 from '../../assets/contentManagement/Content 7.png';
 const ContentManagementPage = () => {
   const contentItems = [
     { imageSrc: content1, title: 'Services' ,url:"" },
-    { imageSrc: content2, title: 'Health talk',url:"/health-talk" },
+    { imageSrc: content2, title: 'Health talk',url:"/content-management/health-talk" },
     { imageSrc: content3, title: 'Core management',url:"" },
     { imageSrc: content4, title: 'News',url:"/news" },
     { imageSrc: content5, title: 'Gallery',url:"" },

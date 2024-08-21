@@ -1,8 +1,7 @@
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import AddNewModal from '../../components/caseStudies/AddNewModal';
-import Breadcrumbs from '../common/Breadcrumbs';
+import AddNewModal from "../../components/caseStudies/AddNewModal";
+import Breadcrumbs from "../common/Breadcrumbs";
 
 const CaseStudyTopPart = ({ addNewCaseStudy }) => {
   const [showAddNewModal, setShowAddNewModal] = useState(false);
@@ -11,11 +10,11 @@ const CaseStudyTopPart = ({ addNewCaseStudy }) => {
   const handleCloseModal = () => setShowAddNewModal(false);
 
   return (
-    <main className="flex flex-col lg:flex-row justify-between my-2 p-3">
+    <main className="flex flex-col lg:flex-row justify-between">
       <Breadcrumbs
         items={[
           { label: "Content management", href: "/content-management" },
-          { label: "Case Studies", href: "/casestudies" }
+          { label: "Case Studies", href: "/casestudies" },
         ]}
       />
       <div className="flex items-end ">
@@ -27,7 +26,7 @@ const CaseStudyTopPart = ({ addNewCaseStudy }) => {
           <span className="text-sm text-primaryColor">Add new</span>
         </button>
       </div>
-      <AddNewModal 
+      <AddNewModal
         show={showAddNewModal}
         onClose={handleCloseModal}
         onAddNew={addNewCaseStudy} // Pass the function here
@@ -37,4 +36,3 @@ const CaseStudyTopPart = ({ addNewCaseStudy }) => {
 };
 
 export default CaseStudyTopPart;
-

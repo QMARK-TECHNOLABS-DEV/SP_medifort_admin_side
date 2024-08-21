@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import Home from './pages/Home';
 import DoctorProfiles from './pages/doctorProfile/DoctorProfiles';
 import DoctorDetailedView from './pages/doctorProfile/DoctorDetailedView';
@@ -66,13 +67,10 @@ function App() {
             <Route path='/department' element={<DepartmentPage/>} />
             <Route path='/add-department' element={<AddDepartmentPage/>} />
 
-            {/*Content Management part */}
-            <Route path='/content-management' element={<ContentManagementPage />} />
-            <Route path='/preventive-health' element={<PreventiveHealth />} />
             <Route path='/contentmanagement/media' element={<Media />} />
 
             {/*Health Talk  */}
-            <Route path='/health-talk' element={<HealthTalkPage />} />
+            <Route path='/content-management/health-talk' element={<HealthTalkPage />} />
             <Route path='/article' element={<ArticlePage />} />
             <Route path='/new-article' element={<NewArticlePage />} />
             <Route path='/video' element={<VideoPage />} />

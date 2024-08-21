@@ -9,7 +9,7 @@ const CaseStudyCards = ({ caseStudies, onEdit, onDelete }) => {
     <div className="w-full overflow-hidden h-screen">
       <div className="flex-1 h-full w-full pb-20 overflow-y-auto scrollbar-hidden">
         <div className="flex flex-col min-h-screen w-full pb-20 mt-4 mb-40">
-          <div className="grid grid-cols-1 sm:grid-cols-2 pr-20 w-full p-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 pr-20 w-full gap-6">
             {caseStudies.map((study, index) => (
               <div key={index} className="p-6 border rounded-3xl bg-white pr-16 pl-10">
                 <p className="text-lg mb-2 text-left">

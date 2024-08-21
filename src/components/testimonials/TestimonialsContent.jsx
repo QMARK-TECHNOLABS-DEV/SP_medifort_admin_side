@@ -18,7 +18,7 @@ const TestimonialsContent = () => {
   ];
 
   return (
-    <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3">
       {galleryItems.map((item) => (
         <Link to={item?.path} key={item.id} className="relative ">
           <img
