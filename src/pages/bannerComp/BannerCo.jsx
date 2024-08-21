@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 // Import images
 import Homecare from "../../assets/banners/Homecare1.png";
@@ -40,8 +41,11 @@ const BannerCo = () => {
     { id: 1, src: Homecare, label: "Homecare.png" },
     { id: 2, src: Testimonials, label: "Testimonials.png" },
     { id: 3, src: Homecare, label: "Homecare.png" },
-
   ]);
+  const breadcrumbsItems = [
+    { label: "Content management", href: "/content-management" },
+    { label: "Banner", href: "/banner" },
+  ];
 
   const navigate = useNavigate();
 
@@ -56,29 +60,44 @@ const BannerCo = () => {
   return (
     <div className="p-6 w-full h-screen overflow-hidden">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-lg font-semibold text-gray-800">
-          Content management &gt; Banner
-        </h1>
+        <div className="flex items-center space-x-2">
+          <Breadcrumbs items={breadcrumbsItems} />
+        </div>
 
         <button
           onClick={handleAddBanner}
-          className="bg-pink-500 text-white text-sm px-4 py-2 mx-4 rounded-full text- hover:bg-pink-600"
+          className="border-primaryColor text-primaryColor text-sm px-4 py-2 mx-4 rounded-xl border-2"
         >
-          Add Banner
+          + Add Banner
         </button>
       </div>
-      <div className="w-full h-screen overflow-y-scroll pb-56">
-        <div className="grid grid-cols-1 gap-4 ">
-          {images.map((image) => (
-            <ImageCard
-              key={image.id}
-              image={image.src}
-              label={image.label}
-              onDelete={() => handleDelete(image.id)}
-            />
-          ))}
+      <div className="w-full h-full overflow-hidden relative">
+        <div className="absolute top-0 left-0 right-0 bottom-0 overflow-auto pr-4">
+          <div className="grid grid-cols-1 gap-4 pb-56">
+            {images.map((image) => (
+              <ImageCard
+                key={image.id}
+                image={image.src}
+                label={image.label}
+                onDelete={() => handleDelete(image.id)}
+              />
+            ))}
+          </div>
         </div>
       </div>
+      {/* Hide scrollbar for WebKit browsers */}
+      <style jsx>{`
+        .overflow-auto::-webkit-scrollbar {
+          width: 0;
+          height: 0;
+        }
+      `}</style>
+      {/* Hide scrollbar for Firefox */}
+      <style jsx global>{`
+        .overflow-auto {
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 };
