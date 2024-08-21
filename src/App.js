@@ -73,14 +73,16 @@ function App() {
             <Route path='/article' element={<ArticlePage />} />
             <Route path='/new-article' element={<NewArticlePage />} />
             <Route path='/video' element={<VideoPage />} />
+              
+            {/*Research*/}
+            <Route path='/research' element={<ResearchPage />} />
+            <Route path='/new-research' element={<NewResarchPage />} />
+            {/*Health Talk part end  */}
 
             {/*News */}
             <Route path='/news' element={<NewsPage />} />
             <Route path='/new-news' element={<AddNewsPage />} />
 
-            {/*Research*/}
-            <Route path='/research' element={<ResearchPage />} />
-            <Route path='/new-research' element={<NewResarchPage />} />
 
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />
@@ -95,9 +97,6 @@ function App() {
              
              {/*Gallery Crud */}
              <Route path='/gallery' element={<Gallery/>} />
-
-           
-
 
           </Route>
         </Routes>

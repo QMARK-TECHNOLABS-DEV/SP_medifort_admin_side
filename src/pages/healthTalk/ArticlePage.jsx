@@ -69,9 +69,9 @@ const ArticlePage = () => {
 
     return (
         <div className="h-screen w-full overflow-hidden">
-          <div className="pb-36 overflow-y-auto h-full">
+          <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
             <div className="flex flex-col ">
-              <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center mt-4">
+              <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center ">
                 <Breadcrumbs items={breadcrumbsItems} />
                 <div className="flex flex-col lg:flex-row gap-2 lg:gap-2 mt-5 lg:mt-0 w-full lg:w-fit">
                   <button
