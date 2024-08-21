@@ -28,6 +28,8 @@ import CaseStudyHomePage from './pages/caseStudies/CaseStudyHomePage';
 import VideoPage from './pages/video/VideoPage';
 import DepartmentPage from './pages/department/DepartmentPage';
 import AddDepartmentPage from './pages/department/AddDepartmentPage';
+import Gallery from './pages/galleryCrud/GalleryCrud';
+import Media from './pages/media';
 
 
 function App() {
@@ -61,11 +63,17 @@ function App() {
             <Route path='/department' element={<DepartmentPage/>} />
             <Route path='/add-department' element={<AddDepartmentPage/>} />
 
-            {/*Health Talk part start */}
+            {/*Content Management part */}
+            <Route path='/content-management' element={<ContentManagementPage />} />
+            <Route path='/preventive-health' element={<PreventiveHealth />} />
+            <Route path='/contentmanagement/media' element={<Media />} />
+
+            {/*Health Talk  */}
             <Route path='/health-talk' element={<HealthTalkPage />} />
             <Route path='/article' element={<ArticlePage />} />
             <Route path='/new-article' element={<NewArticlePage />} />
             <Route path='/video' element={<VideoPage />} />
+              
             {/*Research*/}
             <Route path='/research' element={<ResearchPage />} />
             <Route path='/new-research' element={<NewResarchPage />} />
@@ -86,6 +94,9 @@ function App() {
             {/*Enquiry*/}
             <Route path='/enquiry' element={<EnquiryHomePage />} />
             <Route path='/enquiry/homecare' element={<HomeCareEnquiryPage />} />
+             
+             {/*Gallery Crud */}
+             <Route path='/gallery' element={<Gallery/>} />
 
           </Route>
         </Routes>
