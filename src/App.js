@@ -36,7 +36,6 @@ import InsuranceEnquiryPage from './pages/enquiry/InsuranceEnquiryPage';
 import ContactUsEnquiryPage from './pages/enquiry/ContactUsEnquiryPage';
 import InternationalPatientEnquiryPage from './pages/enquiry/InternationalPatientEnquiryPage';
 import Gallery from './pages/galleryCrud/GalleryCrud';
-import Media from './pages/media';
 
 
 function App() {
@@ -70,8 +69,6 @@ function App() {
             <Route path='/department' element={<DepartmentPage/>} />
             <Route path='/add-department' element={<AddDepartmentPage/>} />
 
-            <Route path='/contentmanagement/media' element={<Media />} />
-
             {/*Health Talk  */}
             <Route path='/content-management/health-talk' element={<HealthTalkPage />} />
             <Route path='/article' element={<ArticlePage />} />
@@ -93,7 +90,7 @@ function App() {
             <Route path='/add-banner' element={<BannComp />} />
 
             {/*cpntent management media */}
-            <Route path='/contentmanagement/media' element={<Media />} />
+            <Route path='/content-management/media' element={<Media />} />
 
             {/*Case Studies*/}
             <Route path='/casestudies' element={<CaseStudyHomePage />} />

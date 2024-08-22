@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import Card from '../components/mediacrud/Card'; 
-import Modal from '../components/mediacrud/Modal'; 
-import Breadcrumbs from '../components/common/Breadcrumbs'; // Import the Breadcrumbs component
+import Card from '../components/mediacrud/Card'; // Ensure this path is correct
+import Modal from '../components/mediacrud/Modal'; // Ensure this path is correct
 
 const Media = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,17 +36,19 @@ const Media = () => {
   };
 
   return (
-    <div className="h-[80vh] overflow-y-auto p-4 scrollbar-none" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
+    <div className="h-[100vh] overflow-y-auto p-4 scrollbar-none" style={{
+      msOverflowStyle: 'none',  /* IE and Edge */
+      scrollbarWidth: 'none'    /* Firefox */
+    }}>
       <div className="flex items-center justify-between p-4 border-b">
-        <Breadcrumbs 
-          items={[
-            { href: '/content-management', label: 'content management' },
-            { href: '/content-management/media', label: 'media' },
-          ]}
-        />
+        <div className="text-gray-600 text-[35px]">
+          <span>content management</span>
+          <span className="mx-2"></span>
+          <span className="font-semibold">media</span>
+        </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="px-3 py-1.5 border border-pink-300 text-pink-600 rounded-md text-sm mt-2" // Added margin-top
+          className="px-4 py-2 border border-pink-300 text-pink-600 rounded-md"
         >
           + Add new
         </button>
@@ -64,6 +65,7 @@ const Media = () => {
         ))}
       </div>
 
+      {/* Call the Modal component and pass props */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
