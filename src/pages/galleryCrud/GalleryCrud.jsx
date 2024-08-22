@@ -102,7 +102,7 @@ const Gallery = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col w-full">
       <div className="flex justify-between items-center mb-4">
         <div className="text-lg text-gray-500">
           <Breadcrumbs items={breadcrumbsItems} />
