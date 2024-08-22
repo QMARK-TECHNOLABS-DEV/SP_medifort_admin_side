@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Card from '../components/mediacrud/Card'; 
-import Modal from '../components/mediacrud/Modal'; 
+import Card from '../components/mediacrud/Card'; // Ensure this path is correct
+import Modal from '../components/mediacrud/Modal'; // Ensure this path is correct
 import Breadcrumbs from '../components/common/Breadcrumbs'; 
 import first from "../assets/media/first.png"; 
 import second from "../assets/media/second.png"; 
@@ -67,7 +67,10 @@ const Media = () => {
   };
 
   return (
-    <div className="h-[80vh] overflow-y-auto p-4 scrollbar-none" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
+    <div className="h-[100vh] overflow-y-auto p-4 scrollbar-none" style={{
+      msOverflowStyle: 'none',  /* IE and Edge */
+      scrollbarWidth: 'none'    /* Firefox */
+    }}>
       <div className="flex items-center justify-between p-4 border-b">
         <Breadcrumbs 
           items={[
