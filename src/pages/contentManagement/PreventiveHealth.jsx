@@ -61,7 +61,7 @@ const PreventiveHealth = () => {
 
   const breadcrumbsItems = [
     { label: "Content management", href: "/content-management" },
-    { label: "Preventive health", href: "/preventive-health" },
+    { label: "Preventive health", href: "/content-management/preventive-health" },
   ];
 
   const handleAddClick = () => {
