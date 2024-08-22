@@ -5,7 +5,16 @@ const Modal = ({ isOpen, onClose, onReset, onAdd, fileName, handleFileUpload }) 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg w-[90%] max-w-[380px] h-[200px]">
+      <div className="bg-white p-6 rounded-lg w-[90%] max-w-[380px] h-[200px] relative">
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-1 right-4 text-gray-600 hover:text-gray-900 text-3xl"
+          aria-label="Close"
+        >
+          ×
+        </button>
+        
         <h2 className="text-xl font-semibold mb-2 text-left">Add New</h2>
         <p className="text-left text-gray-600 mb-4">Upload image</p>
 
@@ -58,4 +67,3 @@ const Modal = ({ isOpen, onClose, onReset, onAdd, fileName, handleFileUpload }) 
 };
 
 export default Modal;
-
