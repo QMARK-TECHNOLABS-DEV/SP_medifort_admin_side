@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import videoImage from "../../assets/testimonials/videoimage.png"; // Thumbnail image
+import videoImage from "../../assets/testimonials/videoimage.png"; // Default Thumbnail
 import clientVideo from "../../assets/testimonials/Client.mp4"; // Local video file
+import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 const TestiComp = () => {
   const [videos, setVideos] = useState([
@@ -10,12 +11,17 @@ const TestiComp = () => {
     { id: 4, name: "Reo George", date: "2024-01-03", src: clientVideo, thumb: videoImage, isYouTube: false },
   ]);
 
+  const breadcrumbsItems = [
+    { label: "Testimonials", href: "/testimonials" },
+    { label: "Video", href: "/testimonials/video" },
+  ];
+
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentVideo, setCurrentVideo] = useState(null);
   const [playingVideoId, setPlayingVideoId] = useState(null);
 
-  const [newVideo, setNewVideo] = useState({ name: "", date: "", src: "", thumb: videoImage, isYouTube: false });
+  const [newVideo, setNewVideo] = useState({ name: "", date: "", src: "", isYouTube: false });
 
   const handleAddClick = () => {
     setIsAdding(true);
@@ -36,12 +42,15 @@ const TestiComp = () => {
     return match ? match[1] : null;
   };
 
+  const getYouTubeThumbnailUrl = (videoId) => `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
   const handleAddSubmit = (e) => {
     e.preventDefault();
     const newId = videos.length ? videos[videos.length - 1].id + 1 : 1;
     const isYouTube = newVideo.src.includes("youtube.com") || newVideo.src.includes("youtu.be");
     const videoSrc = isYouTube ? `https://www.youtube.com/embed/${extractYouTubeId(newVideo.src)}` : clientVideo;
-    setVideos([...videos, { id: newId, ...newVideo, src: videoSrc, isYouTube }]);
+    const videoThumb = isYouTube ? getYouTubeThumbnailUrl(extractYouTubeId(newVideo.src)) : videoImage;
+    setVideos([...videos, { id: newId, ...newVideo, src: videoSrc, thumb: videoThumb, isYouTube }]);
     setIsAdding(false);
     resetForm();
   };
@@ -57,9 +66,10 @@ const TestiComp = () => {
     e.preventDefault();
     const isYouTube = newVideo.src.includes("youtube.com") || newVideo.src.includes("youtu.be");
     const videoSrc = isYouTube ? `https://www.youtube.com/embed/${extractYouTubeId(newVideo.src)}` : clientVideo;
+    const videoThumb = isYouTube ? getYouTubeThumbnailUrl(extractYouTubeId(newVideo.src)) : videoImage;
     setVideos(
       videos.map((video) =>
-        video.id === currentVideo.id ? { ...video, ...newVideo, src: videoSrc, isYouTube } : video
+        video.id === currentVideo.id ? { ...video, ...newVideo, src: videoSrc, thumb: videoThumb, isYouTube } : video
       )
     );
     setIsEditing(false);
@@ -89,12 +99,10 @@ const TestiComp = () => {
     <div className="p-6 w-full">
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center space-x-2">
-          <h2 className="text-gray-500 text-xl font-semibold">Testimonials</h2>
-          <span className="text-gray-500 text-xl font-semibold mx-2">&gt;</span>
-          <h3 className="text-gray-700 text-xl font-semibold">Video</h3>
+          <Breadcrumbs items={breadcrumbsItems} />
         </div>
         <button
-          className="border-2  py-2 px-4 rounded-lg border-primaryColor"
+          className="border-2 py-2 px-4 rounded-lg text-primaryColor border-primaryColor"
           onClick={handleAddClick}
         >
           + Add Video
@@ -102,13 +110,22 @@ const TestiComp = () => {
       </div>
 
       {/* Scrollable Video Grid */}
-      <div className="grid grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto">
+      <div
+        className="grid grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto"
+        style={{
+          scrollbarWidth: 'none', // Firefox
+          msOverflowStyle: 'none', // IE and Edge
+        }}
+      >
         {videos.map((video) => (
           <div
             key={video.id}
-            className="rounded-lg overflow-hidden shadow-lg bg-white border border-blue-200"
+            className="relative rounded-lg overflow-hidden shadow-lg bg-white border border-blue-200"
           >
-            <div className="relative">
+            <div
+              className="relative cursor-pointer"
+              onClick={() => handleThumbnailClick(video.id)}
+            >
               {playingVideoId === video.id ? (
                 video.isYouTube ? (
                   <iframe
@@ -118,15 +135,39 @@ const TestiComp = () => {
                     allowFullScreen
                   ></iframe>
                 ) : (
-                  <video className="w-full h-40 object-cover" src={video.src} controls autoPlay />
+                  <video
+                    className="w-full h-40 object-cover"
+                    src={video.src}
+                    controls
+                    autoPlay
+                  />
                 )
               ) : (
                 <img
-                  className="w-full h-40 object-cover cursor-pointer"
+                  className="w-full h-40 object-cover"
                   src={video.thumb}
                   alt="Video Thumbnail"
-                  onClick={() => handleThumbnailClick(video.id)}
                 />
+              )}
+              {/* Pause Icon */}
+              {playingVideoId !== video.id && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative flex items-center justify-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="text-black bg-white p-2 rounded-full"
+                      viewBox="0 0 24 24"
+                      fill=""
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{ width: '2rem', height: '2rem' }} // Increase the icon size
+                    >
+                      <path d="M6 19L17 12L6 5V19Z" />
+                    </svg>
+                  </div>
+                </div>
               )}
               <div className="absolute top-2 right-2 flex space-x-2">
                 <button
@@ -231,6 +272,7 @@ const TestiComp = () => {
                   required
                 />
               </div>
+          
               <div className="mb-4">
                 <label className="block text-gray-700 font-semibold mb-2 text-left">YouTube Link</label>
                 <input
@@ -246,7 +288,7 @@ const TestiComp = () => {
               <div className="flex justify-start space-x-2">
                 <button
                   type="submit"
-                  className="bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600"
+                  className="bg-primaryColor text-white py-2 px-4 rounded-lg hover:bg-primaryColor-900"
                 >
                   {isAdding ? "Add " : "Save Changes"}
                 </button>
