@@ -5,7 +5,6 @@ import Breadcrumbs from "../../components/common/Breadcrumbs";
 import AddModal from "../../components/contentManagement/PreventiveHealthAddModal";
 import DeleteModal from "../../components/common/DeleteModal";
 
-
 const PreventiveHealth = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -61,7 +60,10 @@ const PreventiveHealth = () => {
 
   const breadcrumbsItems = [
     { label: "Content management", href: "/content-management" },
-    { label: "Preventive health", href: "/content-management/preventive-health" },
+    {
+      label: "Preventive health",
+      href: "/content-management/preventive-health",
+    },
   ];
 
   const handleAddClick = () => {
@@ -120,7 +122,11 @@ const PreventiveHealth = () => {
     <div className="h-screen w-full overflow-hidden ">
       <div className="pb-36 overflow-y-auto h-full scrollbar-hide ">
         <div className="flex flex-col mb-6">
-          <h1 className="flex  text-2xl font-bold text-primaryColor lg:hidden">Preventive Health</h1>
+          {/* ----- Mobile view only--------- */}
+          <h1 className="flex  text-2xl font-bold text-primaryColor lg:hidden">
+            Preventive Health
+          </h1>
+          {/* ------------------------------- */}
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
             <div className="flex flex-col lg:flex-row gap-2 lg:gap-5 mt-2 md:mt-0">
