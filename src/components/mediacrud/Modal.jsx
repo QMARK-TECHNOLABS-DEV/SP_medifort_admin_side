@@ -58,3 +58,4 @@ const Modal = ({ isOpen, onClose, onReset, onAdd, fileName, handleFileUpload }) 
 };
 
 export default Modal;
+

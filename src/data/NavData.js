@@ -7,8 +7,26 @@ export const NavData = [
     },
     {
         id: 2,
+        name: "Doctor profile",
+        link: "/doctors",
+        list: []
+    },
+    {
+        id: 3,
         name: "Content Management",
         link: "/content-management",
+        list: []
+    },
+    {
+        id: 4,
+        name: "Testimonials",
+        link: "/testimonials",
+        list: []
+    },
+    {
+        id: 5,
+        name: "Enquiries",
+        link: "/enquiry",
         list: []
     },
     // {

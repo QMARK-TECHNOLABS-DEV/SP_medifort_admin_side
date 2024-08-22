@@ -3,7 +3,8 @@ import { FiSearch } from "react-icons/fi";
 import PreventiveHealthCard from "../../components/contentManagement/PreventiveHealthCard";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import AddModal from "../../components/contentManagement/PreventiveHealthAddModal";
-import DeleteModal from "../../components/contentManagement/PreventiveHealthDeleteModal";
+import DeleteModal from "../../components/common/DeleteModal";
+
 
 const PreventiveHealth = () => {
   const [showAddModal, setShowAddModal] = useState(false);
@@ -117,7 +118,7 @@ const PreventiveHealth = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      <div className="pb-36 overflow-y-auto h-full">
+      <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
         <div className="flex flex-col mb-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />

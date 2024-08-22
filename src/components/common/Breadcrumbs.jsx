@@ -1,12 +1,12 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React from "react";
+import { useLocation } from "react-router-dom";
 
 const Breadcrumbs = ({ items }) => {
   const location = useLocation();
   const currentPath = location.pathname;
 
   return (
-    <nav className="text-sm sm:text-md md:text-lg lg:text-4xl text-gray-500 mb-4">
+    <nav className="text-left text-[#424242] md:font-[350]">
       <ol className="list-none p-0 inline-flex flex-wrap">
         {items.map((item, index) => (
           <li key={index} className="flex items-center">
@@ -14,8 +14,10 @@ const Breadcrumbs = ({ items }) => {
             <a
               href={item.href}
               className={`${
-                currentPath === item.href ? 'text-[#424242] font-semibold' : 'text-gray-500'
-              } hover:text-black`}
+                currentPath === item.href
+                  ? "text-[#424242] font-semibold"
+                  : "text-[#848484]"
+              } hover:text-[#424242] text-xl lg:text-3xl`}
             >
               {item.label}
             </a>

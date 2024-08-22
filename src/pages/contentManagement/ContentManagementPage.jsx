@@ -9,26 +9,27 @@ import content5 from '../../assets/contentManagement/Content 5.jpeg';
 import content6 from '../../assets/contentManagement/Content 6.png';
 import content7 from '../../assets/contentManagement/Content 7.png';
 
+
 const ContentManagementPage = () => {
   const contentItems = [
-    { imageSrc: content1, title: 'Services' },
-    { imageSrc: content2, title: 'Health talk' },
-    { imageSrc: content3, title: 'Core management' },
-    { imageSrc: content4, title: 'News' },
-    { imageSrc: content5, title: 'Gallery' },
-    { imageSrc: content6, title: 'Banners' },
-    { imageSrc: content7, title: 'Our speciality' },
-    { imageSrc: content1, title: 'Doctor case studies' },
-    { imageSrc: content2, title: 'Departments' },
+    { imageSrc: content1, title: 'Services' ,url:"" },
+    { imageSrc: content2, title: 'Health talk',url:"/content-management/health-talk" },
+    { imageSrc: content3, title: 'Core management',url:"" },
+    { imageSrc: content4, title: 'News',url:"/news" },
+    { imageSrc: content5, title: 'Gallery',url:"" },
+    { imageSrc: content6, title: 'Banners',url:"/banner" },
+    { imageSrc: content7, title: 'Our speciality',url:"" },
+    { imageSrc: content1, title: 'Doctor case studies',url:"/casestudies" },
+    { imageSrc: content2, title: 'Departments',url:"/department" },
   ];
 
   return (
     <div className="h-screen w-full overflow-hidden"> 
-      <div className="flex-1 h-full pb-32 overflow-y-auto"> 
-        <h1 className="text-4xl text-left font-semibold mb-6">Content Management</h1>
+      <div className="flex-1 h-full pb-32 overflow-y-auto scrollbar-hide"> 
+        <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Content Management</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"> 
           {contentItems.map((item, index) => (
-            <ContentCard key={index} imageSrc={item.imageSrc} title={item.title} />
+            <ContentCard key={index} imageSrc={item.imageSrc} title={item.title}  url={item.url}  />
           ))}
         </div>
       </div>
