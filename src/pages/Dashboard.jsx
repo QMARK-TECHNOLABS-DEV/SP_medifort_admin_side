@@ -13,6 +13,7 @@ const Dashboard = () => {
             fontWeight: 400, 
             marginRight: '450px', 
             marginLeft: '0',
+            color: '#333333' // Set the text color to grey
           }}
         >
           Welcome, <span className="text-pink-600">SP</span>
