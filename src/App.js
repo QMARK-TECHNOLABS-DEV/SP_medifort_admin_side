@@ -13,9 +13,7 @@ import TestimonialsHomePage from './pages/testimonials/TestimonialsHomePage';
 import TestimonialsPatientContentPage from './pages/testimonialsPatient/TestimonialsPatientContentPage';
 import ContentManagementPage from './pages/contentManagement/ContentManagementPage';
 import PreventiveHealth from './pages/contentManagement/PreventiveHealth';
-
 import Media from './pages/media';
-
 import HealthTalkPage from './pages/healthTalk/HealthTalkPage';
 import ArticlePage from './pages/healthTalk/ArticlePage';
 import NewArticlePage from './pages/healthTalk/NewArticlePage';
@@ -23,7 +21,6 @@ import NewsPage from './pages/news/NewsPage';
 import AddNewsPage from './pages/news/AddNewsPage';
 import TestiComp from './pages/testiComp/TestiComp';
 import LoginPage from './pages/loginPage/LoginPage';
-
 import EnquiryHomePage from './pages/enquiry/EnquiryHomePage';
 import HomeCareEnquiryPage from './pages/enquiry/HomeCareEnquiryPage';
 import ResearchPage from './pages/research/ResearchPage';
