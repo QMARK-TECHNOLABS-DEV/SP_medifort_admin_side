@@ -1,5 +1,6 @@
-import './App.css';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
 
 import Home from './pages/Home';
 import DoctorProfiles from './pages/doctorProfile/DoctorProfiles';
@@ -13,9 +14,7 @@ import TestimonialsHomePage from './pages/testimonials/TestimonialsHomePage';
 import TestimonialsPatientContentPage from './pages/testimonialsPatient/TestimonialsPatientContentPage';
 import ContentManagementPage from './pages/contentManagement/ContentManagementPage';
 import PreventiveHealth from './pages/contentManagement/PreventiveHealth';
-
 import Media from './pages/Media';
-
 import HealthTalkPage from './pages/healthTalk/HealthTalkPage';
 import ArticlePage from './pages/healthTalk/ArticlePage';
 import NewArticlePage from './pages/healthTalk/NewArticlePage';
@@ -23,7 +22,6 @@ import NewsPage from './pages/news/NewsPage';
 import AddNewsPage from './pages/news/AddNewsPage';
 import TestiComp from './pages/testiComp/TestiComp';
 import LoginPage from './pages/loginPage/LoginPage';
-
 import EnquiryHomePage from './pages/enquiry/EnquiryHomePage';
 import HomeCareEnquiryPage from './pages/enquiry/HomeCareEnquiryPage';
 import ResearchPage from './pages/research/ResearchPage';
@@ -36,79 +34,64 @@ import InsuranceEnquiryPage from './pages/enquiry/InsuranceEnquiryPage';
 import ContactUsEnquiryPage from './pages/enquiry/ContactUsEnquiryPage';
 import InternationalPatientEnquiryPage from './pages/enquiry/InternationalPatientEnquiryPage';
 import Gallery from './pages/galleryCrud/GalleryCrud';
-
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          {/*Login Page*/}
+          {/* Login Page */}
           <Route index path='/login' element={<LoginPage />} />
-          <Route  element={<MainLayout />}>
-
+          <Route element={<MainLayout />}>
             {/* Dashboard */}
             <Route exact path='/' element={<Home />} />
-
+            <Route exact path='/dashboard' element={<Dashboard />} />
             {/* Doctor Profile part */}
             <Route path='/doctor-profiles' element={<DoctorProfiles />} />
             <Route path='/doctor-profiles/:id' element={<DoctorDetailedView />} />
             <Route path='/doctors' element={<DoctorsPage />} />
             <Route path='/doctors/doctor-edit' element={<DoctorsEditPage />} />
-
             {/* Testimonials part */}
             <Route path='/testimonials' element={<TestimonialsHomePage />} />
             <Route path='/testimonials/patient' element={<TestimonialsPatientContentPage />} />
             <Route path='/testimonials/video' element={<TestiComp />} />
-
-             {/*Content Management part */}
-            <Route path='/content-management' element={<ContentManagementPage/>} />
-            <Route path='/preventive-health' element={<PreventiveHealth/>} />
-            
-            {/*Department  */}
-            <Route path='/department' element={<DepartmentPage/>} />
-            <Route path='/add-department' element={<AddDepartmentPage/>} />
-
-            {/*Health Talk  */}
+            {/* Content Management part */}
+            <Route path='/content-management' element={<ContentManagementPage />} />
+            <Route path='/preventive-health' element={<PreventiveHealth />} />
+            {/* Department */}
+            <Route path='/department' element={<DepartmentPage />} />
+            <Route path='/add-department' element={<AddDepartmentPage />} />
+            {/* Health Talk */}
             <Route path='/content-management/health-talk' element={<HealthTalkPage />} />
             <Route path='/article' element={<ArticlePage />} />
             <Route path='/new-article' element={<NewArticlePage />} />
             <Route path='/video' element={<VideoPage />} />
-              
-            {/*Research*/}
+            {/* Research */}
             <Route path='/research' element={<ResearchPage />} />
             <Route path='/new-research' element={<NewResarchPage />} />
-            {/*Health Talk part end  */}
-
-            {/*News */}
+            {/* News */}
             <Route path='/news' element={<NewsPage />} />
             <Route path='/new-news' element={<AddNewsPage />} />
-
-
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
-
-            {/*cpntent management media */}
+            {/* Content management media */}
             <Route path='/content-management/media' element={<Media />} />
-
-            {/*Case Studies*/}
+            {/* Case Studies */}
             <Route path='/casestudies' element={<CaseStudyHomePage />} />
-
-
-            {/*Enquiry*/}
+            {/* Enquiry */}
             <Route path='/enquiry' element={<EnquiryHomePage />} />
             <Route path='/enquiry/homecare' element={<HomeCareEnquiryPage />} />
             <Route path='/enquiry/insurance' element={<InsuranceEnquiryPage />} />
             <Route path='/enquiry/contact-us' element={<ContactUsEnquiryPage />} />
             <Route path='/enquiry/international-patient-enquiry' element={<InternationalPatientEnquiryPage />} />
-              
-             {/*Gallery Crud */}
-             <Route path='/gallery' element={<Gallery/>} />
+            {/* Gallery CRUD */}
+            <Route path='/gallery' element={<Gallery />} />
           </Route>
         </Routes>
       </Router>
-    </div >
+    </div>
   );
 }
 
