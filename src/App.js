@@ -14,7 +14,7 @@ import TestimonialsPatientContentPage from './pages/testimonialsPatient/Testimon
 import ContentManagementPage from './pages/contentManagement/ContentManagementPage';
 import PreventiveHealth from './pages/contentManagement/PreventiveHealth';
 
-import Media from './pages/Media';
+import Media from './pages/media';
 
 import HealthTalkPage from './pages/healthTalk/HealthTalkPage';
 import ArticlePage from './pages/healthTalk/ArticlePage';
