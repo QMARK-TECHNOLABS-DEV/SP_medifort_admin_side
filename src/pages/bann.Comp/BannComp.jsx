@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 const AddBanner = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -17,6 +18,10 @@ const AddBanner = () => {
       setErrorMessage(false);
     }
   };
+  const breadcrumbsItems = [
+    { label: "Content management", href: "/content-management" },
+    { label: "Add Banner", href: "/add-banner" },
+  ];
 
   const handleUploadClick = () => {
     fileInputRef.current.click(); // Programmatically trigger the file input click
@@ -29,10 +34,10 @@ const AddBanner = () => {
   };
 
   return (
-    <div className="w-full p-6 relative">
-      <h1 className="text-lg font-semibold text-gray-800 mb-4 text-left">
-        Content management &gt; Add Banner
-      </h1>
+    <div className="w-full relative">
+      <div className="flex items-center space-x-2">
+          <Breadcrumbs items={breadcrumbsItems} />
+        </div>
       
       <div 
         className="border-2 border-dashed border-gray-300 rounded-lg h-48 md:h-72 flex flex-col justify-center items-center bg-gray-50 relative cursor-pointer w-full"
@@ -77,9 +82,9 @@ const AddBanner = () => {
         <div>
           <button 
             onClick={handleUploadClick}
-            className="bg-pink-500 text-white text-sm px-4 py-2 rounded-full hover:bg-pink-600"
+            className="border-primaryColor text-primaryColor text-sm px-4 py-2 mx-4 rounded-xl border-2 "
           >
-            Upload from Computer
+            upload from computer
           </button>
           <button 
             onClick={handleCancelClick}
