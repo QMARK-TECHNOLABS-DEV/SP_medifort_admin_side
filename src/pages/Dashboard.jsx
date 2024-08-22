@@ -16,7 +16,7 @@ const Dashboard = () => {
             color: '#333333' // Set the text color to grey
           }}
         >
-          Welcome, <span className="text-pink-600">SP</span>
+          Welcome, <span className="text-pink-600">SP </span>
         </h1>
       </div>
       <div className="flex-1 flex flex-col min-h-[calc(100%-4rem)]">

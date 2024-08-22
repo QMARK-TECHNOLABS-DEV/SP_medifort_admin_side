@@ -109,7 +109,7 @@ const AtGlance = () => {
           className="bg-pink-200 text-pink-700 font-semibold py-2 px-4 rounded-full hover:bg-pink-300"
           style={buttonStyle}
         >
-          View
+          View 
         </button>
       </div>
     </div>

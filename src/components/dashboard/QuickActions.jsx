@@ -15,7 +15,7 @@ const QuickActions = () => {
   // Define button styles for small screens
   const buttonStyle = isSmallScreen
     ? { width: '100px', height: '70px' } // Increased height for small screens
-    : { width: '140px', height: '80px' };
+    : { width: '140px', height: '80px'  };
 
   return (
     <div className="mt-8 px-4 sm:px-2 max-w-full" style={{ marginLeft: '20px' }}> {/* Adjusted margin */}
