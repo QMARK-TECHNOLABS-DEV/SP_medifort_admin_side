@@ -123,7 +123,7 @@ const PreventiveHealth = () => {
       <div className="pb-36 overflow-y-auto h-full scrollbar-hide ">
         <div className="flex flex-col mb-6">
           {/* ----- Mobile view only--------- */}
-          <h1 className="flex  text-2xl font-bold text-primaryColor lg:hidden">
+          <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
             Preventive Health
           </h1>
           {/* ------------------------------- */}

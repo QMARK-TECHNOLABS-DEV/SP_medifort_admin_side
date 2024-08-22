@@ -7,7 +7,7 @@ import DeleteModal from '../../components/common/DeleteModal';
 
 const breadcrumbsItems = [
     { label: "Health Talk", href: "/health-talk" },
-    { label: "Article", href: "/article" },
+    { label: "Article", href: "/content-management/article" },
 ];
 
 const ArticlePage = () => {
