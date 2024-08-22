@@ -1,26 +1,28 @@
 import React from 'react';
 import ContentCard from '../../components/contentManagement/ContentCards';
 
-import content1 from '../../assets/contentManagement/Content 1.png';
-import content2 from '../../assets/contentManagement/Content 2.jpeg';
-import content3 from '../../assets/contentManagement/Content 3.png';
+import content1 from '../../assets/contentManagement/preventive.jpg';
+import content2 from '../../assets/contentManagement/Healthtalk.png';
+
 import content4 from '../../assets/contentManagement/Content 4.png';
-import content5 from '../../assets/contentManagement/Content 5.jpeg';
+import content5 from '../../assets/contentManagement/Content 1.png';
 import content6 from '../../assets/contentManagement/Content 6.png';
-import content7 from '../../assets/contentManagement/Content 7.png';
+import content7 from '../../assets/contentManagement/mediaa.jpg';
+import content8 from '../../assets/contentManagement/casestudy.jpg';
+import content9 from '../../assets/contentManagement/depart.png';
 
 
 const ContentManagementPage = () => {
   const contentItems = [
-    { imageSrc: content1, title: 'Services' ,url:"" },
+    { imageSrc: content1, title: 'Preventive Health' ,url:"/preventive-health" },
     { imageSrc: content2, title: 'Health talk',url:"/content-management/health-talk" },
-    { imageSrc: content3, title: 'Core management',url:"" },
+
     { imageSrc: content4, title: 'News',url:"/news" },
-    { imageSrc: content5, title: 'Gallery',url:"" },
+    { imageSrc: content5, title: 'Gallery',url:"/gallery" },
     { imageSrc: content6, title: 'Banners',url:"/banner" },
-    { imageSrc: content7, title: 'Our speciality',url:"" },
-    { imageSrc: content1, title: 'Doctor case studies',url:"/casestudies" },
-    { imageSrc: content2, title: 'Departments',url:"/department" },
+    { imageSrc: content7, title: 'Media',url:"/media" },
+    { imageSrc: content8, title: 'Doctor case studies',url:"/casestudies" },
+    { imageSrc: content9, title: 'Departments',url:"/department" },
   ];
 
   return (
