@@ -45,7 +45,7 @@ function App() {
         <Routes>
           {/*Login Page*/}
           <Route index path='/login' element={<LoginPage />} />
-          <Route  element={<MainLayout />}>
+          <Route element={<MainLayout />}>
 
             {/* Dashboard */}
             <Route exact path='/' element={<Home />} />
@@ -61,40 +61,40 @@ function App() {
             <Route path='/testimonials/patient' element={<TestimonialsPatientContentPage />} />
             <Route path='/testimonials/video' element={<TestiComp />} />
 
-             {/*Content Management part */}
-            <Route path='/content-management' element={<ContentManagementPage/>} />
-            <Route path='/preventive-health' element={<PreventiveHealth/>} />
-            
+            {/*Content Management part */}
+            <Route path='/content-management' element={<ContentManagementPage />} />
+            <Route path='/content-management/preventive-health' element={<PreventiveHealth />} />
+
             {/*Department  */}
-            <Route path='/department' element={<DepartmentPage/>} />
-            <Route path='/add-department' element={<AddDepartmentPage/>} />
+            <Route path='/content-management/department' element={<DepartmentPage />} />
+            <Route path='/content-management/department/add-department' element={<AddDepartmentPage />} />
 
             {/*Health Talk  */}
             <Route path='/content-management/health-talk' element={<HealthTalkPage />} />
-            <Route path='/article' element={<ArticlePage />} />
-            <Route path='/new-article' element={<NewArticlePage />} />
-            <Route path='/video' element={<VideoPage />} />
-              
+            <Route path='/content-management/article' element={<ArticlePage />} />
+            <Route path='/content-management/article/new-article' element={<NewArticlePage />} />
+            <Route path='/content-management/video' element={<VideoPage />} />
+
             {/*Research*/}
-            <Route path='/research' element={<ResearchPage />} />
-            <Route path='/new-research' element={<NewResarchPage />} />
-            {/*Health Talk part end  */}
+            <Route path='/content-management/research' element={<ResearchPage />} />
+            <Route path='/content-management/research/new-research' element={<NewResarchPage />} />
 
             {/*News */}
-            <Route path='/news' element={<NewsPage />} />
-            <Route path='/new-news' element={<AddNewsPage />} />
-
+            <Route path='/content-management/news' element={<NewsPage />} />
+            <Route path='/content-management/news/new-news' element={<AddNewsPage />} />
 
             {/* Banner */}
-            <Route path='/banner' element={<BannerCo />} />
-            <Route path='/add-banner' element={<BannComp />} />
+            <Route path='/content-management/banner' element={<BannerCo />} />
+            <Route path='/content-management/banner/add-banner' element={<BannComp />} />
 
-            {/*cpntent management media */}
+            {/*content management media */}
             <Route path='/content-management/media' element={<Media />} />
 
             {/*Case Studies*/}
-            <Route path='/casestudies' element={<CaseStudyHomePage />} />
+            <Route path='/content-management/casestudies' element={<CaseStudyHomePage />} />
 
+            {/*Gallery Crud */}
+            <Route path='/content-management/gallery' element={<Gallery />} />
 
             {/*Enquiry*/}
             <Route path='/enquiry' element={<EnquiryHomePage />} />
@@ -102,9 +102,7 @@ function App() {
             <Route path='/enquiry/insurance' element={<InsuranceEnquiryPage />} />
             <Route path='/enquiry/contact-us' element={<ContactUsEnquiryPage />} />
             <Route path='/enquiry/international-patient-enquiry' element={<InternationalPatientEnquiryPage />} />
-              
-             {/*Gallery Crud */}
-             <Route path='/gallery' element={<Gallery/>} />
+
           </Route>
         </Routes>
       </Router>

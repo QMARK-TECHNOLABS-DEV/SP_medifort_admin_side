@@ -11,7 +11,7 @@ const MainLayout = () => {
         <Navbar />
       </nav>
       <section className="flex w-full">
-        <div className="border-r-2 h-screen p-5 w-1/3">
+        <div className="border-r-2 h-screen p-5 w-1/3 hidden lg:block">
           <Sidebar />
         </div>
         <div className="p-3 lg:p-5 w-full bg-[#F5F5F5] flex flex-col items-start">

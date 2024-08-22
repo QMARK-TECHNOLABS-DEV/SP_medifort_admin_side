@@ -117,19 +117,20 @@ const PreventiveHealth = () => {
   };
 
   return (
-    <div className="h-screen w-full overflow-hidden">
-      <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
+    <div className="h-screen w-full overflow-hidden ">
+      <div className="pb-36 overflow-y-auto h-full scrollbar-hide ">
         <div className="flex flex-col mb-6">
+          <h1 className="flex  text-2xl font-bold text-primaryColor lg:hidden">Preventive Health</h1>
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
-            <div className="flex flex-col lg:flex-row gap-2 lg:gap-5">
-              <div className="relative w-full max-w-xs mt-3 sm:mt-0">
+            <div className="flex flex-col lg:flex-row gap-2 lg:gap-5 mt-2 md:mt-0">
+              <div className="relative w-full lg:max-w-xs mt-3 sm:mt-0">
                 <input
                   type="text"
                   placeholder="Search"
                   className="border rounded-lg p-3 text-sm w-full placeholder:ps-8"
                 />
-                <div className="absolute inset-y-0 left-3 flex items-center ">
+                <div className="absolute inset-y-0 left-3 flex items-center">
                   <FiSearch className="w-5 h-5 text-gray-400" />
                 </div>
               </div>
