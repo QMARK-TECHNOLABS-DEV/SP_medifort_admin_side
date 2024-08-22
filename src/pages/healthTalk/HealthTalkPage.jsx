@@ -8,7 +8,7 @@ import content3 from '../../assets/contentManagement/Content 3.png';
 
 function HealthTalkPage() {
     const contentItems = [
-        { imageSrc: content1, title: 'Article',url:"/article" },
+        { imageSrc: content1, title: 'Article',url:"/content-management/article" },
         { imageSrc: content2, title: 'Video',url:"/video" },
         { imageSrc: content3, title: 'Research',url:"/research" },
        
