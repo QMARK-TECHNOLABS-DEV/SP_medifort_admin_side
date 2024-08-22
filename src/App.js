@@ -13,6 +13,9 @@ import TestimonialsHomePage from './pages/testimonials/TestimonialsHomePage';
 import TestimonialsPatientContentPage from './pages/testimonialsPatient/TestimonialsPatientContentPage';
 import ContentManagementPage from './pages/contentManagement/ContentManagementPage';
 import PreventiveHealth from './pages/contentManagement/PreventiveHealth';
+
+import Media from './pages/Media';
+
 import HealthTalkPage from './pages/healthTalk/HealthTalkPage';
 import ArticlePage from './pages/healthTalk/ArticlePage';
 import NewArticlePage from './pages/healthTalk/NewArticlePage';
@@ -89,8 +92,12 @@ function App() {
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
 
+            {/*cpntent management media */}
+            <Route path='/contentmanagement/media' element={<Media />} />
+
             {/*Case Studies*/}
             <Route path='/casestudies' element={<CaseStudyHomePage />} />
+
 
             {/*Enquiry*/}
             <Route path='/enquiry' element={<EnquiryHomePage />} />
