@@ -46,8 +46,7 @@ function App() {
           <Route element={<MainLayout />}>
 
             {/* Dashboard */}
-            <Route exact path='/' element={<Home />} />
-            <Route exact path='/dashboard' element={<Dashboard />} />
+            <Route exact path='/' element={<Dashboard />} />
               
             {/* Doctor Profile part */}
             <Route path='/doctor-profiles' element={<DoctorProfiles />} />
