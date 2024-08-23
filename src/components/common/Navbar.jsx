@@ -17,10 +17,10 @@ const Navbar = () => {
       </div>
 
       {/*Profile and search option  */}
-      <div className="flex items-center gap-5">
-        <IoIosSearch size={28} />
+      <div className="flex items-center gap-2 lg:gap-5">
+        <IoIosSearch size={28} className="hidden lg:block"/>
         <CgMenuGridR size={28} />
-        <div>
+        <div className="hidden lg:block">
           <img
             src={require("../../assets/nav/bumy1.png")}
             alt="profile"

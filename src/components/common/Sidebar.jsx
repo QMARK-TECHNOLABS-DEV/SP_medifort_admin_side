@@ -6,7 +6,7 @@ const Sidebar = () => {
   const { pathname } = useLocation();
 
   return (
-    <div className="mt-3 mb-20 h-full">
+    <div className="mt-3 mb-20 h-full ">
       <ul className="flex flex-col gap-1 h-full">
         {NavData?.map((item) => {
           const isActive = 
