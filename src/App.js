@@ -1,5 +1,6 @@
-import './App.css';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
 
 import Home from './pages/Home';
 import DoctorProfiles from './pages/doctorProfile/DoctorProfiles';
@@ -33,30 +34,38 @@ import InsuranceEnquiryPage from './pages/enquiry/InsuranceEnquiryPage';
 import ContactUsEnquiryPage from './pages/enquiry/ContactUsEnquiryPage';
 import InternationalPatientEnquiryPage from './pages/enquiry/InternationalPatientEnquiryPage';
 import Gallery from './pages/galleryCrud/GalleryCrud';
-
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          {/*Login Page*/}
+          {/* Login Page */}
           <Route index path='/login' element={<LoginPage />} />
           <Route element={<MainLayout />}>
 
             {/* Dashboard */}
             <Route exact path='/' element={<Home />} />
-
+            <Route exact path='/dashboard' element={<Dashboard />} />
+              
             {/* Doctor Profile part */}
             <Route path='/doctor-profiles' element={<DoctorProfiles />} />
             <Route path='/doctor-profiles/:id' element={<DoctorDetailedView />} />
             <Route path='/doctors' element={<DoctorsPage />} />
             <Route path='/doctors/doctor-edit' element={<DoctorsEditPage />} />
-
+              
             {/* Testimonials part */}
             <Route path='/testimonials' element={<TestimonialsHomePage />} />
             <Route path='/testimonials/patient' element={<TestimonialsPatientContentPage />} />
             <Route path='/testimonials/video' element={<TestiComp />} />
+
+            {/* Banner */}
+            <Route path='/banner' element={<BannerCo />} />
+            <Route path='/add-banner' element={<BannComp />} />
+              
+            {/* Content management media */}
+            <Route path='/content-management/media' element={<Media />} />
 
             {/*Content Management part */}
             <Route path='/content-management' element={<ContentManagementPage />} />
@@ -93,17 +102,19 @@ function App() {
             {/*Gallery Crud */}
             <Route path='/content-management/gallery' element={<Gallery />} />
 
-            {/*Enquiry*/}
             <Route path='/enquiry' element={<EnquiryHomePage />} />
             <Route path='/enquiry/homecare' element={<HomeCareEnquiryPage />} />
             <Route path='/enquiry/insurance' element={<InsuranceEnquiryPage />} />
             <Route path='/enquiry/contact-us' element={<ContactUsEnquiryPage />} />
             <Route path='/enquiry/international-patient-enquiry' element={<InternationalPatientEnquiryPage />} />
+              
+            {/* Gallery CRUD */}
+            <Route path='/gallery' element={<Gallery />} />
 
           </Route>
         </Routes>
       </Router>
-    </div >
+    </div>
   );
 }
 
