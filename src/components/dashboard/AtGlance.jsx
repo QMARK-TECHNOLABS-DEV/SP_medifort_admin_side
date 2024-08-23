@@ -34,8 +34,7 @@ const AtGlance = () => {
         style={{ 
           fontFamily: "'Abhaya Libre', serif", 
           fontWeight: 400,
-          marginRight: '520px',
-          marginLeft: '0',
+          marginLeft: '-360px', // Ensure it starts from the left
         }}
       >
         At a Glance

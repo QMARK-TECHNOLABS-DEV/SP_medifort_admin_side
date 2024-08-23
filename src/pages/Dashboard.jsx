@@ -11,17 +11,21 @@ const Dashboard = () => {
           style={{ 
             fontFamily: "'Abel', sans-serif", 
             fontWeight: 400, 
-            marginRight: '450px', 
-            marginLeft: '0',
+            marginRight: '120px', 
+            marginLeft: '-400px',
             color: '#333333' // Set the text color to grey
           }}
         >
           Welcome, <span className="text-pink-600">SP </span>
         </h1>
       </div>
-      <div className="flex-1 flex flex-col min-h-[calc(100%-4rem)]">
-        <AtGlance />
-        <QuickActions />
+      <div className="flex flex-col lg:flex-row flex-1 min-h-[calc(100%-4rem)] gap-4">
+        <div className="flex-1">
+          <AtGlance />
+        </div>
+        <div className="flex-1 lg:max-w-[30%] lg:ml-4">
+          <QuickActions />
+        </div>
       </div>
     </div>
   );
