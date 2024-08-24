@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import CaseStudyTopPart from '../../components/caseStudies/CaseStudyTopPart';
 import CaseStudyCards from '../../components/caseStudies/CaseStudyCards';
@@ -40,9 +39,14 @@ const CaseStudyHomePage = () => {
   };
 
   return (
-    <div className='w-full'>
-      <CaseStudyTopPart title={'Content management'}/>
-      <section className='mt-5'>
+    <div className="w-full">
+      <CaseStudyTopPart title="Content management" />
+      <section
+        className="mt-5"
+        style={{
+          marginRight: '5px', // Add a smaller right margin to reduce the gap
+        }}
+      >
         <CaseStudyCards caseStudies={caseStudies} onEdit={editCaseStudy} onDelete={deleteCaseStudy} />
       </section>
       {isModalOpen && (
@@ -58,6 +62,3 @@ const CaseStudyHomePage = () => {
 };
 
 export default CaseStudyHomePage;
-
-
-

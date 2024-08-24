@@ -5,7 +5,6 @@ import { HiPencilAlt } from "react-icons/hi";
 import Article1 from "../../assets/article/images.png";
 import { FaTrashAlt } from "react-icons/fa";
 
-
 const NewArticlePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -13,7 +12,6 @@ const NewArticlePage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isEdit, setIsEdit] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [articleItems, setArticleItems] = useState(location.state?.articleItems || []);
 
   useEffect(() => {
@@ -27,11 +25,10 @@ const NewArticlePage = () => {
   }, [location]);
 
   const breadcrumbsItems = [
-    { label: "Health Talk", href: "/health-talk" },
-    { label: isEdit ? "Edit Article" : "New Article", href: "/new-article" },
+    { label: "Health Talk", href: "/content-management/health-talk" },
+    { label: isEdit ? "Update Article" : "New Article", href: "/content-management/article/new-article" },
   ];
 
-  // Handle image upload
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -41,7 +38,7 @@ const NewArticlePage = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     if (!title || !content) {
       alert("Please fill in all required fields.");
       return;
@@ -72,13 +69,16 @@ const NewArticlePage = () => {
     <div className="h-screen w-full overflow-hidden">
       <div className="pb-36 overflow-y-auto h-full px-6 scrollbar-hide">
         <div className="flex flex-col mb-6">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+          <h1 className={`text-2xl font-bold text-primaryColor mb-2 text-left -ml-4 ${isEdit ? '-ml-4 md:-ml-6 lg:-ml-8 -mt-1 md:-mt-2 lg:-mt-1' : ''}`}>
+            {isEdit ? "Update Article" : "New Article"}
+          </h1>
+          <div className={`flex flex-col sm:flex-row sm:justify-between -ml-4 sm:items-center ${isEdit ? '-ml-4 md:-ml-6 lg:-ml-8' : ''}`}>
             <Breadcrumbs items={breadcrumbsItems} />
-            <div className="flex flex-row gap-4 mt-4 sm:mt-0">
+            <div className="flex flex-col sm:flex-row gap-4 mt-4 sm:mt-0">
               <button
                 type="submit"
                 form="article-form"
-                className="py-2 lg:w-[150px] inline-flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+                className="w-full sm:w-auto py-2 lg:w-[150px] inline-flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
               >
                 Save and submit
               </button>
@@ -123,7 +123,7 @@ const NewArticlePage = () => {
                 </label>
                 <input
                   type="text"
-                  className="w-1/2 h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                  className="w-full sm:w-1/2 h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
                   placeholder="Nourishing Recovery Amidst Medical Challenges"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}

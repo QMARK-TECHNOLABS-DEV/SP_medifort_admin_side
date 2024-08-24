@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DeleteModal from '../../components/common/DeleteModal';
 
 const breadcrumbsItems = [
-    { label: "Health Talk", href: "/health-talk" },
+    { label: "Health Talk", href: "/content-management/health-talk" },
     { label: "Article", href: "/content-management/article" },
 ];
 
@@ -42,11 +42,11 @@ const ArticlePage = () => {
   const [selectedArticle, setSelectedArticle] = useState(null);
 
   const handleAddNewClick = () => {
-    navigate('/new-article', { state: { isEdit: false, articleItems } }); 
+    navigate('/content-management/article/new-article', { state: { isEdit: false, articleItems } }); 
   };
 
   const handleEditClick = (article) => {
-    navigate('/new-article', { state: { isEdit: true, article, articleItems } });
+    navigate('/content-management/article/new-article', { state: { isEdit: true, article, articleItems } });
   };
 
   const handleDeleteClick = (article) => {
@@ -71,6 +71,9 @@ const ArticlePage = () => {
         <div className="h-screen w-full overflow-hidden">
           <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
             <div className="flex flex-col ">
+            <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
+          Articles
+        </h1>
               <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center ">
                 <Breadcrumbs items={breadcrumbsItems} />
                 <div className="flex flex-col lg:flex-row gap-2 lg:gap-2 mt-5 lg:mt-0 w-full lg:w-fit">
@@ -83,7 +86,7 @@ const ArticlePage = () => {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
                 {articleItems.map((item, index) => (
                     <CommonCard
                       key={item.id}

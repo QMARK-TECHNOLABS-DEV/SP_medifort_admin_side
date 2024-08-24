@@ -13,6 +13,10 @@ const InternationalPatientEnquiryTop = ({ title, type, onSearchChange }) => {
 
   return (
     <main className="flex flex-col lg:flex-row justify-between my-2 p-3">
+      <h1 className="flex text-2xl font-bold text-primaryColor mt-[-15px] lg:hidden">
+          International Patient Enquiry
+        </h1>
+       
       <Breadcrumbs items={breadcrumbsItems} />
       <div className="relative flex items-end justify-end">
         <input

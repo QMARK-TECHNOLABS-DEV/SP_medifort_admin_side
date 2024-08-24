@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Modal = ({ isOpen, onClose, onReset, onAdd, fileName, handleFileUpload }) => {
+const Modal = ({ isOpen, onClose, onReset, onAdd, fileName, handleFileUpload, isEditing }) => {
   if (!isOpen) return null;
 
   return (
@@ -15,7 +15,9 @@ const Modal = ({ isOpen, onClose, onReset, onAdd, fileName, handleFileUpload }) 
           ×
         </button>
         
-        <h2 className="text-xl font-semibold mb-2 text-left">Add New</h2>
+        <h2 className="text-xl font-semibold mb-2 text-left">
+          {isEditing ? 'Edit Image' : 'Add New'}
+        </h2>
         <p className="text-left text-gray-600 mb-4">Upload image</p>
 
         <div className="file-upload mb-4 flex items-center">
@@ -52,7 +54,7 @@ const Modal = ({ isOpen, onClose, onReset, onAdd, fileName, handleFileUpload }) 
             className="px-4 py-2 border border-pink-300 text-pink-600 rounded-md"
             onClick={onAdd}
           >
-            Add
+            {isEditing ? 'Save' : 'Add'}
           </button>
           <button
             className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md"

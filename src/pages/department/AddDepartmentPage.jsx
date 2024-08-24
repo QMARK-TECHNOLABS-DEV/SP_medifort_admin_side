@@ -29,7 +29,7 @@ const AddDepartmentPage = () => {
     { label: "Content Management", href: "/content-management" },
     {
       label: isEdit ? "Update Department" : "New Department",
-      href: "/add-department",
+      href: "/content-management/department/add-department",
     },
   ];
 
@@ -81,7 +81,6 @@ const AddDepartmentPage = () => {
     setTreatmentAndProcedures(newProcedures);
   };
 
-  // Handling deletion
   const handleRemoveHeading = (headingIndex) => {
     const newProcedures = treatmentAndProcedures.filter(
       (_, index) => index !== headingIndex
@@ -143,6 +142,16 @@ const AddDepartmentPage = () => {
     <div className="h-screen w-full overflow-hidden">
       <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
         <div className="flex flex-col mb-6">
+          {/* Conditionally render the heading based on the edit state */}
+          {!isEdit ? (
+            <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
+              New Department
+            </h1>
+          ) : (
+            <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
+              Update Department
+            </h1>
+          )}
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
             <div className="flex flex-row gap-4 mt-4 sm:mt-0">
@@ -225,7 +234,7 @@ const AddDepartmentPage = () => {
                     <div className="flex items-center gap-2">
                       <input
                         type="text"
-                        className="w-full h-10 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg mb-2"
+                        className="w-full h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
                         placeholder="Add heading"
                         value={item.heading}
                         onChange={(e) =>
@@ -240,8 +249,8 @@ const AddDepartmentPage = () => {
                       />
                       <button
                         type="button"
-                        className="text-red-600"
                         onClick={() => handleRemoveHeading(headingIndex)}
+                        className="text-red-500 hover:text-red-700"
                       >
                         <FaTrashAlt />
                       </button>
@@ -266,76 +275,74 @@ const AddDepartmentPage = () => {
                           />
                           <button
                             type="button"
-                            className="text-red-600"
                             onClick={() =>
                               handleRemoveSection(headingIndex, sectionIndex)
                             }
+                            className="text-red-500 hover:text-red-700"
                           >
                             <FaTrashAlt />
                           </button>
                         </div>
-                        {section.subSections.map(
-                          (subSection, subSectionIndex) => (
-                            <div key={subSectionIndex} className="ml-8 mb-2">
-                              <div className="flex items-center gap-2">
-                                <input
-                                  type="text"
-                                  className="w-full h-10 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                                  placeholder="Add sub-section"
-                                  value={subSection}
-                                  onChange={(e) =>
-                                    handleProcedureChange(
-                                      "subSection",
-                                      headingIndex,
-                                      sectionIndex,
-                                      subSectionIndex,
-                                      e
-                                    )
-                                  }
-                                />
-                                <button
-                                  type="button"
-                                  className="text-red-600"
-                                  onClick={() =>
-                                    handleRemoveSubSection(
-                                      headingIndex,
-                                      sectionIndex,
-                                      subSectionIndex
-                                    )
-                                  }
-                                >
-                                  <FaTrashAlt />
-                                </button>
-                              </div>
+                        {section.subSections.map((subSection, subSectionIndex) => (
+                          <div key={subSectionIndex} className="ml-8 mb-2">
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="text"
+                                className="w-full h-10 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg mb-2"
+                                placeholder="Add subsection"
+                                value={subSection}
+                                onChange={(e) =>
+                                  handleProcedureChange(
+                                    "subSection",
+                                    headingIndex,
+                                    sectionIndex,
+                                    subSectionIndex,
+                                    e
+                                  )
+                                }
+                              />
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleRemoveSubSection(
+                                    headingIndex,
+                                    sectionIndex,
+                                    subSectionIndex
+                                  )
+                                }
+                                className="text-red-500 hover:text-red-700"
+                              >
+                                <FaTrashAlt />
+                              </button>
                             </div>
-                          )
-                        )}
+                          </div>
+                        ))}
                         <button
                           type="button"
-                          className="block w-full text-left text-[#424242] mt-2 ml-8"
                           onClick={() =>
                             handleAddSubSection(headingIndex, sectionIndex)
                           }
+                          className="mt-2 text-primaryColor font-medium"
                         >
-                          + add sub section
+                          Add Subsection
                         </button>
                       </div>
                     ))}
                     <button
                       type="button"
-                      className="block w-full text-left text-[#424242] mt-2 ml-4"
                       onClick={() => handleAddSection(headingIndex)}
+                      className="mt-2 text-primaryColor font-medium"
                     >
-                      + add section
+                      Add Section
                     </button>
                   </div>
                 ))}
                 <button
                   type="button"
-                  className="block w-full text-left text-[#424242] mt-2"
                   onClick={handleAddHeading}
+                  className="mt-2 text-primaryColor font-medium"
                 >
-                  + add heading
+                  Add Heading
                 </button>
               </div>
             </div>

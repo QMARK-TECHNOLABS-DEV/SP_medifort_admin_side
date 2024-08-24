@@ -3,29 +3,29 @@ import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 const DepartmentCard = ({ imageUrl, name, onEditClick, onDeleteClick }) => {
   return (
-    <div className="flex flex-col bg-white border rounded-2xl mt-10 shadow-lg overflow-hidden mx-auto w-full sm:w-[48%] lg:w-full xl:w-[350px]">
-      <div className="relative h-[250px] rounded-t-2xl border-[15px] border-white overflow-hidden">
+    <div className="flex flex-col bg-white border rounded-xl shadow-lg overflow-hidden mx-auto w-full max-w-[300px]"> {/* Adjusted width */}
+      <div className="relative w-full h-[150px] overflow-hidden">
         <img 
           src={imageUrl} 
           alt={name} 
-          className="w-full h-full object-cover rounded-t-2xl" 
+          className="w-full h-full object-cover"
         />
       </div>
-      <div className="p-4 text-left">
-        <h3 className="text-lg font-semibold text-gray-900 mb-1">{name}</h3>
+      <div className="p-4 text-center">
+        <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
       </div>
-      <div className="flex justify-start p-4 space-x-3">
+      <div className="flex items-center justify-start p-4 space-x-2">
         <button
-          className="text-gray-600 bg-white border p-2 rounded-full shadow-md hover:text-blue-600"
+          className="flex items-center justify-center w-8 h-8 border border-gray-300 rounded-full text-gray-600 hover:text-primaryColor" // Edit icon
           onClick={onEditClick}
         >
-          <FaEdit />
+          <FaEdit className="w-4 h-4" />
         </button>
         <button
-          className="text-gray-600 bg-white border p-2 rounded-full shadow-md hover:text-red-600"
+          className="flex items-center justify-center w-8 h-8 border border-gray-300 rounded-full text-gray-600 hover:text-primaryColor" // Delete icon
           onClick={onDeleteClick}
         >
-          <FaTrashAlt />
+          <FaTrashAlt className="w-4 h-4" />
         </button>
       </div>
     </div>

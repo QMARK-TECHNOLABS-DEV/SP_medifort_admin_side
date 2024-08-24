@@ -10,11 +10,15 @@ const CaseStudyTopPart = ({ addNewCaseStudy }) => {
   const handleCloseModal = () => setShowAddNewModal(false);
 
   return (
+    
     <main className="flex flex-col lg:flex-row justify-between">
+      <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden mt-[10px] sm:mt-[-10px]">
+  Case Studies
+</h1>
       <Breadcrumbs
         items={[
           { label: "Content management", href: "/content-management" },
-          { label: "Case Studies", href: "/casestudies" },
+          { label: "Case Studies", href: "/content-management/casestudies" },
         ]}
       />
       <div className="flex items-end ">

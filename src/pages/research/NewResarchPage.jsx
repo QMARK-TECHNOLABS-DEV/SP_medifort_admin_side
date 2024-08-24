@@ -5,7 +5,6 @@ import { HiPencilAlt } from "react-icons/hi";
 import ResearchPlaceholder from "../../assets/article/images.png";
 import { FaTrashAlt } from "react-icons/fa";
 
-
 const NewResearchPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -13,7 +12,6 @@ const NewResearchPage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isEdit, setIsEdit] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [researchItems, setResearchItems] = useState(location.state?.researchItems || []);
 
   useEffect(() => {
@@ -27,11 +25,10 @@ const NewResearchPage = () => {
   }, [location]);
 
   const breadcrumbsItems = [
-    { label: "Health Talk", href: "/health-talk" },
-    { label: isEdit ? "Edit Research" : "New Research", href: "/new-research" },
+    { label: "Health Talk", href: "/content-management/health-talk" },
+    { label: isEdit ? "Update Research" : "New Research", href: "/content-management/research/new-research" },
   ];
 
-  
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -73,20 +70,25 @@ const NewResearchPage = () => {
     <div className="h-screen w-full overflow-hidden">
       <div className="pb-36 overflow-y-auto h-full px-6 scrollbar-hide">
         <div className="flex flex-col mb-6">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-            <Breadcrumbs items={breadcrumbsItems} />
-            <div className="flex flex-col lg:flex-row gap-4 lg:gap-4 mt-4 sm:mt-0">
+          <div className="flex flex-col sm:flex-row sm:justify-between items-start w-full">
+            <div className="flex flex-col w-full -ml-4 sm:w-auto">
+              <h1 className="text-2xl -ml-60 font-bold text-primaryColor lg:hidden">
+                {isEdit ? "Update Research" : "New Research"}
+              </h1>
+              <Breadcrumbs items={breadcrumbsItems} />
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 mt-4 sm:mt-0 w-full sm:w-auto">
               <button
                 type="submit"
                 form="research-form"
-                className="py-2 lg:w-[150px] inline-flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+                className="w-full sm:w-auto py-2 lg:w-[150px] lr:2 inline-flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
               >
                 Save and submit
               </button>
               {isEdit && (
                 <button
                   type="button"
-                  className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+                  className="w-full sm:w-auto py-2 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
                   onClick={() => navigate("/research")}
                 >
                   <FaTrashAlt className="mr-2" />

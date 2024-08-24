@@ -13,6 +13,10 @@ const InsuranceEnquiryTop = ({ title, type, onSearchChange }) => {
 
   return (
     <main className="flex flex-col lg:flex-row justify-between ">
+      <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
+          Insurance
+        </h1>
+       
       <Breadcrumbs items={breadcrumbsItems} />
       <div className="relative flex items-end justify-end">
         <input

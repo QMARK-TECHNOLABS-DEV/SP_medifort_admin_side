@@ -8,7 +8,7 @@ import Testimonials from "../../assets/banners/Testimonials1.png";
 
 const ImageCard = ({ image, label, onDelete }) => {
   return (
-    <div className="relative rounded-lg shadow-md overflow-hidden h-40 w-full ">
+    <div className="relative rounded-lg shadow-md overflow-hidden h-40 w-full">
       <img src={image} alt={label} className="w-full h-full object-cover" />
       <div className="absolute bottom-2 left-2 bg-white text-gray-700 text-sm px-3 py-1 rounded">
         {label}
@@ -44,7 +44,7 @@ const BannerCo = () => {
   ]);
   const breadcrumbsItems = [
     { label: "Content management", href: "/content-management" },
-    { label: "Banner", href: "/banner" },
+    { label: "Banner", href: "/content-management/banner" },
   ];
 
   const navigate = useNavigate();
@@ -54,48 +54,51 @@ const BannerCo = () => {
   };
 
   const handleAddBanner = () => {
-    navigate("/add-banner");
+    navigate("/content-management/banner/add-banner");
   };
 
   return (
-    <div className="p-6 w-full h-screen overflow-hidden">
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center space-x-2">
+    <div className="px-4 pt-4 w-full h-screen overflow-auto relative">
+      {/* Title */}
+      <h1 className="text-2xl font-bold text-primaryColor lg:hidden mb-4 mt-[-15px] text-left lg:ml-[-16px] ml-[-12px]">
+        Banner
+      </h1>
+
+      {/* Breadcrumbs and Button */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mt-[-25px] mb-4">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center space-y-2 lg:space-y-0 space-x-0 lg:space-x-2 mb-2 mt-2 lg:mb-0 text-left lg:ml-[-16px] ml-[-12px]">
           <Breadcrumbs items={breadcrumbsItems} />
         </div>
-
         <button
           onClick={handleAddBanner}
-          className="border-primaryColor text-primaryColor text-sm px-4 py-2 mx-4 rounded-xl border-2"
+          className="border-primaryColor bg-white text-primaryColor text-sm px-4 py-2 rounded-xl border-2 mt-2 w-[calc(100%+20px)] lg:w-auto lg:ml-0 ml-[-10px]"
         >
           + Add Banner
         </button>
       </div>
-      <div className="w-full h-full overflow-hidden relative">
-        <div className="absolute top-0 left-0 right-0 bottom-0 overflow-auto pr-4">
-          <div className="grid grid-cols-1 gap-4 pb-56">
-            {images.map((image) => (
-              <ImageCard
-                key={image.id}
-                image={image.src}
-                label={image.label}
-                onDelete={() => handleDelete(image.id)}
-              />
-            ))}
-          </div>
+
+      {/* Image Grid */}
+      <div className="w-full h-full">
+        <div className="grid grid-cols-1 gap-6 py-2 pb-56">
+          {images.map((image) => (
+            <ImageCard
+              key={image.id}
+              image={image.src}
+              label={image.label}
+              onDelete={() => handleDelete(image.id)}
+            />
+          ))}
         </div>
       </div>
-      {/* Hide scrollbar for WebKit browsers */}
-      <style jsx>{`
-        .overflow-auto::-webkit-scrollbar {
-          width: 0;
-          height: 0;
-        }
-      `}</style>
-      {/* Hide scrollbar for Firefox */}
+
+      {/* Hidden scrollbar styling */}
       <style jsx global>{`
-        .overflow-auto {
-          scrollbar-width: none;
+        body {
+          overflow: auto;
+          scrollbar-width: none; /* Firefox */
+        }
+        ::-webkit-scrollbar {
+          display: none; /* Safari and Chrome */
         }
       `}</style>
     </div>
