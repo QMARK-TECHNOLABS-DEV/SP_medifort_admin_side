@@ -5,7 +5,6 @@ import { HiPencilAlt } from "react-icons/hi";
 import NewsPlaceholder from "../../assets/article/images.png";
 import { FaTrashAlt } from "react-icons/fa";
 
-
 const AddNewsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,11 +26,9 @@ const AddNewsPage = () => {
   }, [location]);
 
   const breadcrumbsItems = [
-    { label: "Health Talk", href: "/health-talk" },
-    { label: isEdit ? "Edit news" : "New news", href: "/new-news" },
+    { label: "Content Management", href: "/content-management" },
+    { label: isEdit ? "Update news" : "New news", href: "/content-management/news/new-news" },
   ];
-
-
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -73,7 +70,10 @@ const AddNewsPage = () => {
   return (
     <div className="h-screen w-full overflow-hidden">
       <div className="pb-36 overflow-y-auto h-full px-6 scrollbar-hide">
-        <div className="flex flex-col mb-6">
+        <div className="flex flex-col -ml-4 mb-6">
+          <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
+            {isEdit ? "Update News" : "New News"}
+          </h1>
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-4 mt-4 sm:mt-0">

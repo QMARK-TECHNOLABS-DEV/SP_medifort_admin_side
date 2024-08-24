@@ -111,7 +111,7 @@ const TestiComp = () => {
 
       {/* Scrollable Video Grid */}
       <div
-        className="grid grid-cols-2 gap-4 max-h-[70vh] overflow-y-auto"
+        className="grid grid-cols-2 gap-6 max-h-[70vh] overflow-y-auto"
         style={{
           scrollbarWidth: 'none', // Firefox
           msOverflowStyle: 'none', // IE and Edge

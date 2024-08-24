@@ -9,7 +9,7 @@ import DeleteModal from '../../components/common/DeleteModal';
 
 const breadcrumbsItems = [
   { label: "Content Management", href: "/content-management" },
-  { label: "News", href: "/news" },
+  { label: "News", href: "/content-management/news" },
 ];
 
 const NewsPage = () => {
@@ -60,11 +60,11 @@ const NewsPage = () => {
   const [selectedNews, setSelectedNews] = useState(null);
 
   const handleAddNewClick = () => {
-    navigate('/new-news', { state: { isEdit: false, newsItems } });
+    navigate('/content-management/news/new-news', { state: { isEdit: false, newsItems } });
   };
 
   const handleEditClick = (news) => {
-    navigate('/new-news', { state: { isEdit: true, news, newsItems } });
+    navigate('/content-management/news/new-news', { state: { isEdit: true, news, newsItems } });
   };
 
   const handleDeleteClick = (news) => {
@@ -87,20 +87,26 @@ const NewsPage = () => {
   return (
     <div className="h-screen w-full overflow-hidden mx-auto">
       <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
-        <div className="flex flex-col">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-            <Breadcrumbs items={breadcrumbsItems} />
-            <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
-              <button
-                className="p-2 px-4 mr-5 lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-                onClick={handleAddNewClick}
-              >
-                + Add new
-              </button>
-            </div>
+        {/* ----- Mobile view only--------- */}
+        <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
+          News
+        </h1>
+        <div className="flex flex-col space-y-2">
+          <Breadcrumbs items={breadcrumbsItems} />
+          <div className="flex justify-between items-center mt-2"> {/* Adjusted margin-top */}
+            <div className="flex flex-col sm:flex-row sm:items-center"></div>
+            <button
+  className="p-2 px-4 w-full sm:w-auto lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg mt-2 sm:mt-[-50px]"
+  onClick={handleAddNewClick}
+>
+  + Add new
+</button>
+
+
+
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-2 py-1px">
           {newsItems.map((item) => (
             <CommonCard
               key={item.id}

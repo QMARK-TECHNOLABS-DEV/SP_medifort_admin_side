@@ -9,7 +9,7 @@ import DeleteModal from "../../components/common/DeleteModal";
 
 const breadcrumbsItems = [
   { label: "Content Management", href: "/content-management" },
-  { label: "Manage Department", href: "/department" },
+  { label: "Manage Department", href: "/content-management/department" },
 ];
 
 const DepartmentPage = () => {
@@ -64,11 +64,11 @@ const DepartmentPage = () => {
   }, [location.state?.updatedDepartments]);
 
   const handleAddNewClick = () => {
-    navigate("/add-department", { state: { isEdit: false, departmentItems } });
+    navigate("/content-management/department/add-department", { state: { isEdit: false, departmentItems } });
   };
 
   const handleEditClick = (department) => {
-    navigate("/add-department", {
+    navigate("/content-management/department/add-department", {
       state: { isEdit: true, department, departmentItems },
     });
   };
@@ -95,21 +95,25 @@ const DepartmentPage = () => {
   return (
     <div className="h-screen w-full overflow-hidden mx-auto">
       <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
-        <div className="flex flex-col ">
+        <div className="flex flex-col">
+          {/* ----- Mobile view only--------- */}
+          <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
+            Departments
+          </h1>
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
             <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
-              <button
-                className="p-2 px-4 mr-5 lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-                onClick={handleAddNewClick}
-              >
-                + Add new
-              </button>
+  <button
+    className="p-2 px-4 mr-5 lg:w-[150px] flex items-center text-primaryColor justify-center bg-white border border-[#9C2677] font-medium rounded-lg mt-2 sm:mt-4 lg:mt-0"
+    onClick={handleAddNewClick}
+  >
+    + Add new
+  </button>
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 lg:gap-5 ">
-          {departmentItems.map((item, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-0 mt-4 p-1">
+          {departmentItems.map((item) => (
             <DepartmentCard
               key={item.id}
               imageUrl={item.imageUrl}

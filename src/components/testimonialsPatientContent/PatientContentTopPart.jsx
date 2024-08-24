@@ -12,7 +12,11 @@ const PatientContentTopPart = () => {
   ];
 
   return (
+    
     <main className="flex flex-col lg:flex-row justify-between ">
+       <h1 className="text-2xl font-bold text-primaryColor lg:hidden mt-[-10px] sm:mt-[-20px] text-left -ml:1">
+        Paitient
+      </h1>
       <Breadcrumbs items={breadcrumbsItems} />
     </main>
   )

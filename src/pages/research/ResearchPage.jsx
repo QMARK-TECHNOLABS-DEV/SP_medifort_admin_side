@@ -9,8 +9,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DeleteModal from '../../components/common/DeleteModal';
 
 const breadcrumbsItems = [
-  { label: "Health Talk", href: "/health-talk" },
-  { label: "Research", href: "/research" },
+  { label: "Health Talk", href: "/content-management/health-talk" },
+  { label: "Research", href: "/content-management/research" },
 ];
 
 const ResearchPage = () => {
@@ -61,11 +61,11 @@ const ResearchPage = () => {
   const [selectedResearch, setSelectedResearch] = useState(null);
 
   const handleAddNewClick = () => {
-    navigate('/new-research', { state: { isEdit: false, researchItems } });
+    navigate('/content-management/research/new-research', { state: { isEdit: false, researchItems } });
   };
 
   const handleEditClick = (research) => {
-    navigate('/new-research', { state: { isEdit: true, research, researchItems } });
+    navigate('/content-management/research/new-research', { state: { isEdit: true, research, researchItems } });
   };
 
   const handleDeleteClick = (research) => {
@@ -89,11 +89,14 @@ const ResearchPage = () => {
     <div className="h-screen w-full overflow-hidden mx-auto">
       <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
         <div className="flex flex-col">
+          <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
+            Research
+          </h1>
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
             <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
               <button
-                className="p-2 px-4 mr-5 lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+                className="w-full sm:w-auto p-2 px-4 lg:w-[150px] flex items-center justify-center bg-white border border-primaryColor text-primaryColor font-medium rounded-lg"
                 onClick={handleAddNewClick}
               >
                 + Add new
@@ -101,7 +104,7 @@ const ResearchPage = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
           {researchItems.map((item) => (
             <CommonCard
               key={item.id}

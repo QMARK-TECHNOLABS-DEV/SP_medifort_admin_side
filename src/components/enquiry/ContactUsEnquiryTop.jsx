@@ -13,6 +13,11 @@ const ContactUsEnquiryTop = ({ title, type, onSearchChange }) => {
 
   return (
     <main className="flex flex-col lg:flex-row justify-between my-2 p-3">
+      <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden mt-[-15px]">
+  Contact us
+</h1>
+
+       
       <Breadcrumbs items={breadcrumbsItems} />
       <div className="relative flex items-end justify-end">
         <input

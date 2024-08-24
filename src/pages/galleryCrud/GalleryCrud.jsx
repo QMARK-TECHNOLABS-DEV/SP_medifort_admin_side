@@ -33,11 +33,11 @@ const Gallery = () => {
   const [imageSize, setImageSize] = useState(0);
   const [showImageModal, setShowImageModal] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
-  const fileInputRef = useRef(null); 
+  const fileInputRef = useRef(null);
 
   const breadcrumbsItems = [
-    { label: "Content Management", href: "content-management" },
-    { label: "Gallery", href: "/gallery" },
+    { label: "Content Management", href: "/content-management" },
+    { label: "Gallery", href: "/content-management/gallery" },
   ];
 
   const handleSelectImage = (index) => {
@@ -82,7 +82,7 @@ const Gallery = () => {
   };
 
   const handleBrowseClick = () => {
-    fileInputRef.current.click(); 
+    fileInputRef.current.click();
   };
 
   const handleViewImage = (src) => {
@@ -102,27 +102,33 @@ const Gallery = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col w-full">
-      <div className="flex justify-between items-center mb-4">
-        <div className="text-lg text-gray-500">
+    <div className="min-h-screen flex flex-col w-full p-4">
+      <h1 className="text-2xl font-bold text-primaryColor lg:hidden mt-[-10px] sm:mt-[-20px] text-left -ml-4">
+        Gallery
+      </h1>
+
+      {/* Header and Button */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 lg:-mt-4 -ml-4">
+        <div className="text-lg text-gray-500 mb-2 sm:mb-0">
           <Breadcrumbs items={breadcrumbsItems} />
         </div>
         <button
           onClick={toggleAddBox}
-          className="border border-primaryColor text-primaryColor px-4 py-2 rounded"
+          className="border border-primaryColor text-primaryColor bg-white px-4 py-2 rounded-xl w-full sm:w-auto mt-2 sm:mt-0 sm:ml-auto"
         >
           + Add new
         </button>
       </div>
+
       {showAddBox && (
         <div className="fixed inset-0 flex items-center justify-center z-10">
           <div className="bg-white p-6 rounded-md shadow-md relative w-80">
             <h2 className="text-lg mb-4 text-left">Add New</h2>
-            
+
             <div className="mb-4">
               <label className="block mb-2 text-sm text-gray-600 text-left">Upload image</label>
               <div className="border border-gray-300 rounded-md p-2 flex items-center justify-between relative">
-                <span 
+                <span
                   className="text-gray-500 cursor-pointer flex items-center"
                   onClick={handleBrowseClick}
                 >
@@ -132,7 +138,7 @@ const Gallery = () => {
                   type="file"
                   onChange={handleImageChange}
                   className="absolute inset-0 opacity-0 cursor-pointer"
-                  ref={fileInputRef} 
+                  ref={fileInputRef}
                 />
               </div>
             </div>
@@ -202,7 +208,7 @@ const Gallery = () => {
           msOverflowStyle: 'none', // IE and Edge
         }}
       >
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-[20px] mt-4">
           {images.map((src, index) => (
             <div
               key={index}
@@ -210,11 +216,12 @@ const Gallery = () => {
               className={`relative border-2 ${
                 selectedImage === index ? "border-blue-400" : "border-transparent"
               } cursor-pointer`}
+              style={{ marginTop: '-5px' }} // Adjust this value to move further down
             >
               <img
                 src={src}
                 alt={`Gallery image ${index + 1}`}
-                className="w-[300px] h-[130px] object-cover"
+                className="w-full h-[130px] object-cover"
                 onClick={() => handleViewImage(src)}
               />
               {index >= initialImages.length && (

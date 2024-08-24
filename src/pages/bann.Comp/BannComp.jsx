@@ -18,9 +18,10 @@ const AddBanner = () => {
       setErrorMessage(false);
     }
   };
+
   const breadcrumbsItems = [
     { label: "Content management", href: "/content-management" },
-    { label: "Add Banner", href: "/add-banner" },
+    { label: "Add Banner", href: "/content-management/banner/add-banner" },
   ];
 
   const handleUploadClick = () => {
@@ -35,13 +36,20 @@ const AddBanner = () => {
 
   return (
     <div className="w-full relative">
+      {/* Title */}
+      <h1 className="text-2xl font-bold text-primaryColor lg:hidden">
+        Add Banner
+      </h1>
+
+      {/* Breadcrumbs */}
       <div className="flex items-center space-x-2">
-          <Breadcrumbs items={breadcrumbsItems} />
-        </div>
-      
+        <Breadcrumbs items={breadcrumbsItems} />
+      </div>
+
+      {/* File Upload Area */}
       <div 
         className="border-2 border-dashed border-gray-300 rounded-lg h-48 md:h-72 flex flex-col justify-center items-center bg-gray-50 relative cursor-pointer w-full"
-        onClick={handleUploadClick} // Trigger file input click when canvas is clicked
+        onClick={handleUploadClick} // Trigger file input click when area is clicked
       >
         {selectedFile ? (
           <img 
@@ -78,13 +86,14 @@ const AddBanner = () => {
         />
       </div>
 
-      <div className="flex items-center justify-between mt-6">
+      {/* Buttons and Info */}
+      <div className="flex items-center justify-between mt-6 hidden lg:flex">
         <div>
           <button 
             onClick={handleUploadClick}
-            className="border-primaryColor text-primaryColor text-sm px-4 py-2 mx-4 rounded-xl border-2 "
+            className="border-primaryColor text-primaryColor text-sm px-4 py-2 mx-4 rounded-xl border-2"
           >
-            upload from computer
+            Upload from computer
           </button>
           <button 
             onClick={handleCancelClick}

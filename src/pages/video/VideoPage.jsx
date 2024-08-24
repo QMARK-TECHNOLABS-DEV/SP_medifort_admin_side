@@ -5,8 +5,8 @@ import AddModal from "../../components/video/AddModal";
 import thumbnail from "../../assets/testimonials/Client.mp4";
 
 const breadcrumbsItems = [
-  { label: "Health Talk", href: "/health-talk" },
-  { label: "Video", href: "/video" },
+  { label: "Health Talk", href: "/content-management/health-talk" },
+  { label: "Video", href: "/content-management/video" },
 ];
 
 const VideoPage = () => {
@@ -87,19 +87,24 @@ const VideoPage = () => {
     <div className="h-screen w-full overflow-hidden">
       <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
         <div className="flex flex-col mb-6">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-            <Breadcrumbs items={breadcrumbsItems} />
-            <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
-              <button
-                className="p-2 px-4 mr-5 lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-                onClick={handleAddNewClick}
-              >
-                + Add video
-              </button>
-            </div>
-          </div>
+        <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
+          Video
+        </h1>
+       
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center px-4px">
+  <Breadcrumbs items={breadcrumbsItems} className="custom-breadcrumbs" />
+  <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
+    <button
+      className="p-2 px-4px mr-5px lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+      onClick={handleAddNewClick}
+    >
+      + Add video
+    </button>
+  </div>
+</div>
+
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-2 md:p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-1">
           {videos.map((video) => (
             <VideoCard
               key={video.id}
