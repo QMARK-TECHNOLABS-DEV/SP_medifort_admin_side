@@ -1,121 +1,78 @@
-
-
 import React, { useState } from 'react';
-import Card from '../components/mediacrud/Card';
-import Modal from '../components/mediacrud/Modal';
-import Breadcrumbs from '../components/common/Breadcrumbs';
-import first from "../assets/media/first.png";
-import second from "../assets/media/second.png";
-import third from "../assets/media/third.png";
+import Card from '../components/mediacrud/Card'; // Ensure this path is correct
+import Modal from '../components/mediacrud/Modal'; // Ensure this path is correct
 
 const Media = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileName, setFileName] = useState('');
-  const [tempImage, setTempImage] = useState(null);
-  const [images, setImages] = useState([first, second, third, second]);
-  const [editIndex, setEditIndex] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
+
+  const images = [
+    '/path/to/first-image.jpg',
+    '/path/to/second-image.jpg',
+    '/path/to/third-image.jpg',
+    '/path/to/fourth-image.jpg',
+  ];
 
   const handleEdit = (index) => {
-    setEditIndex(index);
-    setFileName(images[index]);
-    setTempImage(images[index]);
-    setIsEditing(true);
-    setIsModalOpen(true);
+    console.log('Edit card:', index);
   };
 
   const handleDelete = (index) => {
-    const updatedImages = images.filter((_, i) => i !== index);
-    setImages(updatedImages);
+    console.log('Delete card:', index);
   };
 
   const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFileName(file.name);
-        setTempImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+    setFileName(event.target.files[0]?.name || '');
   };
 
   const resetModal = () => {
-    if (isEditing) {
-      setTempImage(null);
-      setFileName(images[editIndex]);
-    } else {
-      setFileName('');
-      setTempImage(null);
-    }
+    setFileName('');
   };
 
   const handleAdd = () => {
-    if (tempImage) {
-      if (isEditing && editIndex !== null) {
-        const updatedImages = [...images];
-        updatedImages[editIndex] = tempImage;
-        setImages(updatedImages);
-      } else {
-        setImages([...images, tempImage]);
-      }
-    }
-    setIsModalOpen(false);
-    resetModal();
-  };
-
-  const handleCancel = () => {
+    // Add your logic here
     setIsModalOpen(false);
     resetModal();
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)] overflow-hidden p-4">
-      <h1 className="text-2xl font-bold text-primaryColor lg:hidden mb-2 text-left -ml-4 md:-ml-6 lg:-ml-8 -mt-4 md:-mt-2 lg:-mt-1">Media</h1>
-
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 mt-1 -ml-4 md:-ml-6 lg:-ml-8">
-        <div className="flex items-start -mt-2 md:-mt-2 lg:-mt-3 lg:ml-4"> {/* Added lg:ml-4 to move breadcrumbs slightly right */}
-          <Breadcrumbs
-            items={[
-              { href: '/content-management', label: 'Content management' },
-              { href: '/content-management/media', label: 'Media' },
-            ]}
-          />
+    <div className="h-[100vh] overflow-y-auto p-4 scrollbar-none" style={{
+      msOverflowStyle: 'none',  /* IE and Edge */
+      scrollbarWidth: 'none'    /* Firefox */
+    }}>
+      <div className="flex items-center justify-between p-4 border-b">
+        <div className="text-gray-600 text-[35px]">
+          <span>content management</span>
+          <span className="mx-2"></span>
+          <span className="font-semibold">media</span>
         </div>
         <button
-          onClick={() => {
-            setIsEditing(false);
-            setIsModalOpen(true);
-          }}
-          className="w-full sm:w-auto px-3 py-1.5 border border-primaryColor text-primaryColor rounded-md text-sm mt-2 ml-1 shadow-md bg-white"
+          onClick={() => setIsModalOpen(true)}
+          className="px-4 py-2 border border-pink-300 text-pink-600 rounded-md"
         >
           + Add new
         </button>
       </div>
 
-      {/* Content Area with Scrolling */}
-      <div className="flex-grow overflow-y-auto scrollbar-hide">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-          {images.map((imageSrc, index) => (
-            <Card
-              key={index}
-              imageSrc={imageSrc}
-              onEdit={() => handleEdit(index)}
-              onDelete={() => handleDelete(index)}
-            />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        {images.map((imageSrc, index) => (
+          <Card
+            key={index}
+            imageSrc={imageSrc}
+            onEdit={() => handleEdit(index)}
+            onDelete={() => handleDelete(index)}
+          />
+        ))}
       </div>
 
+      {/* Call the Modal component and pass props */}
       <Modal
         isOpen={isModalOpen}
-        onClose={handleCancel}
+        onClose={() => setIsModalOpen(false)}
         onReset={resetModal}
         onAdd={handleAdd}
         fileName={fileName}
         handleFileUpload={handleFileUpload}
-        isEditing={isEditing}
       />
     </div>
   );
