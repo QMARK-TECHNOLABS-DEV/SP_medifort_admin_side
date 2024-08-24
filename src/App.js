@@ -101,6 +101,7 @@ function App() {
             {/*Gallery Crud */}
             <Route path='/content-management/gallery' element={<Gallery />} />
 
+            {/*Enquiry */}
             <Route path='/enquiry' element={<EnquiryHomePage />} />
             <Route path='/enquiry/homecare' element={<HomeCareEnquiryPage />} />
             <Route path='/enquiry/insurance' element={<InsuranceEnquiryPage />} />
