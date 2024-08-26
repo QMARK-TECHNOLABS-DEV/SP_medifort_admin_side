@@ -29,7 +29,7 @@ const QuickActions = () => {
       <h2 
         className="text-2xl mb-4 sm:text-xl md:text-2xl lg:text-3xl" 
         style={{ 
-          fontFamily: "'Abhaya Libre', serif", 
+        
           fontWeight: 400,
         }}
       >
@@ -41,7 +41,7 @@ const QuickActions = () => {
           style={buttonStyle}
         >
           <span className="text-pink-600 text-lg sm:text-lg">+</span> 
-          <span className="text-black text-sm sm:text-sm" style={{ fontFamily: "'Abhaya Libre', serif", fontWeight: 700 }}>
+          <span className="text-black text-sm sm:text-sm" style={{  fontWeight: 700 }}>
             Add Banner
           </span>
         </button>
@@ -50,7 +50,7 @@ const QuickActions = () => {
           style={buttonStyle}
         >
           <span className="text-pink-600 text-lg sm:text-lg">+</span> 
-          <span className="text-black text-sm sm:text-sm" style={{ fontFamily: "'Abhaya Libre', serif", fontWeight: 700 }}>
+          <span className="text-black text-sm sm:text-sm" style={{  fontWeight: 700 }}>
             Add a Doctor
           </span>
         </button>
@@ -59,7 +59,7 @@ const QuickActions = () => {
           style={buttonStyle}
         >
           <span className="text-pink-600 text-lg sm:text-lg">+</span> 
-          <span className="text-black text-sm sm:text-sm" style={{ fontFamily: "'Abhaya Libre', serif", fontWeight: 700 }}>
+          <span className="text-black text-sm sm:text-sm" style={{  fontWeight: 700 }}>
             New Career
           </span>
         </button>

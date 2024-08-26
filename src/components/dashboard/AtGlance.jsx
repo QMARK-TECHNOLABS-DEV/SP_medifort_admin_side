@@ -30,11 +30,11 @@ const AtGlance = () => {
   return (
     <div className="mt-8 px-4">
       <h2 
-        className="text-3xl mb-4" 
+        className="text-3xl mb-4 lg:text-left sm:text-right md:text-right" 
         style={{ 
-          fontFamily: "'Abhaya Libre', serif", 
           fontWeight: 400,
-          marginLeft: '-360px', // Ensure it starts from the left
+          marginRight: isLargeScreen ? '0' : '10px', // Adjust margin to move slightly left for smaller screens
+          color: '#333333' // Set text color
         }}
       >
         At a Glance
@@ -61,7 +61,6 @@ const AtGlance = () => {
           <span 
             className="text-lg" 
             style={{ 
-              fontFamily: "'Abhaya Libre', serif", 
               fontWeight: 700 
             }}
           >
@@ -97,7 +96,6 @@ const AtGlance = () => {
           <span 
             className="text-lg" 
             style={{ 
-              fontFamily: "'Abhaya Libre', serif", 
               fontWeight: 700 
             }}
           >

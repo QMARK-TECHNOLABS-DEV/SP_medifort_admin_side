@@ -7,12 +7,9 @@ const Dashboard = () => {
     <div className="relative h-[60vh] md:h-[50vh] lg:h-[35vh] xl:h-[80vh] overflow-y-auto p-4" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
       <div className="p-4 border-b">
         <h1 
-          className="text-4xl mb-4" 
+          className="text-4xl mb-4 sm:text-right md:text-right lg:text-left sm:mr-[-30px] lg:mr-0 lg:ml-[6px]" 
           style={{ 
-            fontFamily: "'Abel', sans-serif", 
             fontWeight: 400, 
-            marginRight: '120px', 
-            marginLeft: '-400px',
             color: '#333333' // Set the text color to grey
           }}
         >
