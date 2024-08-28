@@ -104,7 +104,8 @@ const DepartmentPage = () => {
             <Breadcrumbs items={breadcrumbsItems} />
             <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
   <button
-    className="p-2 px-4 mr-5 lg:w-[150px] flex items-center text-primaryColor justify-center bg-white border border-[#9C2677] font-medium rounded-lg mt-2 sm:mt-4 lg:mt-0"
+    className="p-2 px-4 mr-1 lg:mr-2 lg:w-[150px] flex items-center text-primaryColor justify-center bg-white border border-[#9C2677] font-medium rounded-lg mt-2 sm:mt-4 lg:mt-0"
+
     onClick={handleAddNewClick}
   >
     + Add new
@@ -112,17 +113,23 @@ const DepartmentPage = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-0 mt-4 p-1">
-          {departmentItems.map((item) => (
-            <DepartmentCard
-              key={item.id}
-              imageUrl={item.imageUrl}
-              name={item.name}
-              onEditClick={() => handleEditClick(item)}
-              onDeleteClick={() => handleDeleteClick(item)}
-            />
-          ))}
-        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 mt-3 gap-x-6  p-1">
+  {departmentItems.map((item) => (
+    <div className="custom-item-spacing ">
+      <DepartmentCard
+        key={item.id}
+        imageUrl={item.imageUrl}
+        name={item.name}
+        onEditClick={() => handleEditClick(item)}
+        onDeleteClick={() => handleDeleteClick(item)}
+      />
+    </div>
+  ))}
+</div>
+
+
+
+
       </div>
       <DeleteModal
         show={showDeleteModal}

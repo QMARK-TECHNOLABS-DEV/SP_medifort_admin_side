@@ -104,7 +104,8 @@ const ResearchPage = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
+        {/* Reduced gap between grid items */}
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-x-6"> {/* Changed gap-6 to gap-4 */}
           {researchItems.map((item) => (
             <CommonCard
               key={item.id}

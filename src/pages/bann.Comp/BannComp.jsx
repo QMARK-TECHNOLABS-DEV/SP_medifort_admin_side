@@ -37,7 +37,7 @@ const AddBanner = () => {
   return (
     <div className="w-full relative">
       {/* Title */}
-      <h1 className="text-2xl font-bold text-primaryColor lg:hidden">
+      <h1 className="text-2xl font-bold text-primaryColor text-left lg:hidden">
         Add Banner
       </h1>
 
