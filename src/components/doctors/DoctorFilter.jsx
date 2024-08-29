@@ -81,7 +81,7 @@ const DoctorFilter = ({ onAddDoctor }) => {
         <button
           onClick={onAddDoctor}
           className="flex items-center border border-primaryColor justify-center gap-2 p-2  
-          lg:w-fit rounded-lg sm:min-w-full xs:min-w-full min-w-full"
+          lg:w-fit rounded-lg sm:w-full xs:min-w-full min-w-full"
         >
           <FaPlus className="text-primaryColor text-xs" />
           <span className="text-sm text-primaryColor">Add a doctor</span>

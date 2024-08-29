@@ -102,7 +102,7 @@ const Gallery = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col w-full p-4">
+    <div className="min-h-screen flex flex-col w-full px-2 py-4"> {/* Reduced padding */}
       <h1 className="text-2xl font-bold text-primaryColor lg:hidden mt-[-10px] sm:mt-[-20px] text-left -ml-4">
         Gallery
       </h1>
@@ -208,7 +208,7 @@ const Gallery = () => {
           msOverflowStyle: 'none', // IE and Edge
         }}
       >
-        <div className="grid grid-cols-3 gap-[20px] mt-4">
+        <div className="grid grid-cols-3 gap-x-5 gap-y-6 mt-4  px-2 py-2 -ml-9 -mr-6"> {/* Reduced gap between grid items */}
           {images.map((src, index) => (
             <div
               key={index}
@@ -216,7 +216,7 @@ const Gallery = () => {
               className={`relative border-2 ${
                 selectedImage === index ? "border-blue-400" : "border-transparent"
               } cursor-pointer`}
-              style={{ marginTop: '-5px' }} // Adjust this value to move further down
+              style={{ marginTop: '-5px' }} // Adjust this value if needed
             >
               <img
                 src={src}

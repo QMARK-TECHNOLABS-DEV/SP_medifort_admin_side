@@ -31,7 +31,7 @@ function HealthTalkPage() {
                         />
                     </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4"> {/* Reduced gap between cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 -ml-4 -mr-4 px-4"> {/* Reduced gap between cards */}
                     {contentItems.map((item, index) => (
                         <ContentCard key={index} imageSrc={item.imageSrc} title={item.title} url={item.url} />
                     ))}

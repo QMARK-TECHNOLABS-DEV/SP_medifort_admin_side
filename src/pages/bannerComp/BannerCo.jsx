@@ -79,7 +79,7 @@ const BannerCo = () => {
 
       {/* Image Grid */}
       <div className="w-full h-full">
-        <div className="grid grid-cols-1 gap-6 py-2 pb-56">
+        <div className="grid grid-cols-1 gap-6 -ml-3 -mr-3 py-2 pb-56">
           {images.map((image) => (
             <ImageCard
               key={image.id}

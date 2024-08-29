@@ -106,7 +106,7 @@ const NewsPage = () => {
 
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-2 py-1px">
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-2px py-1px">
           {newsItems.map((item) => (
             <CommonCard
               key={item.id}
