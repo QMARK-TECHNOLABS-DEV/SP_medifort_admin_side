@@ -97,12 +97,16 @@ const TestiComp = () => {
 
   return (
     <div className="p-6 w-full">
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center space-x-2">
+      <div className="flex flex-col sm:flex-row justify-start items-start sm:justify-between sm:items-center mb-1">
+        <h1 className="text-2xl font-bold text-primaryColor lg:hidden sm:mt-[-20px] ml-[-1.5rem] mt-[-40px] text-left">
+          Video
+        </h1>
+        <div className="mt-1 sm:mt-0 sm:ml-4 flex sm:flex-col ml-[-1.5rem] items-start lg:ml-[-1rem] lg:mt-[-2.5rem]">
           <Breadcrumbs items={breadcrumbsItems} />
         </div>
+
         <button
-          className="border-2 py-2 px-4 rounded-lg text-primaryColor border-primaryColor"
+          className="border-2 py-2 px-4 ml-[-1.5rem] rounded-lg text-primaryColor border-primaryColor mt-1 sm:mt-0 sm:w-auto w-[110%] sm:ml-0 relative lg:top-[-1rem]"
           onClick={handleAddClick}
         >
           + Add Video
@@ -111,10 +115,13 @@ const TestiComp = () => {
 
       {/* Scrollable Video Grid */}
       <div
-        className="grid grid-cols-2 gap-6 max-h-[70vh] overflow-y-auto"
+        className="grid grid-cols-2 gap-6 max-h-[70vh] overflow-y-auto mx-auto mt-6 sm:mt-0" // Added margin-top for smaller screens
         style={{
           scrollbarWidth: 'none', // Firefox
           msOverflowStyle: 'none', // IE and Edge
+          maxWidth: '150%', // Ensure the grid takes up full width
+          marginLeft: '-1.25rem',  // Negative margin to reduce the gap
+          marginRight: '-1.25rem', // Adjust the value as needed
         }}
       >
         {videos.map((video) => (
@@ -204,100 +211,73 @@ const TestiComp = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   >
-                    <path d="M3 6h18" />
-                    <path d="M8 6v-2c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v2" />
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                    <path d="M10 11v6" />
-                    <path d="M14 11v6" />
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-.867 12.142A2 2 0 0116.134 20H7.866a2 2 0 01-1.999-1.858L5 6m5-4h4a2 2 0 012 2v2H8V4a2 2 0 012-2z" />
                   </svg>
                 </button>
               </div>
             </div>
-            <div className="flex justify-between items-center px-4 py-2">
-              <h3 className="font-medium text-md text-left">{video.name}</h3>
-              <p className="text-sm text-gray-500 text-left">{video.date}</p>
+
+            <div className="px-4 py-2">
+              <h3 className="text-lg font-semibold">{video.name}</h3>
+              <p className="text-sm text-gray-600">{video.date}</p>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Modal for Adding/Editing Video */}
+      {/* Add/Edit Modal */}
       {(isAdding || isEditing) && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative overflow-auto max-h-[90vh]">
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              onClick={closeModal}
-            >
-              {/* Close button */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-            <h2 className="text-lg font-semibold mb-4 text-left">
-              {isAdding ? "Add New" : "Edit Video"}
-            </h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-1/2">
+            <h2 className="text-2xl font-bold mb-4">{isAdding ? "Add Video" : "Edit Video"}</h2>
             <form onSubmit={isAdding ? handleAddSubmit : handleEditSubmit}>
               <div className="mb-4">
-                <label className="block text-gray-700 font-semibold mb-2 text-left">Patient Name</label>
+                <label className="block text-gray-700 mb-2">Name</label>
                 <input
                   type="text"
                   name="name"
                   value={newVideo.name}
                   onChange={handleAddChange}
-                  className="w-full px-3 py-2 bg-gray-300 border rounded-md"
-                  placeholder="General health checkup"
+                  className="border border-gray-300 rounded-lg w-full px-4 py-2"
                   required
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 font-semibold mb-2 text-left">Date</label>
+                <label className="block text-gray-700 mb-2">Date</label>
                 <input
                   type="date"
                   name="date"
                   value={newVideo.date}
                   onChange={handleDateChange}
-                  className="w-full bg-gray-300 px-3 py-2 border rounded-md"
+                  className="border border-gray-300 rounded-lg w-full px-4 py-2"
                   required
                 />
               </div>
-          
               <div className="mb-4">
-                <label className="block text-gray-700 font-semibold mb-2 text-left">YouTube Link</label>
+                <label className="block text-gray-700 mb-2">Video URL</label>
                 <input
                   type="text"
                   name="src"
                   value={newVideo.src}
                   onChange={handleAddChange}
-                  className="w-full bg-gray-300 px-3 py-2 border rounded-md"
-                  placeholder="https://www.youtube.com/watch?v="
+                  className="border border-gray-300 rounded-lg w-full px-4 py-2"
                   required
                 />
               </div>
-              <div className="flex justify-start space-x-2">
-                <button
-                  type="submit"
-                  className="bg-primaryColor text-white py-2 px-4 rounded-lg hover:bg-primaryColor-900"
-                >
-                  {isAdding ? "Add " : "Save Changes"}
-                </button>
+              <div className="flex justify-end">
                 <button
                   type="button"
-                  className="bg-gray-300 text-gray-800 py-2 px-4 rounded-lg hover:bg-gray-400"
-                  onClick={resetForm}
+                  className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg mr-2"
+                  onClick={closeModal}
                 >
-                  Reset
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-primaryColor text-white px-4 py-2 rounded-lg"
+                >
+                  {isAdding ? "Add Video" : "Save Changes"}
                 </button>
               </div>
             </form>
