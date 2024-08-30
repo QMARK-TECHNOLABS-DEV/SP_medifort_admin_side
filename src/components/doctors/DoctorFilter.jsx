@@ -77,7 +77,7 @@ const DoctorFilter = ({ onAddDoctor }) => {
         </div>
       </div>
 
-      <div className="flex items-end justify-end">
+      {/* <div className="flex items-end justify-end">
         <button
           onClick={onAddDoctor}
           className="flex items-center border border-primaryColor justify-center gap-2 p-2  
@@ -86,7 +86,7 @@ const DoctorFilter = ({ onAddDoctor }) => {
           <FaPlus className="text-primaryColor text-xs" />
           <span className="text-sm text-primaryColor">Add a doctor</span>
         </button>
-      </div>
+      </div> */}
     </main>
   );
 };
