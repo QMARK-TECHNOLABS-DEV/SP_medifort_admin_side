@@ -3,6 +3,7 @@ export const baseUrl = 'http://localhost:8800'
 // Admin routes
 export const regenerateRoute = '/api/auth/refresh-token';
 export const inquiryRoute = '/api/admin/inquiry';
+export const bannerRoute = '/api/banner';
 
 
 // HMS routes
