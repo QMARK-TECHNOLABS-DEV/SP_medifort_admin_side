@@ -1,10 +1,12 @@
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EnquiryTableFilter from '../../components/enquiry/EnquiryTableFilter';
 import { TableData } from '../../data/TableData';
 import EnquiryTable from '../../components/enquiry/EnquiryTable';
 import ContactUsEnquiryTop from '../../components/enquiry/ContactUsEnquiryTop';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { inquiryRoute } from '../../utils/Endpoint';
 
 const ContactUsEnquiryPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -19,12 +21,34 @@ const ContactUsEnquiryPage = () => {
   };
 
   // Filter and paginate the data
-  const filteredData = TableData.filter(
-    (item) =>
-      item.Name.toLowerCase().includes(searchQuery) ||
-      item.City.toLowerCase().includes(searchQuery) ||
-      item.Service.toLowerCase().includes(searchQuery)
-  );
+  // const filteredData = TableData.filter(
+  //   (item) =>
+  //     item.Name.toLowerCase().includes(searchQuery) ||
+  //     item.City.toLowerCase().includes(searchQuery) ||
+  //     item.Service.toLowerCase().includes(searchQuery)
+  // );
+
+  const [filteredData, setFilteredData] = useState([]);
+
+  const axiosPrivate = useAxiosPrivate()
+
+  const getData = async () => {
+    try {
+      const response = await axiosPrivate.get(`${inquiryRoute}?type=contact`)
+
+      if (response?.status === 200) {
+        console.log(response?.data?.inquiries)
+        setFilteredData(response?.data?.inquiries)
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, [])
 
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,

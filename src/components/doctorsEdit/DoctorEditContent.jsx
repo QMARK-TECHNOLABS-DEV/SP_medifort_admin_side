@@ -32,6 +32,12 @@ const DoctorEditContent = ({data}) => {
               placeholder="" />
           </div>
 
+          <div className="w-[400px] mb-5">
+            <label htmlFor="title" className="block mb-2 text-sm text-black font-medium text-left ">Title</label>
+            <input type="text" id="title" className="bg-[#B0BAC3] bg-opacity-40 w-full border border-gray-300 text-sm rounded-lg block p-2.5 "
+              placeholder="" />
+          </div>
+
 
         </form>
       </div>

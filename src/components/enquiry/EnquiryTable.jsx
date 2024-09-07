@@ -35,11 +35,11 @@ const EnquiryTable = ({data}) => {
           <tbody>
             {data.map((item) => (
               <tr key={item?.id} className=" border-gray-400 bg-white capitalize">
-                <td className="pl-5 p-3 text-left border">{item?.Name}</td>
-                <td className="px-5 p-3 text-left border">{item?.City}</td>
-                <td className="px-5 p-3 text-left border">{item?.Pincode}</td>
-                <td className="px-5 p-3 text-left border">{item?.Service}</td>
-                <td className="px-5 p-3 text-left border">{item?.Contact}</td>
+                <td className="pl-5 p-3 text-left border">{item?.name}</td>
+                <td className="px-5 p-3 text-left border">{item?.city}</td>
+                <td className="px-5 p-3 text-left border">{item?.pin}</td>
+                <td className="px-5 p-3 text-left border">{item?.service}</td>
+                <td className="px-5 p-3 text-left border">{item?.phone}</td>
                 
               </tr>
             ))}

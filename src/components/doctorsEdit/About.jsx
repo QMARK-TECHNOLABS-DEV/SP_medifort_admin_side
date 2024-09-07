@@ -103,7 +103,7 @@ const About = () => {
                 </button>
               </div>
 
-               
+               {/* Add Opd timings input here eg: opd_timings: [{ days: "Mon - Sat", time: "9 am-3 pm" }] */}
 
             </div>
           </form>
