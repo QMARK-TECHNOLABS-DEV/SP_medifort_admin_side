@@ -9,7 +9,7 @@ const AddDepartmentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [image, setImage] = useState(null);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(location?.state?.department?.department_name || "" );
   const [description, setDescription] = useState("");
   const [treatmentAndProcedures, setTreatmentAndProcedures] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
@@ -27,9 +27,10 @@ const AddDepartmentPage = () => {
 
   const breadcrumbsItems = [
     { label: "Content Management", href: "/content-management" },
+  { label: "Manage Department", href: "/content-management/department" },
     {
       label: isEdit ? "Update Department" : "New Department",
-      href: "/content-management/department/add-department",
+      href: "#",
     },
   ];
 
@@ -209,7 +210,7 @@ const AddDepartmentPage = () => {
                   placeholder="Department Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  required
+                  disabled = {isEdit}
                 />
               </div>
               <div>
