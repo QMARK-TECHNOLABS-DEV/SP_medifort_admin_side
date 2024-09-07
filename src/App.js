@@ -52,7 +52,7 @@ function App() {
             <Route path='/doctor-profiles' element={<DoctorProfiles />} />
             <Route path='/doctor-profiles/:id' element={<DoctorDetailedView />} />
             <Route path='/doctors' element={<DoctorsPage />} />
-            <Route path='/doctors/doctor-edit' element={<DoctorsEditPage />} />
+            <Route path='/doctors/edit/:id' element={<DoctorsEditPage />} />
               
             {/* Testimonials part */}
             <Route path='/testimonials' element={<TestimonialsHomePage />} />
