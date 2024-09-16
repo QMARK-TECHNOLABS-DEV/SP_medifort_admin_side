@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const About = () => {
   const [experiences, setExperiences] = useState(['']);
   const [expertises, setExpertises] = useState(['']);
-  const [educations, setEducations] = useState(['']);
 
   const handleExperienceChange = (index, e) => {
     const newExperiences = [...experiences];
@@ -17,12 +16,6 @@ const About = () => {
     setExpertises(newExpertises);
   };
 
-  const handleEducationChange = (index, e) => {
-    const newEducations = [...educations];
-    newEducations[index] = e.target.value;
-    setEducations(newEducations);
-  };
-
   const handleExperienceSubmit = () => {
     setExperiences([...experiences, '']);
   };
@@ -31,9 +24,6 @@ const About = () => {
     setExpertises([...expertises, '']);
   };
 
-  const handleEducationSubmit = () => {
-    setEducations([...educations, '']);
-  };
 
   return (
     <div
@@ -55,12 +45,10 @@ const About = () => {
       >
         <div className="mb-8">
           <h1 className="text-left mb-2">About</h1>
-          <p className="bg-[#B0BAC3] bg-opacity-40 p-6 rounded-lg text-justify text-sm">
-            Dr Cherian M Thomas is an experienced orthopaedic surgeon in Mumbai, with over<br />
-            32 years of experience overall. He specialises in hip and knee replacement surgeries,<br />
-            foot injury treatment, and lower extremity wound care. His extensive experience has<br />
-            made him one of the best orthopaedic surgeons in Mumbai.
-          </p>
+          <textarea
+          rows={6}
+          className="w-full max-h-[200px] bg-[#B0BAC3] bg-opacity-40 p-6 rounded-lg text-justify text-sm overflow-y-scroll " />
+           
         </div>
         <div>
           <form className="flex flex-wrap gap-8">
@@ -75,7 +63,7 @@ const About = () => {
                     <input
                       type="text"
                       className="bg-[#B0BAC3] bg-opacity-40 w-full border border-gray-300 text-sm rounded-lg p-2.5 mb-2"
-                      placeholder={index === 0 ? '32 years' : 'Enter new experience'}
+                      placeholder='Enter new experience'
                       value={exp}
                       onChange={(e) => handleExperienceChange(index, e)}
                     />
@@ -90,31 +78,6 @@ const About = () => {
                 </button>
               </div>
 
-              {/* Education Section */}
-              <div className="mb-5">
-                <label htmlFor="education" className="block mb-2 text-sm font-medium text-left">
-                  Education
-                </label>
-                {educations.map((edu, index) => (
-                  <div key={index} className="mb-2">
-                    <input
-                      type="text"
-                      className="bg-[#B0BAC3] bg-opacity-40 w-full border border-gray-300 text-sm rounded-lg p-2.5 mb-2"
-                      placeholder={index === 0 ? 'MBBS, MS (Gen. Surgery), FMAS' : 'Enter new education'}
-                      value={edu}
-                      onChange={(e) => handleEducationChange(index, e)}
-                    />
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={handleEducationSubmit}
-                  className="text-xs text-blue-500 hover:underline"
-                >
-                  Add education
-                </button>
-              </div>
-
               {/* Expertise Section */}
               <div className="mb-5">
                 <label htmlFor="expertise" className="block mb-2 text-sm font-medium text-left">
@@ -125,7 +88,7 @@ const About = () => {
                     <input
                       type="text"
                       className="bg-[#B0BAC3] bg-opacity-40 w-full border border-gray-300 text-sm rounded-lg p-2.5 mb-2"
-                      placeholder={index === 0 ? 'Hip and knee replacement surgeries' : 'Enter new expertise'}
+                      placeholder='Enter new expertise'
                       value={exp}
                       onChange={(e) => handleExpertiseChange(index, e)}
                     />
@@ -139,6 +102,9 @@ const About = () => {
                   Add expertise
                 </button>
               </div>
+
+               {/* Add Opd timings input here eg: opd_timings: [{ days: "Mon - Sat", time: "9 am-3 pm" }] */}
+
             </div>
           </form>
         </div>

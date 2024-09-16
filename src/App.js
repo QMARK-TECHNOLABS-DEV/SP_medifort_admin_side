@@ -52,7 +52,7 @@ function App() {
             <Route path='/doctor-profiles' element={<DoctorProfiles />} />
             <Route path='/doctor-profiles/:id' element={<DoctorDetailedView />} />
             <Route path='/doctors' element={<DoctorsPage />} />
-            <Route path='/doctors/doctor-edit' element={<DoctorsEditPage />} />
+            <Route path='/doctors/edit/:id' element={<DoctorsEditPage />} />
               
             {/* Testimonials part */}
             <Route path='/testimonials' element={<TestimonialsHomePage />} />
@@ -72,7 +72,8 @@ function App() {
 
             {/*Department  */}
             <Route path='/content-management/department' element={<DepartmentPage />} />
-            <Route path='/content-management/department/add-department' element={<AddDepartmentPage />} />
+            <Route path='/content-management/department/add' element={<AddDepartmentPage />} />
+            <Route path='/content-management/department/edit/:id' element={<AddDepartmentPage />} />
 
             {/*Health Talk  */}
             <Route path='/content-management/health-talk' element={<HealthTalkPage />} />

@@ -1,19 +1,19 @@
 import React from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
-const DepartmentCard = ({ imageUrl, name, onEditClick, onDeleteClick }) => {
+const DepartmentCard = ({ data, onEditClick, onDeleteClick }) => {
   return (
-    <div className="relative flex flex-col bg-white border rounded-xl shadow-lg overflow-hidden mx-auto w-full max-w-[450px]">
+    <div className="relative flex flex-col bg-white rounded-xl shadow-lg overflow-hidden mx-auto w-full max-w-[450px]">
       <div className="relative w-full h-[150px] overflow-hidden">
         <img 
-          src={imageUrl} 
-          alt={name} 
+          src={ `/img_not_available.png`} 
+          alt="Image"
           className="w-full h-full object-cover"
         />
       </div>
       <div className="flex flex-col justify-between h-full">
         <div className="p-4 text-right">
-          <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
+          <h3 className="text-sm font-semibold text-gray-800">{data?.department_name}</h3>
         </div>
         <div className="absolute bottom-4 left-4 flex items-center space-x-2"> {/* Icons positioned at the bottom */}
           <button
