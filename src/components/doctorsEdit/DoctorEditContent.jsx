@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FiEdit } from "react-icons/fi";
 
-const DoctorEditContent = ({data}) => {
+
+const DoctorEditContent = ({  updateObj, handleChange }) => {
+  
+
   return (
     <div className='p-4 w-full'>
       <div className='flex flex-col md:flex-row gap-4 md:ml-4 lg:ml-0 sm:flex-col h-full overflow-hidden'>
@@ -17,24 +20,34 @@ const DoctorEditContent = ({data}) => {
           <div className="w-[400px] mb-5">
             <label htmlFor="name" className="block mb-2 text-sm text-black font-medium text-left ">Name</label>
             <input type="text" id="name" className="bg-[#B0BAC3] bg-opacity-40 w-full border border-gray-300 text-sm rounded-lg p-2.5 "
-              value={data?.doctor_name}  disabled />
+              value={updateObj?.doctor_name} disabled />
           </div>
 
           <div className="w-[400px] mb-5">
             <label htmlFor="department" className="block mb-2 text-black text-sm font-medium text-left">Department</label>
             <input type="text" id="name" className="bg-[#B0BAC3] bg-opacity-40 w-full border border-gray-300 text-sm rounded-lg p-2.5 "
-              value={data?.department_name}  disabled />
+              value={updateObj?.department_name} disabled />
           </div>
 
           <div className="w-[400px] mb-5">
             <label htmlFor="qualification" className="block mb-2 text-sm text-black font-medium text-left ">Qualification</label>
-            <input type="text" id="qualification" className="bg-[#B0BAC3] bg-opacity-40 w-full border border-gray-300 text-sm rounded-lg block p-2.5 "
+            <input type="text"
+              id="qualification"
+              name="qualification"
+              value={updateObj?.qualification}
+              onChange={handleChange}
+              className="bg-[#B0BAC3] bg-opacity-40 w-full border border-gray-300 text-sm rounded-lg block p-2.5 "
               placeholder="" />
           </div>
 
           <div className="w-[400px] mb-5">
             <label htmlFor="title" className="block mb-2 text-sm text-black font-medium text-left ">Title</label>
-            <input type="text" id="title" className="bg-[#B0BAC3] bg-opacity-40 w-full border border-gray-300 text-sm rounded-lg block p-2.5 "
+            <input type="text"
+              id="title"
+              name="title"
+              value={updateObj?.title}
+              onChange={handleChange}
+              className="bg-[#B0BAC3] bg-opacity-40 w-full border border-gray-300 text-sm rounded-lg block p-2.5 "
               placeholder="" />
           </div>
 

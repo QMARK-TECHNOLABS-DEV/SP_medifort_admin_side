@@ -3,10 +3,12 @@ import TopPart from "../../components/doctors/TopPart";
 import DoctorFilter from "../../components/doctors/DoctorFilter";
 import DoctorsPhotos from "../../components/doctors/DoctorsPhotos";
 import axios from "../../axios-folder/axios";
-import { doc_in_dept_route } from "../../utils/Endpoint";
+import { doc_in_dept_route, doctor_admin_route } from "../../utils/Endpoint";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const DoctorHomePage = () => {
   const [doctors, setDoctors] = useState([]);
+  const axiosPrivate = useAxiosPrivate()
 
   const addNewDoctor = () => {
     const newDoctor = {
@@ -21,16 +23,12 @@ const DoctorHomePage = () => {
 
   const getData = async()=>{
     try {
-      const deptId = "";
-
-      const response = await axios.post(doc_in_dept_route, {
-         "doctor_list": { "department": deptId } 
-      })
+      const response = await axiosPrivate.get(doctor_admin_route)
 
       console.log(response.data);
 
-      if(response?.data?.status === 'success'){
-        const data = response.data.data;
+      if(response?.status === 200){
+        const data = response.data.result;
         setDoctors(data)
       }
 
