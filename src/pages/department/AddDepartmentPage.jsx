@@ -63,22 +63,44 @@ const AddDepartmentPage = () => {
   ];
 
   const handleAddHeading = () => {
-    setTreatmentAndProcedures([
-      ...treatmentAndProcedures,
-      { heading: "", sections: [] },
-    ]);
+    // setTreatmentAndProcedures([
+    //   ...treatmentAndProcedures,
+    //   { heading: "", sections: [] },
+    // ]);
+
+    setUpdateObj((prev)=>({
+      ...prev,
+      treatments: [
+        ...updateObj.treatments,
+        { heading: "", sections: [] },
+      ]
+    }))
   };
 
   const handleAddSection = (headingIndex) => {
-    const newProcedures = [...treatmentAndProcedures];
+    // const newProcedures = [...treatmentAndProcedures];
+    const newProcedures = [...updateObj.treatments];
+
     newProcedures[headingIndex].sections.push({ section: "", subSections: [] });
-    setTreatmentAndProcedures(newProcedures);
+    // setTreatmentAndProcedures(newProcedures);
+
+    setUpdateObj((prev)=>({
+      ...prev,
+      treatments: newProcedures
+    }))
   };
 
   const handleAddSubSection = (headingIndex, sectionIndex) => {
-    const newProcedures = [...treatmentAndProcedures];
+    // const newProcedures = [...treatmentAndProcedures];
+    const newProcedures = [...updateObj.treatments];
+
     newProcedures[headingIndex].sections[sectionIndex].subSections.push("");
-    setTreatmentAndProcedures(newProcedures);
+    // setTreatmentAndProcedures(newProcedures);
+
+    setUpdateObj((prev)=>({
+      ...prev,
+      treatments: newProcedures
+    }))
   };
 
   const handleProcedureChange = (
@@ -88,7 +110,9 @@ const AddDepartmentPage = () => {
     subSectionIndex,
     event
   ) => {
-    const newProcedures = [...treatmentAndProcedures];
+    // const newProcedures = [...treatmentAndProcedures];
+    const newProcedures = [...updateObj?.treatments];
+
     if (type === "heading") {
       newProcedures[headingIndex].heading = event.target.value;
     } else if (type === "section") {
@@ -99,22 +123,46 @@ const AddDepartmentPage = () => {
         subSectionIndex
       ] = event.target.value;
     }
-    setTreatmentAndProcedures(newProcedures);
+
+    // setTreatmentAndProcedures(newProcedures);
+
+    setUpdateObj((prev)=>({
+      ...prev,
+      treatments: newProcedures
+    }))
   };
 
   const handleRemoveHeading = (headingIndex) => {
-    const newProcedures = treatmentAndProcedures.filter(
+    // const newProcedures = treatmentAndProcedures.filter(
+    //   (_, index) => index !== headingIndex
+    // );
+
+    const newProcedures = updateObj?.treatments?.filter(
       (_, index) => index !== headingIndex
     );
-    setTreatmentAndProcedures(newProcedures);
+
+    // setTreatmentAndProcedures(newProcedures);
+
+    setUpdateObj((prev)=>({
+      ...prev,
+      treatments: newProcedures
+    }))
   };
 
   const handleRemoveSection = (headingIndex, sectionIndex) => {
-    const newProcedures = [...treatmentAndProcedures];
+    // const newProcedures = [...treatmentAndProcedures];
+    const newProcedures = [...updateObj?.treatments];
+
     newProcedures[headingIndex].sections = newProcedures[
       headingIndex
     ].sections.filter((_, index) => index !== sectionIndex);
-    setTreatmentAndProcedures(newProcedures);
+
+    // setTreatmentAndProcedures(newProcedures);
+
+    setUpdateObj((prev)=>({
+      ...prev,
+      treatments: newProcedures
+    }))
   };
 
   const handleRemoveSubSection = (
@@ -122,12 +170,20 @@ const AddDepartmentPage = () => {
     sectionIndex,
     subSectionIndex
   ) => {
-    const newProcedures = [...treatmentAndProcedures];
+    // const newProcedures = [...treatmentAndProcedures];
+    const newProcedures = [...updateObj?.treatments];
+
     newProcedures[headingIndex].sections[sectionIndex].subSections =
       newProcedures[headingIndex].sections[sectionIndex].subSections.filter(
         (_, index) => index !== subSectionIndex
       );
-    setTreatmentAndProcedures(newProcedures);
+
+    // setTreatmentAndProcedures(newProcedures);
+
+    setUpdateObj((prev)=>({
+      ...prev,
+      treatments: newProcedures
+    }))
   };
 
   
@@ -296,7 +352,7 @@ const AddDepartmentPage = () => {
                 <label className="block text-sm text-left font-medium text-gray-700 mb-2">
                   Treatment and procedure
                 </label>
-                {treatmentAndProcedures.map((item, headingIndex) => (
+                {updateObj?.treatments?.map((item, headingIndex) => (
                   <div key={headingIndex} className="mb-4">
                     <div className="flex items-center gap-2">
                       <input
