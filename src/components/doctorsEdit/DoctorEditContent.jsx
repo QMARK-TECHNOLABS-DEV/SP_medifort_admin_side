@@ -1,20 +1,69 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { FiEdit } from "react-icons/fi";
+import axios from '../../axios-folder/axios';
+import { uploadRoute } from '../../utils/Endpoint';
 
 
-const DoctorEditContent = ({  updateObj, handleChange }) => {
-  
+const DoctorEditContent = ({ updateObj, setUpdateObj, handleChange }) => {
+  const fileInputRef = useRef()
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+
+    try {
+      const formdata = new FormData();
+
+      formdata.append('file', file);
+
+      const response = await axios.post(uploadRoute, formdata)
+
+      if (response.status === 200) {
+        setUpdateObj((prev) => ({
+          ...prev,
+          image: response?.data?.file
+        }))
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className='p-4 w-full'>
       <div className='flex flex-col md:flex-row gap-4 md:ml-4 lg:ml-0 sm:flex-col h-full overflow-hidden'>
         <div className="relative inline-block w-full md:w-auto -mt-1 sm:mt-1 lg:mt-0"> {/* Adjusted margin-top */}
-          <img
-            src='/avatar.png'
-            className="w-full md:w-[360px] lg:w-[400px] xl:w-[500px]"
-            alt="Doctor"
+
+          {
+            updateObj?.image?.location
+              ?
+              <img
+                src={updateObj?.image?.location}
+                className="w-full md:w-[360px] lg:w-[400px] xl:w-[500px]"
+                alt="Doctor"
+              />
+              :
+              <img
+                src='/avatar.png'
+                className="w-full md:w-[360px] lg:w-[400px] xl:w-[500px]"
+                alt="Doctor"
+              />
+          }
+          <FiEdit
+            size={50}
+            color='#777'
+            onClick={() => fileInputRef.current.click()}
+            className='absolute inset-0 m-auto text-white cursor-pointer'
           />
-          <FiEdit className='absolute inset-0 m-auto text-white' size={50} />
+
+          <input
+            id='fileUploader'
+            type='file'
+            ref={fileInputRef}
+            className='hidden'
+            onChange={handleFileChange}
+          />
+
         </div>
         <form className="max-w-lg mx-auto">
           <div className="w-[400px] mb-5">

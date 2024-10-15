@@ -76,7 +76,7 @@ const DoctorsEditPage = () => {
       <div className='h-full w-full overflow-auto scrollbar-hide'>
         <DoctorsEditTop type={{ name: "search" }} updateObj={updateObj} submitHandler={submitHandler} />
         <section className='mt-10 w-full'>
-          <DoctorEditContent updateObj={updateObj} handleChange={handleChange} />
+          <DoctorEditContent updateObj={updateObj} setUpdateObj={setUpdateObj} handleChange={handleChange} />
         </section>
         <section>
           <About updateObj={updateObj} setUpdateObj={setUpdateObj} handleChange={handleChange} />

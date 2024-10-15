@@ -15,3 +15,5 @@ export const list_departments = '/list-departments';
 
 export const doctor_admin_route = "/api/admin/doctor"
 
+export const uploadRoute = '/api/uploads'
+
