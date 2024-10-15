@@ -14,6 +14,7 @@ export const list_departments = '/list-departments';
 // Admin routes
 
 export const doctor_admin_route = "/api/admin/doctor"
+export const department_admin_route = "/api/admin/department"
 
 export const uploadRoute = '/api/uploads'
 

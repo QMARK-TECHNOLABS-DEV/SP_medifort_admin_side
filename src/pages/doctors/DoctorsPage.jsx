@@ -8,6 +8,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const DoctorHomePage = () => {
   const [doctors, setDoctors] = useState([]);
+  const [search, setSearch] = useState('')
   const axiosPrivate = useAxiosPrivate()
 
   const addNewDoctor = () => {
@@ -21,13 +22,13 @@ const DoctorHomePage = () => {
     setDoctors([...doctors, newDoctor]);
   };
 
-  const getData = async()=>{
+  const getData = async () => {
     try {
-      const response = await axiosPrivate.get(doctor_admin_route)
+      const response = await axiosPrivate.get(`${doctor_admin_route}?search=${search}`)
 
       console.log(response.data);
 
-      if(response?.status === 200){
+      if (response?.status === 200) {
         const data = response.data.result;
         setDoctors(data)
       }
@@ -37,14 +38,14 @@ const DoctorHomePage = () => {
     }
   }
 
-  useEffect(()=>{
-getData();
-  },[])
+  useEffect(() => {
+    getData();
+  }, [search])
 
   return (
     <div>
       <header>
-         <TopPart title={"Doctor profile"} type={{ name: "search" }} />
+        <TopPart title={"Doctor profile"} type={{ name: "search" }} setSearch={setSearch} />
       </header>
       <DoctorFilter onAddDoctor={addNewDoctor} />
       <DoctorsPhotos data={doctors} />

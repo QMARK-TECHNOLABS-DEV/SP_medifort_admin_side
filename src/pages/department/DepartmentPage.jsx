@@ -7,7 +7,7 @@ import departmentimg3 from "../../assets/department/Department3.jpeg";
 import { useLocation, useNavigate } from "react-router-dom";
 import DeleteModal from "../../components/common/DeleteModal";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { list_departments } from "../../utils/Endpoint";
+import { department_admin_route, list_departments } from "../../utils/Endpoint";
 
 const breadcrumbsItems = [
   { label: "Content Management", href: "/content-management" },
@@ -33,7 +33,7 @@ const DepartmentPage = () => {
   };
 
   const handleEditClick = (department) => {
-    navigate(`/content-management/department/edit/${department?.id}`, {
+    navigate(`/content-management/department/edit/${department?.dept_id}`, {
       state: { isEdit: true, department, departmentItems },
     });
   };
@@ -61,10 +61,10 @@ const DepartmentPage = () => {
 
   const getData = async () => {
     try {
-      const response = await axiosPrivate.get(list_departments)
-      if (response?.data?.status === "success") {
-        console.log(response?.data?.data)
-        setDepartmentItems(response?.data?.data)
+      const response = await axiosPrivate.get(department_admin_route)
+      if (response?.status === 200) {
+        const depts = response?.data?.result
+        setDepartmentItems(depts)
       }
     } catch (error) {
       console.log(error)
