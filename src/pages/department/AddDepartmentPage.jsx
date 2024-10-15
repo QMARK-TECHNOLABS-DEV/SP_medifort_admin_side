@@ -11,8 +11,6 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const AddDepartmentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const [treatmentAndProcedures, setTreatmentAndProcedures] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const axiosPrivate= useAxiosPrivate();
 
@@ -37,7 +35,7 @@ const AddDepartmentPage = () => {
           dept_name: department.dept_name,
           description: department.description,
           banner: department?.banner,
-          treatments: department?.treatments
+          treatments: department?.treatments || [],
         })
       }
     } catch (error) {
@@ -63,10 +61,6 @@ const AddDepartmentPage = () => {
   ];
 
   const handleAddHeading = () => {
-    // setTreatmentAndProcedures([
-    //   ...treatmentAndProcedures,
-    //   { heading: "", sections: [] },
-    // ]);
 
     setUpdateObj((prev)=>({
       ...prev,
@@ -78,11 +72,9 @@ const AddDepartmentPage = () => {
   };
 
   const handleAddSection = (headingIndex) => {
-    // const newProcedures = [...treatmentAndProcedures];
     const newProcedures = [...updateObj.treatments];
 
     newProcedures[headingIndex].sections.push({ section: "", subSections: [] });
-    // setTreatmentAndProcedures(newProcedures);
 
     setUpdateObj((prev)=>({
       ...prev,
@@ -91,11 +83,9 @@ const AddDepartmentPage = () => {
   };
 
   const handleAddSubSection = (headingIndex, sectionIndex) => {
-    // const newProcedures = [...treatmentAndProcedures];
     const newProcedures = [...updateObj.treatments];
 
     newProcedures[headingIndex].sections[sectionIndex].subSections.push("");
-    // setTreatmentAndProcedures(newProcedures);
 
     setUpdateObj((prev)=>({
       ...prev,
@@ -110,7 +100,6 @@ const AddDepartmentPage = () => {
     subSectionIndex,
     event
   ) => {
-    // const newProcedures = [...treatmentAndProcedures];
     const newProcedures = [...updateObj?.treatments];
 
     if (type === "heading") {
@@ -124,8 +113,6 @@ const AddDepartmentPage = () => {
       ] = event.target.value;
     }
 
-    // setTreatmentAndProcedures(newProcedures);
-
     setUpdateObj((prev)=>({
       ...prev,
       treatments: newProcedures
@@ -133,15 +120,10 @@ const AddDepartmentPage = () => {
   };
 
   const handleRemoveHeading = (headingIndex) => {
-    // const newProcedures = treatmentAndProcedures.filter(
-    //   (_, index) => index !== headingIndex
-    // );
 
     const newProcedures = updateObj?.treatments?.filter(
       (_, index) => index !== headingIndex
     );
-
-    // setTreatmentAndProcedures(newProcedures);
 
     setUpdateObj((prev)=>({
       ...prev,
@@ -150,14 +132,11 @@ const AddDepartmentPage = () => {
   };
 
   const handleRemoveSection = (headingIndex, sectionIndex) => {
-    // const newProcedures = [...treatmentAndProcedures];
     const newProcedures = [...updateObj?.treatments];
 
     newProcedures[headingIndex].sections = newProcedures[
       headingIndex
     ].sections.filter((_, index) => index !== sectionIndex);
-
-    // setTreatmentAndProcedures(newProcedures);
 
     setUpdateObj((prev)=>({
       ...prev,
@@ -170,7 +149,6 @@ const AddDepartmentPage = () => {
     sectionIndex,
     subSectionIndex
   ) => {
-    // const newProcedures = [...treatmentAndProcedures];
     const newProcedures = [...updateObj?.treatments];
 
     newProcedures[headingIndex].sections[sectionIndex].subSections =
@@ -178,16 +156,11 @@ const AddDepartmentPage = () => {
         (_, index) => index !== subSectionIndex
       );
 
-    // setTreatmentAndProcedures(newProcedures);
-
     setUpdateObj((prev)=>({
       ...prev,
       treatments: newProcedures
     }))
   };
-
-  
-  // Simple code
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -227,9 +200,6 @@ const AddDepartmentPage = () => {
       return;
     }
 
-    if(treatmentAndProcedures?.length > 0){
-      updateObj.treatments = treatmentAndProcedures
-    }
 
     try {
       const response = await axiosPrivate.put(`${department_admin_route}/${id}`, updateObj)
@@ -240,8 +210,6 @@ const AddDepartmentPage = () => {
       console.log(error)
     }
   }
-
-// console.log({treatmentAndProcedures})
 
   return (
     <div className="h-screen w-full overflow-hidden">
