@@ -32,8 +32,8 @@ const DoctorsEditPage = () => {
           title: data?.title,
           qualification: data?.qualification,
           about: data?.about,
-          experiences: data?.experiences,
-          areas_of_expertise: data?.areas_of_expertise,
+          experiences: data?.experiences || [''],
+          areas_of_expertise: data?.areas_of_expertise || [''],
           opd_timings: data?.opd_timings,
           image: data?.image,
         })
@@ -79,7 +79,7 @@ const DoctorsEditPage = () => {
           <DoctorEditContent updateObj={updateObj} handleChange={handleChange} />
         </section>
         <section>
-          <About />
+          <About updateObj={updateObj} setUpdateObj={setUpdateObj} handleChange={handleChange} />
         </section>
       </div>
     </div>
