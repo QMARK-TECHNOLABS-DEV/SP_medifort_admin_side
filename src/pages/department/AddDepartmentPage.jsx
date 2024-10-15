@@ -11,9 +11,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const AddDepartmentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [banner, setBanner] = useState(null);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+
   const [treatmentAndProcedures, setTreatmentAndProcedures] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const axiosPrivate= useAxiosPrivate();
@@ -132,35 +130,7 @@ const AddDepartmentPage = () => {
     setTreatmentAndProcedures(newProcedures);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!updateObj.dept_name || !updateObj.description) {
-      alert("Please fill in all required fields.");
-      return;
-    }
-
-    const newDepartment = {
-      id: isEdit ? location.state.department.id : Date.now(),
-      name,
-      description,
-      treatmentAndProcedures,
-      bannerUrl: banner || Article1,
-      author: "Reo George",
-      date: new Date().toLocaleDateString(),
-    };
-
-    let updatedDepartments;
-    if (isEdit) {
-      updatedDepartments = location.state.departmentItems.map((item) =>
-        item.id === newDepartment.id ? newDepartment : item
-      );
-    } else {
-      updatedDepartments = [...location.state.departmentItems, newDepartment];
-    }
-
-    navigate("/department", { state: { updatedDepartments } });
-  };
-
+  
   // Simple code
 
   const handleFileChange = async (e) => {
@@ -201,6 +171,10 @@ const AddDepartmentPage = () => {
       return;
     }
 
+    if(treatmentAndProcedures?.length > 0){
+      updateObj.treatments = treatmentAndProcedures
+    }
+
     try {
       const response = await axiosPrivate.put(`${department_admin_route}/${id}`, updateObj)
       if (response.status === 200) {
@@ -211,6 +185,7 @@ const AddDepartmentPage = () => {
     }
   }
 
+// console.log({treatmentAndProcedures})
 
   return (
     <div className="h-screen w-full overflow-hidden">
