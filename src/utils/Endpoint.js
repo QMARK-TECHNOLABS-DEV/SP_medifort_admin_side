@@ -11,3 +11,10 @@ export const doc_in_dept_route = '/doctor-in-department';
 export const get_doc_to_consult = '/doctor-consultation-available-in-date';
 export const list_departments = '/list-departments';
 
+// Admin routes
+
+export const doctor_admin_route = "/api/admin/doctor"
+export const department_admin_route = "/api/admin/department"
+
+export const uploadRoute = '/api/uploads'
+

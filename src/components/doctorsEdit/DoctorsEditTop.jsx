@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Breadcrumbs from '../common/Breadcrumbs';
 
-const DoctorsEditTop = ({ doctorData, onSave, data }) => {
+const DoctorsEditTop = ({ doctorData, onSave, data, updateObj, submitHandler }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [currentDoctor, setCurrentDoctor] = useState(doctorData); // State to manage doctor data
 
@@ -15,7 +15,7 @@ const DoctorsEditTop = ({ doctorData, onSave, data }) => {
 
   const breadcrumbsItems = [
     { label: "Doctor profile", href: "/doctors" },
-    { label: isEdit ? "Edit Article" : `${data?.doctor_name}`, href: `/doctors/edit/${data?.doctor_id}` },
+    { label: isEdit ? "Edit Article" : `${updateObj?.doctor_name}`, href: `/doctors/edit/${updateObj?.doctor_id}` },
   ];
 
   const handleSave = () => {
@@ -56,7 +56,7 @@ const DoctorsEditTop = ({ doctorData, onSave, data }) => {
       <Breadcrumbs items={breadcrumbsItems} />
       <div className="flex flex-col lg:flex-row items-start lg:items-center mt-4 lg:mt-0 lg:ml-0">
         <button
-          onClick={handleSave}
+          onClick={submitHandler}
           className="flex items-center justify-center border border-primaryColor mb-4 lg:mb-0 p-2 w-full lg:w-auto rounded-lg text-center mt-4"
         >
           <span className="text-sm text-primaryColor">Save and submit</span>
