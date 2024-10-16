@@ -9,6 +9,8 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const DoctorHomePage = () => {
   const [doctors, setDoctors] = useState([]);
   const [search, setSearch] = useState('')
+  const [deptId, setDeptId] = useState('')
+  const [sort, setSort] = useState('asc')
   const axiosPrivate = useAxiosPrivate()
 
   const addNewDoctor = () => {
@@ -24,12 +26,18 @@ const DoctorHomePage = () => {
 
   const getData = async () => {
     try {
-      const response = await axiosPrivate.get(`${doctor_admin_route}?search=${search}`)
+      const response = await axiosPrivate.get(`${doctor_admin_route}?search=${search}&deptId=${deptId}`)
 
       console.log(response.data);
 
       if (response?.status === 200) {
-        const data = response.data.result;
+        let data = [...response.data.result];
+        if (sort === 'asc') {
+          data = data?.sort((a, b) => a.doctor_name.localeCompare(b.doctor_name))
+        }
+        else if (sort === 'desc') {
+         data = data?.sort((a, b) => b.doctor_name.localeCompare(a.doctor_name))
+        }
         setDoctors(data)
       }
 
@@ -40,14 +48,28 @@ const DoctorHomePage = () => {
 
   useEffect(() => {
     getData();
-  }, [search])
+  }, [search, deptId])
+
+  useEffect(() => {
+    let data = [...doctors]
+    if (sort === 'asc') {
+      data = data?.sort((a, b) => a.doctor_name.localeCompare(b.doctor_name))
+    }
+    else if (sort === 'desc') {
+     data = data?.sort((a, b) => b.doctor_name.localeCompare(a.doctor_name))
+    }
+    setDoctors(data)
+  }, [sort])
+
+  console.log({sort})
+
 
   return (
     <div>
       <header>
         <TopPart title={"Doctor profile"} type={{ name: "search" }} setSearch={setSearch} />
       </header>
-      <DoctorFilter onAddDoctor={addNewDoctor} />
+      <DoctorFilter onAddDoctor={addNewDoctor} setDeptId={setDeptId} setSort={setSort} />
       <DoctorsPhotos data={doctors} />
     </div>
   );
