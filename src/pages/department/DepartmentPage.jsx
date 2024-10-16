@@ -85,7 +85,8 @@ getData()
           </h1>
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
-            <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
+
+            {/* <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
               <button
                 className="p-2 px-4 mr-1 lg:mr-2 lg:w-[150px] flex items-center text-primaryColor justify-center bg-white border border-[#9C2677] font-medium rounded-lg mt-2 sm:mt-4 lg:mt-0"
 
@@ -93,7 +94,8 @@ getData()
               >
                 + Add new
               </button>
-            </div>
+            </div> */}
+
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 mt-3 gap-x-6  p-1">

@@ -243,7 +243,8 @@ const AddDepartmentPage = () => {
               >
                 Save and submit
               </button>
-              {isEdit && (
+
+              {/* {isEdit && (
                 <button
                   type="button"
                   className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
@@ -252,7 +253,8 @@ const AddDepartmentPage = () => {
                   <FaTrashAlt className="mr-2" />
                   Delete
                 </button>
-              )}
+              )} */}
+
             </div>
           </div>
         </div>

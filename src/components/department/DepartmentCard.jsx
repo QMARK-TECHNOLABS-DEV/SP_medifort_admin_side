@@ -4,14 +4,14 @@ import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 const DepartmentCard = ({ data, onEditClick, onDeleteClick }) => {
   return (
     <div className="relative flex flex-col bg-white rounded-xl shadow-lg overflow-hidden mx-auto w-full max-w-[450px]">
-      <div className="relative w-full h-[150px] overflow-hidden">
+      <div className="relative w-full h-[150px] p-4 overflow-hidden">
         {
           data?.banner?.location
           ?
           <img 
             src={data?.banner?.location} 
             alt="Image"
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
           />
           :
           <img 
@@ -33,12 +33,14 @@ const DepartmentCard = ({ data, onEditClick, onDeleteClick }) => {
           >
             <FaEdit className="w-4 h-4" />
           </button>
-          <button
+
+          {/* <button
             className="flex items-center justify-center w-8 h-8 border border-gray-300 rounded-full text-gray-600 hover:text-primaryColor" // Delete icon
             onClick={onDeleteClick}
           >
             <FaTrashAlt className="w-4 h-4" />
-          </button>
+          </button> */}
+
         </div>
       </div>
     </div>
