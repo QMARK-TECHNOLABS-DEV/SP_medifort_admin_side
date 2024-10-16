@@ -12,29 +12,33 @@ const AddDepartmentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isEdit, setIsEdit] = useState(false);
-  const axiosPrivate= useAxiosPrivate();
+  const axiosPrivate = useAxiosPrivate();
 
-  const {id} = useParams();
+  const { id } = useParams();
 
   const [updateObj, setUpdateObj] = useState({
     dept_name: "",
     description: '',
     banner: null,
+    image: null,
+    logo: null,
     treatments: []
   })
 
 
-  const getDepartment = async()=>{
+  const getDepartment = async () => {
     try {
       const response = await axiosPrivate.get(`${department_admin_route}/${id}`)
 
-      if(response.status === 200){
+      if (response.status === 200) {
         const department = response.data.result;
 
         setUpdateObj({
           dept_name: department.dept_name,
           description: department.description,
           banner: department?.banner,
+          image: department?.image,
+          logo: department?.logo,
           treatments: department?.treatments || [],
         })
       }
@@ -62,7 +66,7 @@ const AddDepartmentPage = () => {
 
   const handleAddHeading = () => {
 
-    setUpdateObj((prev)=>({
+    setUpdateObj((prev) => ({
       ...prev,
       treatments: [
         ...updateObj.treatments,
@@ -76,7 +80,7 @@ const AddDepartmentPage = () => {
 
     newProcedures[headingIndex].sections.push({ section: "", subSections: [] });
 
-    setUpdateObj((prev)=>({
+    setUpdateObj((prev) => ({
       ...prev,
       treatments: newProcedures
     }))
@@ -87,7 +91,7 @@ const AddDepartmentPage = () => {
 
     newProcedures[headingIndex].sections[sectionIndex].subSections.push("");
 
-    setUpdateObj((prev)=>({
+    setUpdateObj((prev) => ({
       ...prev,
       treatments: newProcedures
     }))
@@ -113,7 +117,7 @@ const AddDepartmentPage = () => {
       ] = event.target.value;
     }
 
-    setUpdateObj((prev)=>({
+    setUpdateObj((prev) => ({
       ...prev,
       treatments: newProcedures
     }))
@@ -125,7 +129,7 @@ const AddDepartmentPage = () => {
       (_, index) => index !== headingIndex
     );
 
-    setUpdateObj((prev)=>({
+    setUpdateObj((prev) => ({
       ...prev,
       treatments: newProcedures
     }))
@@ -138,7 +142,7 @@ const AddDepartmentPage = () => {
       headingIndex
     ].sections.filter((_, index) => index !== sectionIndex);
 
-    setUpdateObj((prev)=>({
+    setUpdateObj((prev) => ({
       ...prev,
       treatments: newProcedures
     }))
@@ -156,13 +160,13 @@ const AddDepartmentPage = () => {
         (_, index) => index !== subSectionIndex
       );
 
-    setUpdateObj((prev)=>({
+    setUpdateObj((prev) => ({
       ...prev,
       treatments: newProcedures
     }))
   };
 
-  const handleFileChange = async (e) => {
+  const handleFileChange = async (e, kind) => {
     const file = e.target.files[0];
 
     try {
@@ -175,7 +179,7 @@ const AddDepartmentPage = () => {
       if (response.status === 200) {
         setUpdateObj((prev) => ({
           ...prev,
-          banner: response?.data?.file
+          [kind]: response?.data?.file
         }))
       }
 
@@ -216,19 +220,19 @@ const AddDepartmentPage = () => {
       <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
         <div className="flex flex-col mb-6">
           {/* Conditionally render the heading based on the edit state */}
-          {isEdit 
-          ? 
-          (
-            <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
-              Update Department
-            </h1>
-          ) 
-          : 
-          (
-            <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
-              New Department
-            </h1>
-          )}
+          {isEdit
+            ?
+            (
+              <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
+                Update Department
+              </h1>
+            )
+            :
+            (
+              <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
+                New Department
+              </h1>
+            )}
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
             <div className="flex flex-row gap-4 mt-4 sm:mt-0">
@@ -259,18 +263,18 @@ const AddDepartmentPage = () => {
 
                 {
                   updateObj?.banner?.location
-                  ?
-                  <img
-                    src={updateObj?.banner?.location}
-                    alt="Department"
-                    className="w-full h-full object-cover rounded-2xl "
-                  />
-                  :
-                  <img
-                    src={Article1}
-                    alt="Department"
-                    className="w-full h-full object-cover rounded-2xl "
-                  />
+                    ?
+                    <img
+                      src={updateObj?.banner?.location}
+                      alt="Department"
+                      className="w-full h-full object-cover rounded-2xl "
+                    />
+                    :
+                    <img
+                      src={Article1}
+                      alt="Department"
+                      className="w-full h-full object-cover rounded-2xl "
+                    />
                 }
 
                 <div className="absolute inset-0 flex items-center justify-center w-full">
@@ -282,15 +286,51 @@ const AddDepartmentPage = () => {
                     type="file"
                     accept="image/*"
                     className="hidden"
-                    onChange={handleFileChange}
+                    onChange={(e) => handleFileChange(e, 'banner')}
                   />
                 </div>
               </div>
             </div>
             <div className="flex flex-col w-full gap-6">
+
+              <div className="flex items-center gap-8">
+
+                <div className="flex flex-col ">
+                  <label className="block text-sm text-left font-medium text-gray-700 mb-2">
+                    Image
+                  </label>
+                  <input
+                    type="file"
+                    className="w-full h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                    placeholder="Image"
+                    name="image"
+                    id="image"
+                    accept="image/*"
+                    onChange={(e) => handleFileChange(e, 'image')}
+                    disabled={!isEdit}
+                  />
+                </div>
+
+                <div className="flex flex-col ">
+                  <label className="block text-sm text-left font-medium text-gray-700 mb-2">
+                    Logo
+                  </label>
+                  <input
+                    type="file"
+                    className="w-full h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                    placeholder="logo"
+                    name="logo"
+                    id="logo"
+                    accept="image/*"
+                    onChange={(e) => handleFileChange(e, 'logo')}
+                    disabled={!isEdit}
+                  />
+                </div>
+              </div>
+
               <div>
                 <label className="block text-sm text-left font-medium text-gray-700 mb-2">
-                Department Name
+                  Department Name
                 </label>
                 <input
                   type="text"
