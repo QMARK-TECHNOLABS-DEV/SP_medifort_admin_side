@@ -47,13 +47,13 @@ function App() {
 
             {/* Dashboard */}
             <Route exact path='/' element={<Dashboard />} />
-              
+
             {/* Doctor Profile part */}
             <Route path='/doctor-profiles' element={<DoctorProfiles />} />
             <Route path='/doctor-profiles/:id' element={<DoctorDetailedView />} />
             <Route path='/doctors' element={<DoctorsPage />} />
             <Route path='/doctors/edit/:id' element={<DoctorsEditPage />} />
-              
+
             {/* Testimonials part */}
             <Route path='/testimonials' element={<TestimonialsHomePage />} />
             <Route path='/testimonials/patient' element={<TestimonialsPatientContentPage />} />
@@ -62,7 +62,7 @@ function App() {
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />
             <Route path='/add-banner' element={<BannComp />} />
-              
+
             {/* Content management media */}
             <Route path='/content-management/media' element={<Media />} />
 
@@ -105,7 +105,7 @@ function App() {
             <Route path='/enquiry/insurance' element={<InsuranceEnquiryPage />} />
             <Route path='/enquiry/contact-us' element={<ContactUsEnquiryPage />} />
             <Route path='/enquiry/international-patient-enquiry' element={<InternationalPatientEnquiryPage />} />
-              
+
             {/* Gallery CRUD */}
             <Route path='/gallery' element={<Gallery />} />
 
