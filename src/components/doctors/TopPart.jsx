@@ -2,7 +2,7 @@ import React from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa6";
 
-const TopPart = ({ title }) => {
+const TopPart = ({ title, setSearch }) => {
   return (
     <main className="flex flex-col lg:flex-row justify-between items-start lg:items-center my-2 p-3 w-full">
       <h1 className="text-secondary text-xl md:text-2xl md:font-[350] mb-3 lg:mb-0 w-full lg:w-auto">
@@ -13,7 +13,8 @@ const TopPart = ({ title }) => {
       <div className="relative flex items-center justify-end w-full lg:w-auto mt-2 lg:mt-0">
         <input
           type="text"
-          name=""
+          name="search"
+          onChange={(e)=> setSearch(e.target.value)}
           className="w-full lg:w-[300px] rounded-lg text-sm bg-lightGray p-3 px-5 pl-12 placeholder:text-[#475467]
              placeholder:font-[500] placeholder:text-xl focus:outline-none"
           placeholder="Search"

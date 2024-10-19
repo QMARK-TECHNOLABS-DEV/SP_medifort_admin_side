@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Breadcrumbs from '../common/Breadcrumbs';
 
-const DoctorsEditTop = ({ title, doctorData, onSave }) => {
+const DoctorsEditTop = ({ doctorData, onSave, data, updateObj, submitHandler }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [currentDoctor, setCurrentDoctor] = useState(doctorData); // State to manage doctor data
 
@@ -15,7 +15,7 @@ const DoctorsEditTop = ({ title, doctorData, onSave }) => {
 
   const breadcrumbsItems = [
     { label: "Doctor profile", href: "/doctors" },
-    { label: isEdit ? "Edit Article" : "Dr. Cherian M Thomas", href: "/doctors/doctor-edit" },
+    { label: isEdit ? "Edit Article" : `${updateObj?.doctor_name}`, href: `/doctors/edit/${updateObj?.doctor_id}` },
   ];
 
   const handleSave = () => {
@@ -49,24 +49,25 @@ const DoctorsEditTop = ({ title, doctorData, onSave }) => {
 
   return (
     <main className="flex flex-col lg:flex-row justify-between p-3 min:flex-col">
-    <h1 className="text-2xl font-bold text-primaryColor lg:hidden mb-4 mt-[-15px] text-left lg:ml-[-10px] ml-[-4px]">
-  Edit Page
-</h1>
+      <h1 className="text-2xl font-bold text-primaryColor lg:hidden mb-4 mt-[-15px] text-left lg:ml-[-10px] ml-[-4px]">
+        Edit Page
+      </h1>
 
       <Breadcrumbs items={breadcrumbsItems} />
-      <div className="flex flex-col lg:flex-row items-start lg:items-center lg:ml-auto mt-4 lg:mt-0 lg:ml-0">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center mt-4 lg:mt-0 lg:ml-0">
         <button
-          onClick={handleSave}
+          onClick={submitHandler}
           className="flex items-center justify-center border border-primaryColor mb-4 lg:mb-0 p-2 w-full lg:w-auto rounded-lg text-center mt-4"
         >
           <span className="text-sm text-primaryColor">Save and submit</span>
         </button>
-        <button
-  onClick={handleDelete}
-  className="flex items-center justify-center text-gray-700 mt-2 lg:mt-[10px] lg:ml-4 w-full lg:w-auto rounded-lg border border-primaryColor p-2"
->
-  <span className="text-sm  text-primaryColor">Delete</span>
-</button>
+
+        {/* <button
+          onClick={handleDelete}
+          className="flex items-center justify-center text-gray-700 mt-2 lg:mt-[10px] lg:ml-4 w-full lg:w-auto rounded-lg border border-primaryColor p-2"
+        >
+          <span className="text-sm  text-primaryColor">Delete</span>
+        </button> */}
 
       </div>
     </main>

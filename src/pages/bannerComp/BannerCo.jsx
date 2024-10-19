@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 // Import images
 import Homecare from "../../assets/banners/Homecare1.png";
 import Testimonials from "../../assets/banners/Testimonials1.png";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { bannerRoute } from "../../utils/Endpoint";
 
-const ImageCard = ({ image, label, onDelete }) => {
+const ImageCard = ({data, onDelete }) => {
   return (
     <div className="relative rounded-lg shadow-md overflow-hidden h-40 w-full">
-      <img src={image} alt={label} className="w-full h-full object-cover" />
+      <img src={data?.image?.location} alt='img' className="w-full h-full object-cover" />
       <div className="absolute bottom-2 left-2 bg-white text-gray-700 text-sm px-3 py-1 rounded">
-        {label}
+        {data?.title}
       </div>
       <button
         onClick={onDelete}
@@ -37,10 +39,10 @@ const ImageCard = ({ image, label, onDelete }) => {
 };
 
 const BannerCo = () => {
-  const [images, setImages] = useState([
-    { id: 1, src: Homecare, label: "Homecare.png" },
-    { id: 2, src: Testimonials, label: "Testimonials.png" },
-    { id: 3, src: Homecare, label: "Homecare.png" },
+  const [data, setData] = useState([
+    // { id: 1, src: Homecare, label: "Homecare.png" },
+    // { id: 2, src: Testimonials, label: "Testimonials.png" },
+    // { id: 3, src: Homecare, label: "Homecare.png" },
   ]);
   const breadcrumbsItems = [
     { label: "Content management", href: "/content-management" },
@@ -50,12 +52,30 @@ const BannerCo = () => {
   const navigate = useNavigate();
 
   const handleDelete = (id) => {
-    setImages(images.filter((image) => image.id !== id));
+    setData(data.filter((image) => image.id !== id));
   };
 
   const handleAddBanner = () => {
     navigate("/content-management/banner/add-banner");
   };
+
+  const axiosPrivate = useAxiosPrivate();
+
+  const getData = async () => {
+    try {
+      const response = await axiosPrivate.get(bannerRoute)
+      if (response?.status === 200) {
+        console.log(response?.data?.banners)
+        setData(response?.data?.banners)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   return (
     <div className="px-4 pt-4 w-full h-screen overflow-auto relative">
@@ -80,12 +100,11 @@ const BannerCo = () => {
       {/* Image Grid */}
       <div className="w-full h-full">
         <div className="grid grid-cols-1 gap-6 -ml-3 -mr-3 py-2 pb-56">
-          {images.map((image) => (
+          {data.map((item, index) => (
             <ImageCard
-              key={image.id}
-              image={image.src}
-              label={image.label}
-              onDelete={() => handleDelete(image.id)}
+              key={index}
+              data={item}
+              onDelete={() => handleDelete(item._id)}
             />
           ))}
         </div>
