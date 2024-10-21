@@ -35,6 +35,8 @@ import ContactUsEnquiryPage from './pages/enquiry/ContactUsEnquiryPage';
 import InternationalPatientEnquiryPage from './pages/enquiry/InternationalPatientEnquiryPage';
 import Gallery from './pages/galleryCrud/GalleryCrud';
 import Dashboard from './pages/Dashboard';
+import DepartmentHomePage from './pages/department/DepartmentHomePage';
+import DepartmentCard from './components/department/DepartmentCard';
 
 function App() {
   return (
@@ -71,9 +73,10 @@ function App() {
             <Route path='/content-management/preventive-health' element={<PreventiveHealth />} />
 
             {/*Department  */}
-            <Route path='/content-management/department' element={<DepartmentPage />} />
-            {/* <Route path='/content-management/department/add' element={<AddDepartmentPage />} /> */}
-            <Route path='/content-management/department/edit/:id' element={<AddDepartmentPage />} />
+          
+            <Route path='/department' element={<DepartmentHomePage />} />
+            <Route path='/department/add' element={<DepartmentPage />} />
+            <Route path='/department/edit/:id' element={<AddDepartmentPage />} />
 
             {/*Health Talk  */}
             <Route path='/content-management/health-talk' element={<HealthTalkPage />} />

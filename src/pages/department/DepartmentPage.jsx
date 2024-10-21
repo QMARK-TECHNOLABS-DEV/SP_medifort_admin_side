@@ -10,8 +10,8 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { department_admin_route, list_departments } from "../../utils/Endpoint";
 
 const breadcrumbsItems = [
-  { label: "Content Management", href: "/content-management" },
-  { label: "Manage Department", href: "/content-management/department" },
+  { label: "Department", href: "/Department" },
+  { label: "Manage Department", href: "/department/DepartmentPage" },
 ];
 
 const DepartmentPage = () => {
@@ -29,11 +29,11 @@ const DepartmentPage = () => {
   }, [location.state?.updatedDepartments]);
 
   const handleAddNewClick = () => {
-    navigate("/content-management/department/add", { state: { isEdit: false, departmentItems } });
+    navigate("/department/add", { state: { isEdit: false, departmentItems } });
   };
 
   const handleEditClick = (department) => {
-    navigate(`/content-management/department/edit/${department?.dept_id}`, {
+    navigate(`/department/edit/${department?.dept_id}`, {
       state: { isEdit: true, department, departmentItems },
     });
   };
