@@ -9,7 +9,7 @@ import content5 from '../../assets/contentManagement/Content 1.png';
 import content6 from '../../assets/contentManagement/Content 6.png';
 import content7 from '../../assets/contentManagement/mediaa.jpg';
 import content8 from '../../assets/contentManagement/casestudy.jpg';
-import content9 from '../../assets/contentManagement/depart.png';
+
 
 const ContentManagementPage = () => {
   const contentItems = [
@@ -20,7 +20,7 @@ const ContentManagementPage = () => {
     { imageSrc: content6, title: 'Banners', url: "/content-management/banner" },
     { imageSrc: content7, title: 'Media', url: "/content-management/media" },
     { imageSrc: content8, title: 'Doctor case studies', url: "/content-management/casestudies" },
-    { imageSrc: content9, title: 'Departments', url: "/content-management/department" },
+   
   ];
 
   return (
