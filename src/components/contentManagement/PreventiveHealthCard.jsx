@@ -11,7 +11,7 @@ const PreventiveHealthCard = ({ title, details, price, onEditClick, onDeleteClic
             <li key={index}>{item}</li>
           ))}
         </ul>
-        <p className="text-base sm:text-lg font-bold text-gray-800">Price: {price}</p>
+        <p className="text-base sm:text-lg font-bold text-gray-800">Price: {price}/-</p>
       </div>
       <div className="flex justify-start mt-4 space-x-3">
         <button

@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { toast } from 'react-toastify';
+import { checkupAdminRoute, checkupRoute } from '../../utils/Endpoint';
+import axios from '../../axios-folder/axios';
 
-const AddModal = ({ show, onClose, onSubmit, editItem }) => {
+const AddModal = ({ show, onClose, mode, editItemId, checkups, setCheckups }) => {
   const [formData, setFormData] = useState({ title: '', price: 0, tests: [] });
 
   const [currentTest, setCurrentTest] = useState('');
+
+  const axiosPrivateHook = useAxiosPrivate()
 
   const handleAddTest = () => {
     if (!currentTest?.trim()) {
@@ -51,17 +57,30 @@ const AddModal = ({ show, onClose, onSubmit, editItem }) => {
 
   }
 
+  const getOneCheckup = async (id) => {
+    try {
+      const res = await axios.get(`${checkupRoute}/${id}`)
+
+      if (res.status === 200) {
+        const editItem = res.data.result;
+        setFormData({
+          title: editItem.title,
+          price: editItem.price || 0,
+          tests: editItem.tests || [],
+        });
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
-    if (editItem) {
-      setFormData({
-        title: editItem.title,
-        price: editItem.price || 0,
-        tests: editItem.tests || [],
-      });
+    if (mode === 'update') {
+      getOneCheckup(editItemId)
     } else {
       setFormData({ title: '', price: 0, tests: [] });
     }
-  }, [editItem]);
+  }, [mode, editItemId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -72,11 +91,56 @@ const AddModal = ({ show, onClose, onSubmit, editItem }) => {
     return null;
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData?.title?.trim()) {
+      return toast.info('Add Title')
+    }
+
+    try {
+      let res;
+
+      if (mode === 'update') {
+        res = await axiosPrivateHook.put(`${checkupAdminRoute}/${editItemId}`, formData)
+      }
+      else {
+        res = await axiosPrivateHook.post(checkupAdminRoute, formData)
+      }
+
+      if (res.status === 200) {
+        toast.success('Checkup Updated');
+        onClose()
+        const newItem = res.data?.result;
+
+        const newCheckupsArray = [...checkups].map((item) => {
+          if (String(item?._id) === String(newItem?._id)) {
+            return newItem
+          }
+          else {
+            return item
+          }
+        })
+
+        setCheckups(newCheckupsArray)
+
+      }
+      else if (res.status === 201) {
+        toast.success('Checkup Added');
+        onClose()
+        setCheckups((prev) => ([...prev, res.data.result]))
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3">
       <div className="bg-white text-left p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-xl text-left font-semibold mb-4">{editItem ? 'Edit' : 'Add'} Health Item</h2>
-        <form onSubmit={onSubmit}>
+        <h2 className="text-xl text-left font-semibold mb-4 capitalize ">{mode} Health Item</h2>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">Title</label>
             <input
@@ -114,7 +178,6 @@ const AddModal = ({ show, onClose, onSubmit, editItem }) => {
                 placeholder="Add Test"
                 value={currentTest}
                 onChange={(e) => setCurrentTest(e.target.value)}
-                required
               />
 
               <IoIosAddCircleOutline size={28}
@@ -129,7 +192,7 @@ const AddModal = ({ show, onClose, onSubmit, editItem }) => {
           border border-[#B0BAC366] rounded-lg ' >
             {
               formData?.tests?.map((item, index) => (
-                <div className='flex items-center gap-2 mt-2 ' >
+                <div key={index} className='flex items-center gap-2 mt-2 ' >
                   <input
                     type="text"
                     value={item}
@@ -148,9 +211,10 @@ const AddModal = ({ show, onClose, onSubmit, editItem }) => {
           <div className="flex justify-end space-x-4">
             <button
               type="submit"
-              className="bg-white hover:border-[#9C2677] hover:text-[#9C2677] border text-gray-800 font-medium py-2 px-4 rounded-md"
+              className="bg-white hover:border-[#9C2677] hover:text-[#9C2677] border text-gray-800 
+              font-medium py-2 px-4 rounded-md capitalize "
             >
-              {editItem ? 'Update' : 'Add'}
+              {mode}
             </button>
             <button
               type="button"
