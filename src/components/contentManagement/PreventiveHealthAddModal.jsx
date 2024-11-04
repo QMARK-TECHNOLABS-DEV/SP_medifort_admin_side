@@ -1,17 +1,65 @@
 import React, { useEffect, useState } from 'react';
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { MdDeleteForever } from "react-icons/md";
 
 const AddModal = ({ show, onClose, onSubmit, editItem }) => {
-  const [formData, setFormData] = useState({ title: '', content: '', price: '' });
+  const [formData, setFormData] = useState({ title: '', price: 0, tests: [] });
+
+  const [currentTest, setCurrentTest] = useState('');
+
+  const handleAddTest = () => {
+    if (!currentTest?.trim()) {
+      return
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      tests: [
+        ...prev.tests,
+        currentTest
+      ]
+    }))
+
+    setCurrentTest('')
+  }
+
+  const handleEditTest = (event, index) => {
+    const value = event.target.value;
+
+    if (!value) {
+      return
+    }
+
+    const newArray = [...formData.tests]
+
+    newArray[index] = value;
+
+    setFormData((prev) => ({
+      ...prev,
+      tests: newArray
+    }))
+
+  }
+
+  const handleRemoveTest = (index) => {
+    const newArray = formData.tests?.filter((_, i) => i !== index)
+
+    setFormData((prev) => ({
+      ...prev,
+      tests: newArray
+    }))
+
+  }
 
   useEffect(() => {
     if (editItem) {
       setFormData({
         title: editItem.title,
-        content: editItem.details.join(', '),
-        price: editItem.price.replace('/-', ''),
+        price: editItem.price || 0,
+        tests: editItem.tests || [],
       });
     } else {
-      setFormData({ title: '', content: '', price: '' });
+      setFormData({ title: '', price: 0, tests: [] });
     }
   }, [editItem]);
 
@@ -35,36 +83,68 @@ const AddModal = ({ show, onClose, onSubmit, editItem }) => {
               type="text"
               name="title"
               className="mt-1 block w-full rounded-md bg-[#B0BAC366] border-gray-300 shadow-sm p-2"
-              placeholder="General health checkup"
+              placeholder="Add Title"
               value={formData.title}
               onChange={handleChange}
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Content</label>
-            <textarea
-              name="content"
-              rows="4"
-              className="mt-1 block w-full rounded-md border border-gray-300 bg-[#B0BAC366] text-gray-900 shadow-sm focus:border-[#9C2677] focus:ring-[#9C2677] p-2"
-              placeholder="MBBS, MS (Gen. Surgery), FMAS"
-              value={formData.content}
-              onChange={handleChange}
-              required
-            />
-          </div>
+
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">Price</label>
             <input
               type="text"
               name="price"
               className="mt-1 block w-full rounded-md bg-[#B0BAC366] border-gray-300 shadow-sm p-2"
-              placeholder="1499"
+              placeholder="Add Price"
               value={formData.price}
               onChange={handleChange}
               required
             />
           </div>
+
+          <div className="mb-4   ">
+            <label className="block text-sm font-medium text-gray-700">Tests</label>
+
+            <div className='flex items-center gap-2 ' >
+              <input
+                type="text"
+                name="test"
+                className="mt-1 block w-full rounded-md bg-[#B0BAC366] border-gray-300 shadow-sm p-2"
+                placeholder="Add Test"
+                value={currentTest}
+                onChange={(e) => setCurrentTest(e.target.value)}
+                required
+              />
+
+              <IoIosAddCircleOutline size={28}
+                onClick={handleAddTest}
+              />
+            </div>
+
+          </div>
+
+
+          <div className='h-[150px] overflow-y-auto scrollbar-hide my-2 
+          border border-[#B0BAC366] rounded-lg ' >
+            {
+              formData?.tests?.map((item, index) => (
+                <div className='flex items-center gap-2 mt-2 ' >
+                  <input
+                    type="text"
+                    value={item}
+                    onChange={(e) => handleEditTest(e, index)}
+                    className="mt-1 block w-full rounded-md bg-[#B0BAC366] border-gray-300 shadow-sm p-2"
+                  />
+
+                  <MdDeleteForever size={28} onClick={() => handleRemoveTest(index)} />
+                </div>
+
+              ))
+            }
+          </div>
+
+
           <div className="flex justify-end space-x-4">
             <button
               type="submit"

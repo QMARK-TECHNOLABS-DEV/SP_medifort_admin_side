@@ -19,3 +19,6 @@ export const department_admin_route = "/api/admin/department"
 
 export const uploadRoute = '/api/uploads'
 
+export const checkupAdminRoute = '/api/admin/checkups'
+export const checkupRoute = '/api/checkups'
+
