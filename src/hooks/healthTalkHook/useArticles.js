@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { axiosPrivate } from '../../axios-folder/axios';
-import { uploadArticles } from '../../utils/Endpoint';
+import { getArticles, uploadArticles } from '../../utils/Endpoint';
 import { toast } from 'react-toastify';
 
 const useArticles = () => {
@@ -12,51 +12,17 @@ const useArticles = () => {
   const fetchArticles = async () => {
     setLoading(true);
     try {
-      const response = await axiosPrivate.get('/articles');
-      setArticles(response.data);
+        const response = await axiosPrivate.get(getArticles);
+        console.log(response.data.articles)
+        setArticles(response.data.articles); // Ensure articles is an array
     } catch (err) {
-      setError(err);
-      toast.error('Failed to fetch articles');
+        setError(err);
+        toast.error('Failed to fetch articles');
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
-
-  // Add a new article
-  const addArticle = async (articleData) => {
-    setLoading(true);
-    try {
-      const response = await axiosPrivate.post(uploadArticles, articleData);
-      console.log(response.data)
-      setArticles((prevArticles) => [...prevArticles, response.data]);
-      toast.success('Article added successfully');
-    } catch (err) {
-      setError(err);
-      toast.error('Failed to add article');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Edit an article
-  const editArticle = async (articleId, updatedData) => {
-    setLoading(true);
-    try {
-      const response = await axiosPrivate.put(`${uploadArticles}/${articleId}`, updatedData);
-      setArticles((prevArticles) =>
-        prevArticles.map((article) =>
-          article.id === articleId ? response.data : article
-        )
-      );
-      toast.success('Article updated successfully');
-    } catch (err) {
-      setError(err);
-      toast.error('Failed to update article');
-    } finally {
-      setLoading(false);
-    }
-  };
-
+};
+ 
   // Delete an article
   const deleteArticle = async (articleId) => {
     setLoading(true);
@@ -75,16 +41,14 @@ const useArticles = () => {
   };
 
   // Initial fetch of articles
-  useEffect(() => {
-    fetchArticles();
-  }, []);
+  // useEffect(() => {
+  //   fetchArticles();
+  // }, []);
 
   return {
     articles,
     loading,
     error,
-    addArticle,
-    editArticle,
     deleteArticle,
     fetchArticles,
   };
