@@ -20,7 +20,7 @@ const VidTestimonial = () => {
   const [currentVideo, setCurrentVideo] = useState(null);
   const [playingVideoId, setPlayingVideoId] = useState(null);
 
-  const [postData, setPostData] = useState({ name: "", date: "", media: "", thumbnail: "" , isVideo: true});
+  const [postData, setPostData] = useState({ name: "", date: "", media: "", thumbnail: "", isVideo: true });
 
   const handleAddClick = () => {
     setIsAdding(true);
@@ -40,23 +40,23 @@ const VidTestimonial = () => {
     setIsEditing(true);
     setIsAdding(false);
     setCurrentVideo(video);
-    setPostData({ name: video.name, date: video.date, src: video.src, isYouTube: video.isYouTube });
+    setPostData({ name: video.name, date: video.date, media: video.media, thumbnail: video.thumbnail, isVideo: true });
   };
 
   const resetForm = () => {
-    setPostData({ name: "", date: "", src: "", isYouTube: false });
+    setPostData({ name: "", date: "", media: "", thumbnail: "", isVideo: true });
   };
 
-  const handleDelete = async(id) => {
+  const handleDelete = async (id) => {
     try {
       const res = await axiosPrivateHook.delete(`${testimonialAdminRoute}/${id}`)
 
-      if(res.status === 200){
+      if (res.status === 200) {
         setVideos(videos.filter((video) => String(video._id) !== String(id)));
       }
-      
+
     } catch (error) {
-      
+
     }
   };
 
@@ -108,7 +108,7 @@ const VidTestimonial = () => {
 
       if (isAdding && res.status === 200) {
         setIsAdding(false);
-        setVideos([...videos, res.data.result])
+        setVideos([res.data.result, ...videos])
       }
       if (isEditing && res.status === 200) {
         setIsEditing(false);
@@ -135,6 +135,28 @@ const VidTestimonial = () => {
 
       if (res.status === 200) {
         setVideos(res.data.result)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+  const updateStatus = async (status, id) => {
+    try {
+      const res = await axiosPrivateHook.put(`${testimonialAdminRoute}/${id}`,
+        { published: status }
+      )
+
+      if (res.status === 200) {
+        const newVids = [...videos]?.map((video) => {
+          if (String(video?._id) === String(id)) {
+            video.published = status
+          }
+          return video
+        })
+
+        setVideos(newVids)
       }
     } catch (error) {
       console.log(error)
@@ -236,9 +258,17 @@ const VidTestimonial = () => {
               </div>
             </div>
 
-            <div className="px-4 py-2">
-              <h3 className="text-lg font-semibold">{video.name}</h3>
-              <p className="text-sm text-gray-600">{video.date}</p>
+            <div className="px-4 py-2 flex items-center justify-around ">
+              <div>
+                <h3 className="text-lg font-semibold">{video.name}</h3>
+                <p className="text-sm text-gray-600">{video.date}</p>
+              </div>
+
+              <button
+                onClick={() => video?.published ? updateStatus(false, video?._id) : updateStatus(true, video?._id)}
+                className="bg-[#F6D6EC] text-primaryColor text-sm p-2 mr-8 rounded-md">
+                {video?.published ? 'Unpublish' : 'Publish'}
+              </button>
             </div>
           </div>
         ))}
