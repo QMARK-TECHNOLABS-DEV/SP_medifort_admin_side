@@ -19,3 +19,7 @@ export const department_admin_route = "/api/admin/department"
 
 export const uploadRoute = '/api/uploads'
 
+// health Talks section
+
+// Articles
+export const uploadArticles = '/api/admin/article'
