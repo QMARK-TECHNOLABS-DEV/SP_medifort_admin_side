@@ -13,20 +13,12 @@ const ContactUsEnquiryPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 9; // Number of items per page
-  const totalItems = TableData.length;
+  const [totalItems, setTotalItems] = useState(0)
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
     setCurrentPage(1); // Reset to first page on new search
   };
-
-  // Filter and paginate the data
-  // const filteredData = TableData.filter(
-  //   (item) =>
-  //     item.Name.toLowerCase().includes(searchQuery) ||
-  //     item.City.toLowerCase().includes(searchQuery) ||
-  //     item.Service.toLowerCase().includes(searchQuery)
-  // );
 
   const [filteredData, setFilteredData] = useState([]);
 
@@ -39,6 +31,7 @@ const ContactUsEnquiryPage = () => {
       if (response?.status === 200) {
         console.log(response?.data?.inquiries)
         setFilteredData(response?.data?.inquiries)
+        setTotalItems(response?.data?.total)
       }
 
     } catch (error) {
