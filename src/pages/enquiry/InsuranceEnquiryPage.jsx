@@ -9,6 +9,7 @@ import { inquiryRoute } from '../../utils/Endpoint';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const InsuranceEnquiryPage = () => {
+  const [sort, setSort] = useState('latest');
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -26,7 +27,7 @@ const InsuranceEnquiryPage = () => {
 
   const getData = async () => {
     try {
-      const response = await axiosPrivate.get(`${inquiryRoute}?type=insurance&search=${search}`)
+      const response = await axiosPrivate.get(`${inquiryRoute}?type=insurance&search=${search}&sort=${sort}`)
 
       if (response?.status === 200) {
         console.log(response?.data?.inquiries)
@@ -41,7 +42,7 @@ const InsuranceEnquiryPage = () => {
 
   useEffect(() => {
     getData();
-  }, [search])
+  }, [search, sort])
 
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
@@ -72,6 +73,7 @@ const InsuranceEnquiryPage = () => {
           itemsPerPage={itemsPerPage}
           onNextPage={handleNextPage}
           onPreviousPage={handlePreviousPage}
+          setSort={setSort}
         />
       </section>
       <EnquiryTable data={paginatedData} />

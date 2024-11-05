@@ -9,6 +9,7 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { inquiryRoute } from '../../utils/Endpoint';
 
 const HomeCareEnquiryPage = () => {
+  const [sort, setSort] = useState('latest');
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -27,7 +28,7 @@ const HomeCareEnquiryPage = () => {
 
   const getData = async () => {
     try {
-      const response = await axiosPrivate.get(`${inquiryRoute}?type=homecare&search=${search}`)
+      const response = await axiosPrivate.get(`${inquiryRoute}?type=homecare&search=${search}&sort=${sort}`)
 
       if (response?.status === 200) {
         console.log(response?.data?.inquiries)
@@ -42,7 +43,7 @@ const HomeCareEnquiryPage = () => {
 
   useEffect(() => {
     getData();
-  }, [search])
+  }, [search, sort])
 
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
@@ -78,6 +79,7 @@ const HomeCareEnquiryPage = () => {
           itemsPerPage={itemsPerPage}
           onNextPage={handleNextPage}
           onPreviousPage={handlePreviousPage}
+          setSort={setSort}
         />
       </section>
       <EnquiryTable data={paginatedData} />
