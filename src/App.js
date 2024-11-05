@@ -37,6 +37,7 @@ import Gallery from './pages/galleryCrud/GalleryCrud';
 import Dashboard from './pages/Dashboard';
 import DepartmentHomePage from './pages/department/DepartmentHomePage';
 import DepartmentCard from './components/department/DepartmentCard';
+import VidTestimonial from './pages/testimonials/VidTestimonial';
 
 function App() {
   return (
@@ -59,7 +60,7 @@ function App() {
             {/* Testimonials part */}
             <Route path='/testimonials' element={<TestimonialsHomePage />} />
             <Route path='/testimonials/patient' element={<TestimonialsPatientContentPage />} />
-            <Route path='/testimonials/video' element={<TestiComp />} />
+            <Route path='/testimonials/video' element={<VidTestimonial />} />
 
             {/* Banner */}
             <Route path='/banner' element={<BannerCo />} />

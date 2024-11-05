@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import videoImage from "../../assets/testimonials/videoimage.png"; // Default Thumbnail
-import clientVideo from "../../assets/testimonials/Client.mp4"; // Local video file
+import React, { useEffect, useState } from "react";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
+import { BsFillPlayCircleFill } from "react-icons/bs";
+import { LuPencilLine } from "react-icons/lu";
+import { GoTrash } from "react-icons/go";
+import axios from "../../axios-folder/axios";
+import { testimonialAdminRoute, uploadRoute } from "../../utils/Endpoint";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate"
 
-const TestiComp = () => {
-  const [videos, setVideos] = useState([
-    { id: 1, name: "Reo George", date: "2024-01-03", src: clientVideo, thumb: videoImage, isYouTube: false },
-    { id: 2, name: "Reo George", date: "2024-01-03", src: clientVideo, thumb: videoImage, isYouTube: false },
-    { id: 3, name: "Reo George", date: "2024-01-03", src: clientVideo, thumb: videoImage, isYouTube: false },
-    { id: 4, name: "Reo George", date: "2024-01-03", src: clientVideo, thumb: videoImage, isYouTube: false },
-  ]);
+const VidTestimonial = () => {
+  const [videos, setVideos] = useState([]);
 
   const breadcrumbsItems = [
     { label: "Testimonials", href: "/testimonials" },
@@ -21,7 +20,7 @@ const TestiComp = () => {
   const [currentVideo, setCurrentVideo] = useState(null);
   const [playingVideoId, setPlayingVideoId] = useState(null);
 
-  const [newVideo, setNewVideo] = useState({ name: "", date: "", src: "", isYouTube: false });
+  const [postData, setPostData] = useState({ name: "", date: "", media: "", thumbnail: "" , isVideo: true});
 
   const handleAddClick = () => {
     setIsAdding(true);
@@ -30,59 +29,35 @@ const TestiComp = () => {
 
   const handleAddChange = (e) => {
     const { name, value } = e.target;
-    setNewVideo({ ...newVideo, [name]: value });
+    setPostData({ ...postData, [name]: value });
   };
 
   const handleDateChange = (e) => {
-    setNewVideo({ ...newVideo, date: e.target.value });
-  };
-
-  const extractYouTubeId = (url) => {
-    const match = url.match(/(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|v\/|e\/|watch\?v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-    return match ? match[1] : null;
-  };
-
-  const getYouTubeThumbnailUrl = (videoId) => `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-
-  const handleAddSubmit = (e) => {
-    e.preventDefault();
-    const newId = videos.length ? videos[videos.length - 1].id + 1 : 1;
-    const isYouTube = newVideo.src.includes("youtube.com") || newVideo.src.includes("youtu.be");
-    const videoSrc = isYouTube ? `https://www.youtube.com/embed/${extractYouTubeId(newVideo.src)}` : clientVideo;
-    const videoThumb = isYouTube ? getYouTubeThumbnailUrl(extractYouTubeId(newVideo.src)) : videoImage;
-    setVideos([...videos, { id: newId, ...newVideo, src: videoSrc, thumb: videoThumb, isYouTube }]);
-    setIsAdding(false);
-    resetForm();
+    setPostData({ ...postData, date: e.target.value });
   };
 
   const handleEditClick = (video) => {
     setIsEditing(true);
     setIsAdding(false);
     setCurrentVideo(video);
-    setNewVideo({ name: video.name, date: video.date, src: video.src, isYouTube: video.isYouTube });
-  };
-
-  const handleEditSubmit = (e) => {
-    e.preventDefault();
-    const isYouTube = newVideo.src.includes("youtube.com") || newVideo.src.includes("youtu.be");
-    const videoSrc = isYouTube ? `https://www.youtube.com/embed/${extractYouTubeId(newVideo.src)}` : clientVideo;
-    const videoThumb = isYouTube ? getYouTubeThumbnailUrl(extractYouTubeId(newVideo.src)) : videoImage;
-    setVideos(
-      videos.map((video) =>
-        video.id === currentVideo.id ? { ...video, ...newVideo, src: videoSrc, thumb: videoThumb, isYouTube } : video
-      )
-    );
-    setIsEditing(false);
-    setCurrentVideo(null);
-    resetForm();
+    setPostData({ name: video.name, date: video.date, src: video.src, isYouTube: video.isYouTube });
   };
 
   const resetForm = () => {
-    setNewVideo({ name: "", date: "", src: "", isYouTube: false });
+    setPostData({ name: "", date: "", src: "", isYouTube: false });
   };
 
-  const handleDelete = (id) => {
-    setVideos(videos.filter((video) => video.id !== id));
+  const handleDelete = async(id) => {
+    try {
+      const res = await axiosPrivateHook.delete(`${testimonialAdminRoute}/${id}`)
+
+      if(res.status === 200){
+        setVideos(videos.filter((video) => String(video._id) !== String(id)));
+      }
+      
+    } catch (error) {
+      
+    }
   };
 
   const closeModal = () => {
@@ -94,6 +69,81 @@ const TestiComp = () => {
   const handleThumbnailClick = (id) => {
     setPlayingVideoId(id === playingVideoId ? null : id);
   };
+
+  const handleUpload = async (e, name) => {
+    const file = e.target.files[0]
+
+    if (!file) {
+      return
+    }
+    try {
+      const formData = new FormData();
+      formData.append('file', file)
+      const res = await axios.post(uploadRoute, formData);
+
+      if (res.status === 200) {
+        const result = res?.data?.file
+        if (result) {
+          setPostData((prev) => ({ ...prev, [name]: result }))
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const axiosPrivateHook = useAxiosPrivate();
+
+  const handlePostData = async (e) => {
+    e.preventDefault();
+    try {
+      let res;
+
+      if (isAdding) {
+        res = await axiosPrivateHook.post(testimonialAdminRoute, postData)
+      }
+      else if (isEditing && currentVideo) {
+        res = await axiosPrivateHook.put(`${testimonialAdminRoute}/${currentVideo?._id}`, postData)
+      }
+
+      if (isAdding && res.status === 200) {
+        setIsAdding(false);
+        setVideos([...videos, res.data.result])
+      }
+      if (isEditing && res.status === 200) {
+        setIsEditing(false);
+        const newArray = [...videos]?.map((video) => {
+          if (String(video?._id) === String(currentVideo?._id)) {
+            return res.data.result
+          }
+
+          return video;
+        })
+
+        setVideos(newArray)
+      }
+
+      currentVideo(null)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const fetchTestimonials = async () => {
+    try {
+      const res = await axiosPrivateHook.get(`${testimonialAdminRoute}?kind=video`)
+
+      if (res.status === 200) {
+        setVideos(res.data.result)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchTestimonials()
+  }, [])
 
   return (
     <div className="p-6 w-full">
@@ -126,25 +176,24 @@ const TestiComp = () => {
       >
         {videos.map((video) => (
           <div
-            key={video.id}
+            key={video._id}
             className="relative rounded-lg overflow-hidden shadow-lg bg-white border border-blue-200"
           >
             <div
               className="relative cursor-pointer"
-              onClick={() => handleThumbnailClick(video.id)}
+              onClick={() => handleThumbnailClick(video._id)}
             >
-              {playingVideoId === video.id ? (
+              {playingVideoId === video._id ? (
                 video.isYouTube ? (
                   <iframe
                     className="w-full h-40"
-                    src={video.src}
-                    frameBorder="0"
+                    src={video.media?.location}
                     allowFullScreen
                   ></iframe>
                 ) : (
                   <video
                     className="w-full h-40 object-cover"
-                    src={video.src}
+                    src={video.media?.location}
                     controls
                     autoPlay
                   />
@@ -152,27 +201,18 @@ const TestiComp = () => {
               ) : (
                 <img
                   className="w-full h-40 object-cover"
-                  src={video.thumb}
+                  src={video.thumbnail?.location}
                   alt="Video Thumbnail"
                 />
               )}
               {/* Pause Icon */}
-              {playingVideoId !== video.id && (
+              {playingVideoId !== video._id && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative flex items-center justify-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="text-black bg-white p-2 rounded-full"
-                      viewBox="0 0 24 24"
-                      fill=""
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      style={{ width: '2rem', height: '2rem' }} // Increase the icon size
-                    >
-                      <path d="M6 19L17 12L6 5V19Z" />
-                    </svg>
+                    <BsFillPlayCircleFill
+                      size={32}
+                      color="white"
+                    />
                   </div>
                 </div>
               )}
@@ -182,38 +222,16 @@ const TestiComp = () => {
                   onClick={() => handleEditClick(video)}
                 >
                   {/* Pencil icon SVG */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-gray-600"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 20h9" />
-                    <path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4L16.5 3.5z" />
-                  </svg>
+                  <LuPencilLine
+                    size={24}
+                  />
                 </button>
                 <button
                   className="bg-white rounded-full p-2 shadow-md"
-                  onClick={() => handleDelete(video.id)}
+                  onClick={() => handleDelete(video._id)}
                 >
                   {/* Trash icon SVG */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-gray-600"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polyline points="3 6 5 6 21 6" />
-                    <path d="M19 6l-.867 12.142A2 2 0 0116.134 20H7.866a2 2 0 01-1.999-1.858L5 6m5-4h4a2 2 0 012 2v2H8V4a2 2 0 012-2z" />
-                  </svg>
+                  < GoTrash />
                 </button>
               </div>
             </div>
@@ -231,16 +249,15 @@ const TestiComp = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full sm:w-1/2">
             <h2 className="text-2xl font-bold mb-4">{isAdding ? "Add Video" : "Edit Video"}</h2>
-            <form onSubmit={isAdding ? handleAddSubmit : handleEditSubmit}>
+            <form onSubmit={handlePostData}>
               <div className="mb-4">
                 <label className="block text-gray-700 mb-2 text-left">Name</label>
                 <input
                   type="text"
                   name="name"
-                  value={newVideo.name}
+                  value={postData.name}
                   onChange={handleAddChange}
                   className="border border-gray-300 rounded-lg w-full px-4 py-2"
-                  required
                 />
               </div>
               <div className="mb-4">
@@ -248,22 +265,31 @@ const TestiComp = () => {
                 <input
                   type="date"
                   name="date"
-                  value={newVideo.date}
+                  value={postData.date}
                   onChange={handleDateChange}
                   className="border border-gray-300 rounded-lg w-full px-4 py-2"
-                  required
                 />
               </div>
 
               <div className="mb-4">
-                <label className="block text-gray-700 mb-2 text-left">Video URL</label>
+                <label className="block text-gray-700 mb-2 text-left">Thumbnail</label>
                 <input
-                  type="text"
-                  name="src"
-                  value={newVideo.src}
-                  onChange={handleAddChange}
+                  type="file"
+                  name="thumbnail"
+                  value={postData.thumbnail?.originalname}
+                  onChange={(e) => handleUpload(e, 'thumbnail')}
                   className="border border-gray-300 rounded-lg w-full px-4 py-2"
-                  required
+                />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-2 text-left">Video File</label>
+                <input
+                  type="file"
+                  name="media"
+                  value={postData.media?.originalname}
+                  onChange={(e) => handleUpload(e, 'media')}
+                  className="border border-gray-300 rounded-lg w-full px-4 py-2"
                 />
               </div>
 
@@ -290,4 +316,4 @@ const TestiComp = () => {
   );
 };
 
-export default TestiComp;
+export default VidTestimonial;
