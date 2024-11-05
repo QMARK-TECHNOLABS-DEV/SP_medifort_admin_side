@@ -23,3 +23,6 @@ export const uploadRoute = '/api/uploads'
 
 // Articles
 export const uploadArticles = '/api/admin/article'
+export const checkupAdminRoute = '/api/admin/checkups'
+export const checkupRoute = '/api/checkups'
+
