@@ -9,14 +9,14 @@ import { inquiryRoute } from '../../utils/Endpoint';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const InsuranceEnquiryPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 9; // Number of items per page
   const [totalItems, setTotalItems] = useState(0)
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value.toLowerCase());
+    setSearch(e.target.value);
     setCurrentPage(1); // Reset to first page on new search
   };
 
@@ -26,7 +26,7 @@ const InsuranceEnquiryPage = () => {
 
   const getData = async () => {
     try {
-      const response = await axiosPrivate.get(`${inquiryRoute}?type=insurance`)
+      const response = await axiosPrivate.get(`${inquiryRoute}?type=insurance&search=${search}`)
 
       if (response?.status === 200) {
         console.log(response?.data?.inquiries)
@@ -41,7 +41,7 @@ const InsuranceEnquiryPage = () => {
 
   useEffect(() => {
     getData();
-  }, [])
+  }, [search])
 
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,

@@ -9,14 +9,14 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { inquiryRoute } from '../../utils/Endpoint';
 
 const ContactUsEnquiryPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 9; // Number of items per page
   const [totalItems, setTotalItems] = useState(0)
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value.toLowerCase());
+    setSearch(e.target.value.toLowerCase());
     setCurrentPage(1); // Reset to first page on new search
   };
 
@@ -26,7 +26,7 @@ const ContactUsEnquiryPage = () => {
 
   const getData = async () => {
     try {
-      const response = await axiosPrivate.get(`${inquiryRoute}?type=contact`)
+      const response = await axiosPrivate.get(`${inquiryRoute}?type=contact&search=${search}`)
 
       if (response?.status === 200) {
         console.log(response?.data?.inquiries)
@@ -41,7 +41,7 @@ const ContactUsEnquiryPage = () => {
 
   useEffect(() => {
     getData();
-  }, [])
+  }, [search])
 
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,

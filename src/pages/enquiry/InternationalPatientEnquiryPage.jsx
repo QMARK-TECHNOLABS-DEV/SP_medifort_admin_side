@@ -10,14 +10,14 @@ import { inquiryRoute } from '../../utils/Endpoint';
 
 
 const InternationalPatientEnquiryPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 9; // Number of items per page
   const [totalItems, setTotalItems] = useState(0)
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value.toLowerCase());
+    setSearch(e.target.value);
     setCurrentPage(1); // Reset to first page on new search
   };
 
@@ -28,7 +28,7 @@ const InternationalPatientEnquiryPage = () => {
 
   const getData = async () => {
     try {
-      const response = await axiosPrivate.get(`${inquiryRoute}?type=international`)
+      const response = await axiosPrivate.get(`${inquiryRoute}?type=international&search=${search}`)
 
       if (response?.status === 200) {
         console.log(response?.data?.inquiries)
@@ -43,7 +43,7 @@ const InternationalPatientEnquiryPage = () => {
 
   useEffect(() => {
     getData();
-  }, [])
+  }, [search])
 
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
