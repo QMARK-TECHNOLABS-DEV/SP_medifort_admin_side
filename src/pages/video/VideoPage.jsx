@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import VideoCard from "../../components/video/VideoCard";
 import AddModal from "../../components/video/AddModal";
 import thumbnail from "../../assets/testimonials/Client.mp4";
+import useVideos from "../../hooks/healthTalkHook/useVideos";
 
 const breadcrumbsItems = [
   { label: "Health Talk", href: "/content-management/health-talk" },
@@ -10,15 +11,43 @@ const breadcrumbsItems = [
 ];
 
 const VideoPage = () => {
-  const [videos, setVideos] = useState([
-    { id: 1, name: "Reo George", date: "2024-01-03", src: thumbnail, isYouTube: false },
-    { id: 2, name: "Reo George", date: "2024-01-03", src: thumbnail, isYouTube: false },
-    { id: 3, name: "Reo George", date: "2024-01-03", src: thumbnail, isYouTube: false },
+  const [videosw, setVideos] = useState([
+    {
+      id: 1,
+      name: "Reo George",
+      date: "2024-01-03",
+      src: thumbnail,
+      isYouTube: false,
+    },
+    {
+      id: 2,
+      name: "Reo George",
+      date: "2024-01-03",
+      src: thumbnail,
+      isYouTube: false,
+    },
+    {
+      id: 3,
+      name: "Reo George",
+      date: "2024-01-03",
+      src: thumbnail,
+      isYouTube: false,
+    },
   ]);
+  const { loading, videos, fetchVideos } = useVideos();
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentVideo, setCurrentVideo] = useState(null);
-  const [newVideo, setNewVideo] = useState({ name: "", date: "", src: "", isYouTube: false });
+  const [newVideo, setNewVideo] = useState({
+    name: "",
+    date: "",
+    src: "",
+    isYouTube: false,
+  });
+
+  useEffect(() => {
+    fetchVideos();
+  }, []);
 
   const handleAddNewClick = () => setIsAdding(true);
 
@@ -27,10 +56,12 @@ const VideoPage = () => {
     setNewVideo((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleDateChange = (e) => setNewVideo((prev) => ({ ...prev, date: e.target.value }));
+  const handleDateChange = (e) =>
+    setNewVideo((prev) => ({ ...prev, date: e.target.value }));
 
   const extractYouTubeID = (url) => {
-    const regex = /(?:youtube\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const regex =
+      /(?:youtube\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const match = url.match(regex);
     return match ? match[1] : null;
   };
@@ -54,7 +85,12 @@ const VideoPage = () => {
   const handleEditClick = (video) => {
     setIsEditing(true);
     setCurrentVideo(video);
-    setNewVideo({ name: video.name, date: video.date, src: video.src, isYouTube: video.isYouTube });
+    setNewVideo({
+      name: video.name,
+      date: video.date,
+      src: video.src,
+      isYouTube: video.isYouTube,
+    });
   };
 
   const handleEditSubmit = (e) => {
@@ -72,9 +108,11 @@ const VideoPage = () => {
     resetForm();
   };
 
-  const handleDeleteClick = (id) => setVideos((prev) => prev.filter((video) => video.id !== id));
+  const handleDeleteClick = (id) =>
+    setVideos((prev) => prev.filter((video) => video.id !== id));
 
-  const resetForm = () => setNewVideo({ name: "", date: "", src: "", isYouTube: false });
+  const resetForm = () =>
+    setNewVideo({ name: "", date: "", src: "", isYouTube: false });
 
   const handleCloseModal = () => {
     setIsAdding(false);
@@ -82,28 +120,36 @@ const VideoPage = () => {
     setCurrentVideo(null);
     resetForm();
   };
-
+  if (loading) return <div>Loading videos...</div>;
   return (
     <div className="h-screen w-full overflow-hidden">
       <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
         <div className="flex flex-col mb-6">
-        <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
-          Video
-        </h1>
-       
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center px-4px">
-  <Breadcrumbs items={breadcrumbsItems} className="custom-breadcrumbs" />
-  <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
-    <button
-      className="p-2 px-4px mr-5px lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-      onClick={handleAddNewClick}
-    >
-      + Add video
-    </button>
-  </div>
-</div>
+          <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
+            Video
+          </h1>
 
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center px-4px">
+            <Breadcrumbs
+              items={breadcrumbsItems}
+              className="custom-breadcrumbs"
+            />
+            <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
+              <button
+                className="p-2 px-4px mr-5px lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+                onClick={handleAddNewClick}
+              >
+                + Add video
+              </button>
+            </div>
+          </div>
         </div>
+        {videos.length === 0 ? (
+ <div className="text-center mt-10 text-lg justify-center items-center text-gray-500">
+ No videos available.
+</div>
+        ):(
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-1">
           {videos.map((video) => (
             <VideoCard
@@ -114,6 +160,8 @@ const VideoPage = () => {
             />
           ))}
         </div>
+        )
+      }
       </div>
       {(isAdding || isEditing) && (
         <AddModal
