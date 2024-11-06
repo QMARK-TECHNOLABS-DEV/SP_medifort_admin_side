@@ -9,24 +9,17 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { inquiryRoute } from '../../utils/Endpoint';
 
 const ContactUsEnquiryPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [sort, setSort] = useState('latest');
+  const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 9; // Number of items per page
-  const totalItems = TableData.length;
+  const [totalItems, setTotalItems] = useState(0)
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value.toLowerCase());
+    setSearch(e.target.value.toLowerCase());
     setCurrentPage(1); // Reset to first page on new search
   };
-
-  // Filter and paginate the data
-  // const filteredData = TableData.filter(
-  //   (item) =>
-  //     item.Name.toLowerCase().includes(searchQuery) ||
-  //     item.City.toLowerCase().includes(searchQuery) ||
-  //     item.Service.toLowerCase().includes(searchQuery)
-  // );
 
   const [filteredData, setFilteredData] = useState([]);
 
@@ -34,11 +27,12 @@ const ContactUsEnquiryPage = () => {
 
   const getData = async () => {
     try {
-      const response = await axiosPrivate.get(`${inquiryRoute}?type=contact`)
+      const response = await axiosPrivate.get(`${inquiryRoute}?type=contact&search=${search}&sort=${sort}`)
 
       if (response?.status === 200) {
         console.log(response?.data?.inquiries)
         setFilteredData(response?.data?.inquiries)
+        setTotalItems(response?.data?.total)
       }
 
     } catch (error) {
@@ -48,7 +42,7 @@ const ContactUsEnquiryPage = () => {
 
   useEffect(() => {
     getData();
-  }, [])
+  }, [search, sort])
 
   const paginatedData = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
@@ -79,6 +73,7 @@ const ContactUsEnquiryPage = () => {
           itemsPerPage={itemsPerPage}
           onNextPage={handleNextPage}
           onPreviousPage={handlePreviousPage}
+          setSort={setSort}
         />
       </section>
       <EnquiryTable data={paginatedData} />
