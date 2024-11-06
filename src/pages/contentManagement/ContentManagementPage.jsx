@@ -17,7 +17,6 @@ const ContentManagementPage = () => {
     { imageSrc: content2, title: 'Health talk', url: "/content-management/health-talk" },
     { imageSrc: content4, title: 'News', url: "/content-management/news" },
     { imageSrc: content5, title: 'Gallery', url: "/content-management/gallery" },
-    { imageSrc: content6, title: 'Banners', url: "/content-management/banner" },
     { imageSrc: content7, title: 'Media', url: "/content-management/media" },
     { imageSrc: content8, title: 'Doctor case studies', url: "/content-management/casestudies" },
    

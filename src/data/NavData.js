@@ -25,12 +25,18 @@ export const NavData = [
     },
     {
         id: 5,
+        name: "Banner Management",
+        link: "/banner-management",
+        list: []
+    },
+    {
+        id: 6,
         name: "Testimonials",
         link: "/testimonials",
         list: []
     },
     {
-        id: 6,
+        id: 7,
         name: "Enquiries",
         link: "/enquiry",
         list: []

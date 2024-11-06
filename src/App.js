@@ -38,6 +38,7 @@ import Dashboard from './pages/Dashboard';
 import DepartmentHomePage from './pages/department/DepartmentHomePage';
 import DepartmentCard from './components/department/DepartmentCard';
 import VidTestimonial from './pages/testimonials/VidTestimonial';
+import BannerManagementPage from './pages/bannerManagement/BannerManagementPage';
 
 function App() {
   return (
@@ -93,15 +94,17 @@ function App() {
             <Route path='/content-management/news' element={<NewsPage />} />
             <Route path='/content-management/news/new-news' element={<AddNewsPage />} />
 
-            {/* Banner */}
-            <Route path='/content-management/banner' element={<BannerCo />} />
-            <Route path='/content-management/banner/add-banner' element={<BannComp />} />
 
             {/*Case Studies*/}
             <Route path='/content-management/casestudies' element={<CaseStudyHomePage />} />
 
             {/*Gallery Crud */}
             <Route path='/content-management/gallery' element={<Gallery />} />
+
+            <Route path='/banner-management' element={<BannerManagementPage />} />
+            {/* Banner */}
+            <Route path='/banner-management/banner' element={<BannerCo />} />
+            <Route path='/banner-management/banner/add-banner' element={<BannComp />} />
 
             {/*Enquiry */}
             <Route path='/enquiry' element={<EnquiryHomePage />} />

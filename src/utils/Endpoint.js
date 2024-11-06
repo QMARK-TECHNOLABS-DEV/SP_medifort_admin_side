@@ -32,6 +32,9 @@ export const getNews = '/api/news'
 // Videos
 export const uploadVideos = '/api/admin/video'
 export const getVideos = '/api/video'
+// CaseStudies
+export const uploadCaseStudies = '/api/admin/case-study'
+export const getCaseStudies = '/api/case-study'
 
 
 export const checkupAdminRoute = '/api/admin/checkups'

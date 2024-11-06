@@ -45,8 +45,8 @@ const BannerCo = () => {
     // { id: 3, src: Homecare, label: "Homecare.png" },
   ]);
   const breadcrumbsItems = [
-    { label: "Content management", href: "/content-management" },
-    { label: "Banner", href: "/content-management/banner" },
+    { label: "Banner management", href: "/banner-management" },
+    { label: "Home Banner", href: "/content-management/banner" },
   ];
 
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ const BannerCo = () => {
   };
 
   const handleAddBanner = () => {
-    navigate("/content-management/banner/add-banner");
+    navigate("/banner-management/banner/add-banner");
   };
 
   const axiosPrivate = useAxiosPrivate();
