@@ -4,23 +4,27 @@ import Breadcrumbs from "../../components/common/Breadcrumbs";
 import { HiPencilAlt } from "react-icons/hi";
 import NewsPlaceholder from "../../assets/article/images.png";
 import { FaTrashAlt } from "react-icons/fa";
+import uploadFile from "../../hooks/uploadFile";
+import { toast } from "react-toastify";
+import { uploadNews } from "../../utils/Endpoint";
+import { axiosPrivate } from "../../axios-folder/axios";
 
 const AddNewsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [image, setImage] = useState(NewsPlaceholder);
+  const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isEdit, setIsEdit] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [newsItems, setNewsItems] = useState(location.state?.newsItems || []);
+  const [pdf, setPdf] = useState();
 
   useEffect(() => {
     if (location.state && location.state.isEdit) {
       const { news } = location.state;
       setTitle(news.title);
-      setContent(news.content);
-      setImage(news.imageUrl);
+      setContent(news.description);
+      setImage(news.image);
+      setPdf(news.file)
       setIsEdit(true);
     }
   }, [location]);
@@ -30,15 +34,40 @@ const AddNewsPage = () => {
     { label: isEdit ? "Update news" : "New news", href: "/content-management/news/new-news" },
   ];
 
-  const handleImageUpload = (event) => {
+  const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
+      try {
+        const uploadResponse = await uploadFile(file);
+        setImage({
+          key: uploadResponse.key,
+          name: uploadResponse.name,
+          location: uploadResponse.location,
+        });
+      } catch (error) {
+        console.error("Image upload failed", error);
+        toast.error("Failed to upload image.");
+      }
     }
   };
 
-  const handleSubmit = (e) => {
+  const handlePdfUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        const uploadResponse = await uploadFile(file);
+        setPdf({
+          key: uploadResponse.key,
+          name: uploadResponse.name,
+          location: uploadResponse.location,
+        });
+      } catch (error) {
+        console.error("PDF upload failed", error);
+        toast.error("Failed to upload PDF.");
+      }
+    }
+  };
+  const handleSubmit = async (e) => {
     e.preventDefault(); 
 
     if (!title || !content) {
@@ -49,22 +78,27 @@ const AddNewsPage = () => {
     const newNews = {
       id: isEdit ? location.state.news.id : Date.now(),
       title,
-      content,
-      imageUrl: image || NewsPlaceholder,
-      author: "Reo George",
+      description :content,
+      image: image,
+      file : pdf,
       date: new Date().toLocaleDateString(),
     };
 
-    let updatedNews;
-    if (isEdit) {
-      updatedNews = newsItems.map(item => 
-        item.id === newNews.id ? newNews : item
-      );
-    } else {
-      updatedNews = [...newsItems, newNews];
-    }
+ 
+      // Send the news data to the server
+      const response = await axiosPrivate({
+        method: isEdit ? "PUT" : "POST",
+        url: isEdit
+          ? `${uploadNews}/${location.state.news._id}`
+          : uploadNews,
+        data: newNews,
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.status === 200) {
+        toast.success("Article uploaded successfully");
+      }
 
-    navigate("/news", { state: { updatedNews } });
+    navigate("/content-management/news");
   };
 
   return (
@@ -88,7 +122,7 @@ const AddNewsPage = () => {
                 <button
                   type="button"
                   className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-                  onClick={() => navigate("/news")}
+                  onClick={() => navigate("/content-management/news")}
                 >
                   <FaTrashAlt className="mr-2" />
                   Cancel
@@ -102,7 +136,7 @@ const AddNewsPage = () => {
             <div className="flex flex-col lg:flex-row gap-6 mb-6">
               <div className="relative lg:w-1/2">
                 <img
-                  src={image}
+                  src={image?.location ? image.location : NewsPlaceholder}
                   alt="News"
                   className="w-full h-[200px] bg-[#B0BAC366] object-cover rounded-lg"
                 />
@@ -146,8 +180,26 @@ const AddNewsPage = () => {
                   onChange={(e) => setContent(e.target.value)}
                 />
               </div>
-              <div className="text-left text-sm text-gray-500">
-                + upload content as PDF
+              <div className="flex flex-col mb-6">
+                <label
+                  className="block text-sm text-left font-medium text-gray-700 mb-2 cursor-pointer"
+                  htmlFor="pdf-upload"
+                >
+                  + Upload Content as PDF
+                </label>
+                <input
+                  id="pdf-upload"
+                  type="file"
+                  accept="application/pdf"
+                  className="hidden"
+                  onChange={handlePdfUpload}
+                />
+                {/* Show the uploaded PDF file name */}
+                {pdf?.name && (
+                  <div className="mt-2 text-left text-sm text-gray-600">
+                    {pdf.name} {/* Display the PDF file name */}
+                  </div>
+                )}
               </div>
             </div>
           </div>

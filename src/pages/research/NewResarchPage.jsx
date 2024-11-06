@@ -4,13 +4,19 @@ import Breadcrumbs from "../../components/common/Breadcrumbs";
 import { HiPencilAlt } from "react-icons/hi";
 import ResearchPlaceholder from "../../assets/article/images.png";
 import { FaTrashAlt } from "react-icons/fa";
+import uploadFile from "../../hooks/uploadFile";
+import { toast } from "react-toastify";
+import { axiosPrivate } from "../../axios-folder/axios";
+import { uploadResearch } from "../../utils/Endpoint";
 
 const NewResearchPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [image, setImage] = useState(ResearchPlaceholder);
+  const [image, setImage] = useState({file: null, location:ResearchPlaceholder});
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [author, setAuthor] = useState("");
+  const [pdf, setPdf] = useState({ file: null, name: "" });
   const [isEdit, setIsEdit] = useState(false);
   const [researchItems, setResearchItems] = useState(location.state?.researchItems || []);
 
@@ -18,8 +24,10 @@ const NewResearchPage = () => {
     if (location.state && location.state.isEdit) {
       const { research } = location.state;
       setTitle(research.title);
-      setContent(research.content);
-      setImage(research.imageUrl);
+      setContent(research.journal);
+      setAuthor(research.authors)
+      setImage(research.image);
+      setPdf(research.file);
       setIsEdit(true);
     }
   }, [location]);
@@ -29,42 +37,79 @@ const NewResearchPage = () => {
     { label: isEdit ? "Update Research" : "New Research", href: "/content-management/research/new-research" },
   ];
 
-  const handleImageUpload = (event) => {
+  const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
+      try {
+        const uploadResponse = await uploadFile(file);
+        setImage({
+          key: uploadResponse.key,
+          name: uploadResponse.name,
+          location: uploadResponse.location,
+        });
+      } catch (error) {
+        console.error("Image upload failed", error);
+        toast.error("Failed to upload image.");
+      }
     }
   };
 
-  const handleSubmit = (e) => {
+  const handlePdfUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        const uploadResponse = await uploadFile(file);
+        setPdf({
+          key: uploadResponse.key,
+          name: uploadResponse.name,
+          location: uploadResponse.location,
+        });
+      } catch (error) {
+        console.error("PDF upload failed", error);
+        toast.error("Failed to upload PDF.");
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault(); 
 
-    if (!title || !content) {
-      alert("Please fill in all required fields.");
+    if (!title || !content || !pdf) {
+      toast.error("Please fill in all required fields and upload a PDF.");
       return;
     }
 
     const newResearch = {
-      id: isEdit ? location.state.research.id : Date.now(),
+     
       title,
-      content,
-      imageUrl: image || ResearchPlaceholder,
-      author: "Reo George",
-      date: new Date().toLocaleDateString(),
+      journal:content,
+      image: image ,
+      file: pdf,
+      authors:author,
+      publishedDate: new Date().toLocaleDateString(),
     };
-
-    let updatedResearch;
-    if (isEdit) {
-      updatedResearch = researchItems.map(item => 
-        item.id === newResearch.id ? newResearch : item
-      );
-    } else {
-      updatedResearch = [...researchItems, newResearch];
+    console.log(newResearch)
+    try {
+    const response = await axiosPrivate({
+      method: isEdit ? "PUT" : "POST",
+      url: isEdit
+        ? `${uploadResearch}/${location.state.research._id}`
+        : uploadResearch,
+      data: newResearch,
+      headers: { "Content-Type": "application/json" },
+    });
+    if (response.status === 200) {
+      toast.success("Article uploaded successfully");
     }
-
-    navigate("/research", { state: { updatedResearch } });
-  };
+    // Redirect with the updated articles data
+    navigate("/content-management/research", {
+      state: { updatedArticles: response.data },
+    });
+  } catch (error) {
+    console.error("Failed to submit article", error);
+    toast.error("An error occurred while saving the article.");
+  }
+};
 
   return (
     <div className="h-screen w-full overflow-hidden">
@@ -103,7 +148,7 @@ const NewResearchPage = () => {
             <div className="flex flex-col lg:flex-row gap-6 mb-6">
               <div className="relative lg:w-1/2">
                 <img
-                  src={image}
+                  src={image.location}
                   alt="Research"
                   className="w-full h-[200px] bg-[#B0BAC366] object-cover rounded-lg"
                 />
@@ -120,16 +165,27 @@ const NewResearchPage = () => {
                   />
                 </div>
               </div>
-              <div className="lg:w-1/2 mt-32">
+              <div className="lg:flex-1 flex flex-col justify-end">
                 <label className="block text-sm text-left font-medium text-gray-700 mb-2">
                   Title
                 </label>
                 <input
                   type="text"
-                  className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                  placeholder="Enter research title"
+                  className="w-full sm:w-1/2 h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                  placeholder="Nourishing Recovery Amidst Medical Challenges"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
+                  required
+                />
+                <label className="block text-sm text-left font-medium text-gray-700 mt-5 mb-2">
+                  Author
+                </label>
+                <input
+                  type="text"
+                  className="w-full sm:w-1/2 h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                  placeholder="Author Name"
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
                   required
                 />
               </div>
@@ -148,8 +204,26 @@ const NewResearchPage = () => {
                   required
                 />
               </div>
-              <div className="text-left text-sm text-gray-500">
-                + upload content as PDF
+              <div className="flex flex-col mb-6">
+                <label
+                  className="block text-sm text-left font-medium text-gray-700 mb-2 cursor-pointer"
+                  htmlFor="pdf-upload"
+                >
+                  + Upload Content as PDF
+                </label>
+                <input
+                  id="pdf-upload"
+                  type="file"
+                  accept="application/pdf"
+                  className="hidden"
+                  onChange={handlePdfUpload}
+                />
+                {/* Show the uploaded PDF file name */}
+                {pdf.name && (
+                  <div className="mt-2 text-left text-sm text-gray-600">
+                    {pdf.name} {/* Display the PDF file name */}
+                  </div>
+                )}
               </div>
             </div>
           </div>
