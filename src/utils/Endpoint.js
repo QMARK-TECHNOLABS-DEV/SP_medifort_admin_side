@@ -1,4 +1,5 @@
-export const baseUrl = 'https://spserver.qmarkdesk.com';
+// export const baseUrl = 'https://spserver.qmarkdesk.com';
+export const baseUrl = 'http://localhost:8800';
 
 // Admin routes
 export const regenerateRoute = '/api/auth/refresh-token';

@@ -7,17 +7,11 @@ const VideoCard = ({ video, onEditClick, onDeleteClick }) => {
       style={{ width: "full" }} 
     >
       <div className="relative h-52"> 
-        {video.isYouTube ? (
-          <iframe
-            className="w-full h-full object-cover"
-            src={video.src}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title={video.name}
-          ></iframe>
-        ) : (
-          <video className="w-full h-full object-cover" src={video.src} controls />
-        )}
+     
+          <video className="w-full h-full object-cover" src={video.attachment?.location}  
+          autoPlay
+           controls />
+       
         <div className="absolute top-2 right-2 flex space-x-2">
           <button
             className="bg-white rounded-full p-2 shadow-md"
@@ -40,7 +34,7 @@ const VideoCard = ({ video, onEditClick, onDeleteClick }) => {
           </button>
           <button
             className="bg-white rounded-full p-2 shadow-md"
-            onClick={() => onDeleteClick(video.id)}
+            onClick={() => onDeleteClick(video._id)}
           >
             {/* Trash icon SVG */}
             <svg
@@ -63,8 +57,8 @@ const VideoCard = ({ video, onEditClick, onDeleteClick }) => {
         </div>
       </div>
       <div className="flex justify-between items-center px-4 py-2">
-        <h3 className="font-medium text-md text-left">{video.name}</h3>
-        <p className="text-sm text-gray-500 text-left">{video.date}</p>
+        <h3 className="font-medium text-md text-left">{video?.title}</h3>
+        <p className="text-sm text-gray-500 text-left">{video?.date}</p>
       </div>
     </div>
   );
