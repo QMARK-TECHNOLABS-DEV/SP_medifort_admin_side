@@ -1,4 +1,4 @@
-// export const baseUrl = 'https://spserver.qmarkdesk.com';
+export const baseUrl = 'https://spserver.qmarkdesk.com';
 
 // Admin routes
 export const regenerateRoute = '/api/auth/refresh-token';
