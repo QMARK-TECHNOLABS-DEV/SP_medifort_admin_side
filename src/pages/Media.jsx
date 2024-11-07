@@ -7,7 +7,7 @@ import content2 from '../assets/contentManagement/Content 2.jpeg';
 const Media = () => {
   const contentItems = [
     { imageSrc: content1, title: 'Gallery', url: "/content-management/media/gallery" },
-    { imageSrc: content2, title: 'Video', url: "/content-management/video" },
+    { imageSrc: content2, title: 'Video', url: "/content-management/media/video" },
    
 ];
 
