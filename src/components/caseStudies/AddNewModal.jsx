@@ -1,33 +1,63 @@
+import React, { useState, useEffect } from 'react';
+import { IoClose } from "react-icons/io5";
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { uploadCaseStudies } from '../../utils/Endpoint'; // Ensure this is the correct endpoint
+import { toast } from 'react-toastify';
 
-import React, { useState } from 'react';
-import { IoLinkSharp, IoClose } from "react-icons/io5";
-
-const AddNewModal = ({ show, onClose, onAddNew }) => {
+const AddNewModal = ({ show, onClose, addNewCaseStudy, initialStudy }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
+  const axiosPrivateHook = useAxiosPrivate();
+
+  useEffect(() => {
+    if (initialStudy) {
+      setTitle(initialStudy.title);
+      setAuthor(initialStudy.author);
+    } else {
+      setTitle('');
+      setAuthor('');
+    }
+  }, [initialStudy]);
 
   if (!show) return null;
 
-  const handleAdd = (e) => {
+  const handleAddOrUpdate = async (e) => {
     e.preventDefault();
-    if (title && author) {
-      onAddNew({ title, author, date: new Date().toLocaleDateString() });
-      setTitle(''); // Reset form fields
-      setAuthor('');
+
+    const newStudy = { title, author, date: new Date().toLocaleDateString() };
+
+    try {
+      if (initialStudy) {
+        // Edit mode (PUT request)
+        const response = await axiosPrivateHook.put(`${uploadCaseStudies}/${initialStudy._id}`, newStudy);
+        toast.success('Case study updated successfully');
+        addNewCaseStudy(response.data);  // Pass updated data back to the parent
+      } else {
+        // Add new study (POST request)
+        const response = await axiosPrivateHook.post(uploadCaseStudies, newStudy);
+        toast.success('Case study added successfully');
+        addNewCaseStudy(response.data);  // Pass the new data back to the parent
+      }
+      onClose(); // Close the modal after success
+    } catch (error) {
+      toast.error('Failed to add/edit case study');
+      console.error(error);
     }
   };
-
+  
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96 text-left relative">
-        <h1 className='mb-4 text-lg text-[#424242]'>Add New</h1>
+        <h1 className='mb-4 text-lg text-[#424242]'>
+          {initialStudy ? 'Edit Case Study' : 'Add New Case Study'}
+        </h1>
         <IoClose
           onClick={onClose}
           size={23}
           className="absolute top-4 right-4 text-[#475467] cursor-pointer"
         />
       
-        <form onSubmit={handleAdd}>
+        <form onSubmit={handleAddOrUpdate}>
           <div className="mb-3">
             <label htmlFor="title" className="block text-sm pb-1 font-medium text-[#3C3C3C]">
               Case Study Title
@@ -60,9 +90,8 @@ const AddNewModal = ({ show, onClose, onAddNew }) => {
           </div>
 
           <div className="flex flex-row gap-8">
-            <button type="submit" className="mt-4 block w-[100px] h-10 px-4 py-2 border rounded-md
-             border-primaryColor text-primaryColor">
-              Add
+            <button type="submit" className="mt-4 block w-[100px] h-10 px-4 py-2 border rounded-md border-primaryColor text-primaryColor">
+              {initialStudy ? 'Update' : 'Add'}
             </button>
             <span className='text-[#424242] pt-6 cursor-pointer' onClick={onClose}>Reset</span>
           </div>
@@ -73,4 +102,3 @@ const AddNewModal = ({ show, onClose, onAddNew }) => {
 };
 
 export default AddNewModal;
-

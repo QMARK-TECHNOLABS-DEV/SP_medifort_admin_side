@@ -1,36 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CaseStudyTopPart from '../../components/caseStudies/CaseStudyTopPart';
 import CaseStudyCards from '../../components/caseStudies/CaseStudyCards';
 import AddNewModal from '../../components/caseStudies/AddNewModal';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { getCaseStudies } from '../../utils/Endpoint';
+import { toast } from 'react-toastify';
 
 const CaseStudyHomePage = () => {
-  const [caseStudies, setCaseStudies] = useState([
-    { title: "Nourishing Recovery Amidst Medical Challenges", author: "Reo George", date: "03/01/24" },
-    { title: "Innovative Solutions for Sustainable Living", author: "Alice Smith", date: "03/15/24" },
-    { title: "Empowering Communities Through Technology", author: "Sam Patel", date: "03/29/24" }
-  ]);
-
+  const [caseStudies, setCaseStudies] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentStudy, setCurrentStudy] = useState(null); // Track which study is being edited
-  
+  const [currentStudy, setCurrentStudy] = useState(null); 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const axiosPrivateHook = useAxiosPrivate();
+
+  useEffect(() => {
+    const fetchCaseStudies = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosPrivateHook.get(getCaseStudies);
+        setCaseStudies(response.data.caseStudies); // Ensure caseStudies is an array
+      } catch (err) {
+        setError(err);
+        toast.error('Failed to fetch case studies');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCaseStudies();
+  }, [axiosPrivateHook]);
+
   const addNewCaseStudy = (newStudy) => {
     if (currentStudy !== null) {
       // Edit mode
-      const updatedStudies = caseStudies.map((study, index) => 
+      const updatedStudies = caseStudies.map((study, index) =>
         index === currentStudy ? newStudy : study
       );
       setCaseStudies(updatedStudies);
-      setCurrentStudy(null);
+      setCurrentStudy(null);  // Reset after editing
     } else {
       // Add new study
       setCaseStudies([...caseStudies, newStudy]);
     }
-    setIsModalOpen(false); // Close modal after adding/editing
+    setIsModalOpen(false);  // Close modal after adding/editing
   };
 
   const editCaseStudy = (index) => {
-    setCurrentStudy(index); // Set the study to be edited
-    setIsModalOpen(true); // Open modal for editing
+    setCurrentStudy(index);  // Set the study to be edited
+    setIsModalOpen(true);  // Open modal for editing
   };
 
   const deleteCaseStudy = (index) => {
@@ -47,13 +65,24 @@ const CaseStudyHomePage = () => {
           marginRight: '5px', // Add a smaller right margin to reduce the gap
         }}
       >
-        <CaseStudyCards caseStudies={caseStudies} onEdit={editCaseStudy} onDelete={deleteCaseStudy} />
+        {caseStudies.length === 0 ? (
+          <div className="text-center mt-10 text-lg justify-center items-center text-gray-500">
+            No Case Studies available.
+          </div>
+        ) : (
+          <CaseStudyCards
+            caseStudies={caseStudies}
+            onEdit={editCaseStudy}
+            onDelete={deleteCaseStudy}
+          />
+        )}
       </section>
+
       {isModalOpen && (
         <AddNewModal
           show={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          addNewCaseStudy={addNewCaseStudy}
+          addNewCaseStudy={addNewCaseStudy}  // Pass the success handler for adding/editing
           initialStudy={currentStudy !== null ? caseStudies[currentStudy] : null}
         />
       )}
