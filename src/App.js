@@ -99,7 +99,7 @@ function App() {
             <Route path='/content-management/casestudies' element={<CaseStudyHomePage />} />
 
             {/*Gallery Crud */}
-            <Route path='/content-management/gallery' element={<Gallery />} />
+            <Route path='/content-management/media/gallery' element={<Gallery />} />
 
             <Route path='/banner-management' element={<BannerManagementPage />} />
             {/* Banner */}

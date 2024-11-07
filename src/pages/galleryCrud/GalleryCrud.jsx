@@ -36,8 +36,8 @@ const Gallery = () => {
   const fileInputRef = useRef(null);
 
   const breadcrumbsItems = [
-    { label: "Content Management", href: "/content-management" },
-    { label: "Gallery", href: "/content-management/gallery" },
+    { label: "Media", href: "/content-management/media" },
+    { label: "Gallery", href: "/content-management/media/gallery" },
   ];
 
   const handleSelectImage = (index) => {
