@@ -7,7 +7,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import uploadFile from "../../hooks/uploadFile";
 import { toast } from "react-toastify";
 import { uploadNews } from "../../utils/Endpoint";
-import { axiosPrivate } from "../../axios-folder/axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const AddNewsPage = () => {
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ const AddNewsPage = () => {
   const [content, setContent] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [pdf, setPdf] = useState();
+  const axiosPrivateHook = useAxiosPrivate();
 
   useEffect(() => {
     if (location.state && location.state.isEdit) {
@@ -86,7 +87,7 @@ const AddNewsPage = () => {
 
  
       // Send the news data to the server
-      const response = await axiosPrivate({
+      const response = await axiosPrivateHook({
         method: isEdit ? "PUT" : "POST",
         url: isEdit
           ? `${uploadNews}/${location.state.news._id}`
