@@ -5,7 +5,11 @@ export const baseUrl = 'http://localhost:8800';
 export const regenerateRoute = '/api/auth/refresh-token';
 export const inquiryRoute = '/api/admin/inquiry';
 export const bannerRoute = '/api/banner';
+export const galleryRoute = '/api/admin/gallery';
+export const updateGalleryRoute = '/api/admin/gallery/:id';
 
+//guest routes
+export const getAllGalleriesRoute = '/api/gallery';
 
 // HMS routes
 export const doc_in_dept_route = '/doctor-in-department';
