@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Breadcrumbs from '../../components/common/Breadcrumbs'
 import VideoCard from '../../components/video/VideoCard';
-import AddModal from '../../components/contentManagement/PreventiveHealthAddModal';
+import AddModal from '../../components/video/AddModal';
 const breadcrumbsItems = [
     { label: "Media", href: "/content-management/media" },
     { label: "Video", href: "/content-management/media/video" },
@@ -20,10 +20,11 @@ const MediaVideoPage = () => {
       isVideo: true,
     });
     const handleAddNewClick = () => {
-        setIsAdding(true);
-        setIsEditing(false);
-      };
-    
+      console.log("Add button clicked"); // Check if this logs on click
+      setIsAdding(true);
+      setIsEditing(false);
+      console.log("isAdding:", isAdding, "isEditing:", isEditing); // Check if states are updating
+    };
       const handleAddChange = (e) => {
         const { name, value } = e.target;
         setNewVideo((prev) => ({ ...prev, [name]: value }));
