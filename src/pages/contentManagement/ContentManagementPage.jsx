@@ -5,8 +5,6 @@ import content1 from '../../assets/contentManagement/preventive.jpg';
 import content2 from '../../assets/contentManagement/Healthtalk.png';
 
 import content4 from '../../assets/contentManagement/Content 4.png';
-import content5 from '../../assets/contentManagement/Content 1.png';
-import content6 from '../../assets/contentManagement/Content 6.png';
 import content7 from '../../assets/contentManagement/mediaa.jpg';
 import content8 from '../../assets/contentManagement/casestudy.jpg';
 
@@ -16,7 +14,6 @@ const ContentManagementPage = () => {
     { imageSrc: content1, title: 'Preventive Health', url: "/content-management/preventive-health" },
     { imageSrc: content2, title: 'Health talk', url: "/content-management/health-talk" },
     { imageSrc: content4, title: 'News', url: "/content-management/news" },
-    { imageSrc: content5, title: 'Gallery', url: "/content-management/gallery" },
     { imageSrc: content7, title: 'Media', url: "/content-management/media" },
     { imageSrc: content8, title: 'Doctor case studies', url: "/content-management/casestudies" },
    

@@ -6,7 +6,8 @@ import Breadcrumbs from "../../components/common/Breadcrumbs";
 import Homecare from "../../assets/banners/Homecare1.png";
 import Testimonials from "../../assets/banners/Testimonials1.png";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { bannerRoute } from "../../utils/Endpoint";
+import { bannerRoute, uploadBanner } from "../../utils/Endpoint";
+import { toast } from "react-toastify";
 
 const ImageCard = ({data, onDelete }) => {
   return (
@@ -40,21 +41,16 @@ const ImageCard = ({data, onDelete }) => {
 
 const BannerCo = () => {
   const [data, setData] = useState([
-    // { id: 1, src: Homecare, label: "Homecare.png" },
-    // { id: 2, src: Testimonials, label: "Testimonials.png" },
-    // { id: 3, src: Homecare, label: "Homecare.png" },
+ 
   ]);
   const breadcrumbsItems = [
     { label: "Banner management", href: "/banner-management" },
-    { label: "Home Banner", href: "/content-management/banner" },
+    { label: "Home Banner", href: "/banner-management/banner" },
   ];
 
   const navigate = useNavigate();
 
-  const handleDelete = (id) => {
-    setData(data.filter((image) => image.id !== id));
-  };
-
+   
   const handleAddBanner = () => {
     navigate("/banner-management/banner/add-banner");
   };
@@ -76,6 +72,22 @@ const BannerCo = () => {
   useEffect(() => {
     getData()
   }, [])
+  
+  const handleDelete = async  (id) => {
+    try {
+      const res = await axiosPrivate.delete(`${uploadBanner}/${id}`);
+      if(res.status === 200 ){
+        toast.success("Banner Delete Successfully")
+      }
+      getData()
+    } catch (error) {
+      console.error("Failed to submit banner", error);
+        toast.error("An error occurred while saving the Banner.");
+    }
+
+    setData(data.filter((image) => image.id !== id));
+  };
+
 
   return (
     <div className="px-4 pt-4 w-full h-screen overflow-auto relative">
