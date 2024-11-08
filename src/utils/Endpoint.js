@@ -6,7 +6,7 @@ export const regenerateRoute = '/api/auth/refresh-token';
 export const inquiryRoute = '/api/admin/inquiry';
 export const bannerRoute = '/api/banner';
 export const galleryRoute = '/api/admin/gallery';
-export const updateGalleryRoute = '/api/admin/gallery/:id';
+export const updateGalleryRoute = '/api/admin/gallery';
 
 //guest routes
 export const getAllGalleriesRoute = '/api/gallery';

@@ -3,10 +3,10 @@ import React, { useState, useRef,useEffect } from "react";
 import { useNavigate } from "react-router";
 import gallery from "../../assets/Gallery/gallery.png";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { galleryRoute,getAllGalleriesRoute,updateGalleryRoute,uploadRoute } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
-import '../../../src/index.css'
+// import '../../../src/index.css'
 
 // SVG Trash Icon Component
 const TrashIcon = () => (
@@ -68,6 +68,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
     { label: "Gallery", href: "/content-management/gallery" },
   ];
 
+  //handleEdit image
   const handleEditImage = (index) => {
     setEditingImageIndex(index); // Set the image index to be edited
     setEditingImageName(images[index].caption); // Set the current caption
@@ -94,49 +95,50 @@ const [isModalOpen, setIsModalOpen] = useState(false);
     setIsModalOpen(false);
 };
 
-
+//handleUpdateImage
 const handleUpdateImage = async () => {
   if (editingImageIndex === null) return;
 
+  const imageId = images[editingImageIndex]._id; // Get the ID from the selected image
   const formData = new FormData();
   formData.append('caption', editingImageName); // Add caption to form data
   if (editingImageFile) {
-      formData.append('image', editingImageFile); // Add image file if provided
+    formData.append('image', editingImageFile); // Add image file if provided
   }
 
   try {
-     
-      const response = await fetch(`${updateGalleryRoute.replace(':id', images[editingImageIndex]._id)}`, {
-          method: 'PUT',
-          body: formData,
-      });
+    const response = await axiosPrivate.put(`${updateGalleryRoute}/${imageId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
-      if (!response.ok) {
-          const errorData = await response.json();
-          toast.error(`Error: ${errorData.msg}`);
-          return;
-      }
+    // Check the response status and handle it
+    if (response.status !== 200) {
+      toast.error(`Error: ${response.data.msg}`);
+      return;
+    }
 
-      const data = await response.json();
-      const updatedImage = data.gallery;
+    const updatedImage = response.data.gallery;
 
-      // Update the images array with the edited image data
-      const updatedImages = [...images];
-      updatedImages[editingImageIndex] = updatedImage;
-      setImages(updatedImages);
+    // Update the images array with the edited image data
+    const updatedImages = [...images];
+    updatedImages[editingImageIndex] = updatedImage;
+    setImages(updatedImages);
 
-      // Close the modal and reset editing state
-      setIsModalOpen(false);
-      setEditingImageIndex(null);
-      setEditingImageName('');
-      setEditingImageFile(null);
-      toast.success(data.msg);
+    // Close the modal and reset editing state
+    setIsModalOpen(false);
+    setEditingImageIndex(null);
+    setEditingImageName('');
+    setEditingImageFile(null);
+    toast.success(response.data.msg);
   } catch (error) {
-      console.error("Failed to edit image:", error);
-      toast.error("Something went wrong");
+    console.error("Failed to edit image:", error);
+    toast.error("Something went wrong");
   }
 };
 
+//handleImageChange
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -150,6 +152,7 @@ const handleUpdateImage = async () => {
     }
   };
   
+  //fetGalleryData
   useEffect(() => {
     // Fetch gallery data from the backend
     const fetchGalleryData = async () => {
@@ -189,23 +192,28 @@ const handleUpdateImage = async () => {
         },
       });
   
-      const addedImage = response.data.gallery.image.location;
-      const addedGalleryId = response.data.gallery._id;
+      const addedImage = response.data.gallery;
   
-      if (addedGalleryId) {
+      // Add the full image object to the images array
+      if (addedImage) {
         setImages((prevImages) => [...prevImages, addedImage]);
-        setGalleryIds((prevIds) => [...prevIds, addedGalleryId]);
       }
   
       toast.success("Image added successfully!");
-      // closeAddBox(); // Close the add image box after successful addition
+      closeAddBox(); // Close the add image box after successful addition
+  
+      // Reset form fields after successful image upload
+      setImageName('');
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ""; // Clear file input
+      }
     } catch (error) {
       toast.error("Failed to add image. Please try again.");
       console.error("Error in uploading image:", error);
     }
   };
   
-
+//handleDeleteImage
 
 const handleRemoveImage = async (galleryId, index) => {
   if (!galleryId) {
@@ -226,6 +234,7 @@ const handleRemoveImage = async (galleryId, index) => {
     setImages(updatedImages);
     setGalleryIds(updatedIds);
     toast.success("Image deleted successfully!");
+    
   } catch (error) {
     console.log("Error in deleting image", error);
     toast.error("Failed to delete image. Please try again.");
@@ -435,8 +444,7 @@ const handleRemoveImage = async (galleryId, index) => {
           </div>
         )}
 
-        <ToastContainer />
-
+      
         <button
           onClick={(e) => {
             e.stopPropagation();
