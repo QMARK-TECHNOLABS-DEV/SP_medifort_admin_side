@@ -5,7 +5,12 @@ export const baseUrl = 'https://spserver.qmarkdesk.com';
 export const regenerateRoute = '/api/auth/refresh-token';
 export const inquiryRoute = '/api/admin/inquiry';
 
+// Gallery 
+export const galleryRoute = '/api/admin/gallery';
+export const updateGalleryRoute = '/api/admin/gallery';
 
+//guest routes
+export const getAllGalleriesRoute = '/api/gallery';
 
 // HMS routes
 export const doc_in_dept_route = '/doctor-in-department';
