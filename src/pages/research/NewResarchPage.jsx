@@ -6,8 +6,8 @@ import ResearchPlaceholder from "../../assets/article/images.png";
 import { FaTrashAlt } from "react-icons/fa";
 import uploadFile from "../../hooks/uploadFile";
 import { toast } from "react-toastify";
-import { axiosPrivate } from "../../axios-folder/axios";
 import { uploadResearch } from "../../utils/Endpoint";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const NewResearchPage = () => {
   const navigate = useNavigate();
@@ -19,6 +19,7 @@ const NewResearchPage = () => {
   const [pdf, setPdf] = useState({ file: null, name: "" });
   const [isEdit, setIsEdit] = useState(false);
   const [researchItems, setResearchItems] = useState(location.state?.researchItems || []);
+  const axiosPrivateHook = useAxiosPrivate();
 
   useEffect(() => {
     if (location.state && location.state.isEdit) {
@@ -90,7 +91,7 @@ const NewResearchPage = () => {
     };
     console.log(newResearch)
     try {
-    const response = await axiosPrivate({
+    const response = await axiosPrivateHook({
       method: isEdit ? "PUT" : "POST",
       url: isEdit
         ? `${uploadResearch}/${location.state.research._id}`
@@ -134,7 +135,7 @@ const NewResearchPage = () => {
                 <button
                   type="button"
                   className="w-full sm:w-auto py-2 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-                  onClick={() => navigate("/research")}
+                  onClick={() => navigate("/content-management/research")}
                 >
                   <FaTrashAlt className="mr-2" />
                   Cancel

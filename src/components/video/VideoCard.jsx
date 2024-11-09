@@ -7,11 +7,13 @@ const VideoCard = ({ video, onEditClick, onDeleteClick }) => {
       style={{ width: "full" }} 
     >
       <div className="relative h-52"> 
-     
-          <video className="w-full h-full object-cover" src={video.attachment?.location}  
-          autoPlay
-           controls />
-       
+      <iframe
+            className="w-full h-full object-cover"
+            src={video.ytlink}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title={video.name}
+          ></iframe>
         <div className="absolute top-2 right-2 flex space-x-2">
           <button
             className="bg-white rounded-full p-2 shadow-md"

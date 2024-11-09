@@ -3,10 +3,8 @@ import Breadcrumbs from "../../components/common/Breadcrumbs";
 import VideoCard from "../../components/video/VideoCard";
 import AddModal from "../../components/video/AddModal";
 import useVideos from "../../hooks/healthTalkHook/useVideos";
-import { axiosPrivate } from "../../axios-folder/axios";
-import { uploadRoute, uploadVideos } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import uploadFile from "../../hooks/uploadFile";
+import { uploadVideos } from "../../utils/Endpoint";
 import { toast } from "react-toastify";
 
 const breadcrumbsItems = [
@@ -23,13 +21,12 @@ const VideoPage = () => {
   const [newVideo, setNewVideo] = useState({
     title: "",
     date: "",
-    attachment: "",
-    isVideo: false,
+    ytlink: "",
+    isVideo: true,
   });
 
   useEffect(() => {
     fetchVideos();
-    
   }, []);
 
   const handleAddNewClick = () => {
@@ -48,7 +45,7 @@ const VideoPage = () => {
     setNewVideo({
       title: video.title,
       date: video.date,
-      attachment: video.attachment,
+      ytlink: video.ytlink,
       isVideo: true,
     });
   };
@@ -56,68 +53,62 @@ const VideoPage = () => {
   const handleDateChange = (e) =>
     setNewVideo((prev) => ({ ...prev, date: e.target.value }));
 
-  const handleUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-  
-    try {
-      const uploadResponse = await uploadFile(file);
-      console.log(uploadResponse);
-      setNewVideo((prev) => ({ ...prev,attachment: uploadResponse }))
-  
-  
-    } catch (error) {
-      console.error("File upload failed:", error);
-    }
+  const extractYouTubeID = (url) => {
+    const regex =
+      /(?:youtube\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
   };
+
   const axiosPrivateHook = useAxiosPrivate();
 
   const handlePostData = async (e) => {
     e.preventDefault();
-    try {
-      let res;
+    const youTubeID = extractYouTubeID(newVideo.ytlink);
 
-      if (isAdding) {
-        console.log(newVideo ,"data")
-        res = await axiosPrivateHook.post(uploadVideos, newVideo);
-      } else if (isEditing && currentVideo) {
-        res = await axiosPrivateHook.put(`${uploadVideos}/${currentVideo?._id}`, newVideo);
-      }
+    if (youTubeID) {
+      const videoData = {
+        ...newVideo,
+        ytlink: `https://www.youtube.com/embed/${youTubeID}`, // Embed link format
+      };
 
-      if (isAdding && res.status === 200) {
-        setIsAdding(false);
-        fetchVideos()
-        toast.success("Video Added Successfully ")
-      }
-      if (isEditing && res.status === 200) {
-        setIsEditing(false);
-        const updatedVideos = videos.map((video) =>
-          String(video._id) === String(currentVideo._id) ? res.data.result : video
-        );
-        fetchVideos()
-        setVideos(updatedVideos);
-      }
+      try {
+        let res;
+        if (isAdding) {
+          res = await axiosPrivateHook.post(uploadVideos, videoData);
+        } else if (isEditing && currentVideo) {
+          res = await axiosPrivateHook.put(`${uploadVideos}/${currentVideo._id}`, videoData);
+        }
 
-      setCurrentVideo(null);
-    } catch (error) {
-      console.log(error);
+        if (res && res.status === 200) {
+          toast.success(isAdding ? "Video added successfully" : "Video updated successfully");
+          fetchVideos();
+          handleCloseModal();
+        }
+      } catch (error) {
+        console.error("Failed to save video:", error);
+        toast.error("An error occurred while saving the video.");
+      }
+    } else {
+      toast.error("Invalid YouTube URL");
     }
   };
 
-  const handleDeleteClick = async (id) =>{
+  const handleDeleteClick = async (id) => {
     try {
-      const res = await axiosPrivateHook.delete(`${uploadVideos}/${id}`)
-
+      const res = await axiosPrivateHook.delete(`${uploadVideos}/${id}`);
       if (res.status === 200) {
-        fetchVideos()
+        fetchVideos();
+        toast.success("Video deleted successfully");
       }
-
     } catch (error) {
-
+      console.error("Failed to delete video:", error);
+      toast.error("An error occurred while deleting the video.");
     }
   };
+
   const resetForm = () =>
-    setNewVideo({ title: "", date: "", attachment: "", isVideo: false });
+    setNewVideo({ title: "", date: "", ytlink: "", isVideo: true });
 
   const handleCloseModal = () => {
     setIsAdding(false);
@@ -135,18 +126,16 @@ const VideoPage = () => {
           <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Video</h1>
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center px-4px">
             <Breadcrumbs items={breadcrumbsItems} className="custom-breadcrumbs" />
-            <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
-              <button
-                className="p-2 px-4px mr-5px lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-                onClick={handleAddNewClick}
-              >
-                + Add video
-              </button>
-            </div>
+            <button
+              className="p-2 px-4px mr-5px lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+              onClick={handleAddNewClick}
+            >
+              + Add video
+            </button>
           </div>
         </div>
         {videosItems.length === 0 ? (
-          <div className="text-center mt-10 text-lg justify-center items-center text-gray-500">
+          <div className="text-center mt-10 text-lg text-gray-500">
             No videos available.
           </div>
         ) : (
@@ -169,8 +158,7 @@ const VideoPage = () => {
           newVideo={newVideo}
           onAddChange={handleAddChange}
           onDateChange={handleDateChange}
-          onUpload={handleUpload}
-          onSubmit={handlePostData} 
+          onSubmit={handlePostData}
           onClose={handleCloseModal}
           onReset={resetForm}
         />
