@@ -64,8 +64,8 @@ const [editingImageFile, setEditingImageFile] = useState(null);
 const [isModalOpen, setIsModalOpen] = useState(false);
 
   const breadcrumbsItems = [
-    { label: "Content Management", href: "/content-management" },
-    { label: "Gallery", href: "/content-management/gallery" },
+    { label: "Media", href: "/content-management/media" },
+    { label: "Gallery", href: "/content-management/media/gallery" },
   ];
 
   //handleEdit image

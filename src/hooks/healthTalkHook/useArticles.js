@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react';
-import { axiosPrivate } from '../../axios-folder/axios';
+import { useState } from 'react';
 import { getArticles, uploadArticles } from '../../utils/Endpoint';
 import { toast } from 'react-toastify';
+import useAxiosPrivate from '../useAxiosPrivate';
 
 const useArticles = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const axiosPrivateHook = useAxiosPrivate();
   // Fetch all articles
   const fetchArticles = async () => {
     setLoading(true);
     try {
-        const response = await axiosPrivate.get(getArticles);
+        const response = await axiosPrivateHook.get(getArticles);
         console.log(response.data.articles)
         setArticles(response.data.articles); // Ensure articles is an array
     } catch (err) {
@@ -27,7 +27,7 @@ const useArticles = () => {
   const deleteArticle = async (articleId) => {
     setLoading(true);
     try {
-      await axiosPrivate.delete(`${uploadArticles}/${articleId}`);
+      await axiosPrivateHook.delete(`${uploadArticles}/${articleId}`);
       setArticles((prevArticles) =>
         prevArticles.filter((article) => article.id !== articleId)
       );

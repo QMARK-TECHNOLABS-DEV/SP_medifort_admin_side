@@ -39,6 +39,7 @@ import DepartmentHomePage from './pages/department/DepartmentHomePage';
 import DepartmentCard from './components/department/DepartmentCard';
 import VidTestimonial from './pages/testimonials/VidTestimonial';
 import BannerManagementPage from './pages/bannerManagement/BannerManagementPage';
+import MediaVideoPage from './pages/media/MediaVideoPage';
 
 function App() {
   return (
@@ -99,7 +100,8 @@ function App() {
             <Route path='/content-management/casestudies' element={<CaseStudyHomePage />} />
 
             {/*Gallery Crud */}
-            <Route path='/content-management/gallery' element={<Gallery />} />
+            <Route path='/content-management/media/gallery' element={<Gallery />} />
+            <Route path='/content-management/media/video' element={<MediaVideoPage />} />
 
             <Route path='/banner-management' element={<BannerManagementPage />} />
             {/* Banner */}

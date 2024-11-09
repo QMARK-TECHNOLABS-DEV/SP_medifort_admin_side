@@ -1,10 +1,11 @@
-// export const baseUrl = 'https://spserver.qmarkdesk.com';
-export const baseUrl = 'http://localhost:8800';
+export const baseUrl = 'https://spserver.qmarkdesk.com';
+// export const baseUrl = 'http://localhost:8800';
 
 // Admin routes
 export const regenerateRoute = '/api/auth/refresh-token';
 export const inquiryRoute = '/api/admin/inquiry';
-export const bannerRoute = '/api/banner';
+
+// Gallery 
 export const galleryRoute = '/api/admin/gallery';
 export const updateGalleryRoute = '/api/admin/gallery';
 
@@ -40,6 +41,10 @@ export const getVideos = '/api/video'
 export const uploadCaseStudies = '/api/admin/case-study'
 export const getCaseStudies = '/api/case-study'
 
+// banner management 
+// Home Bannner
+export const uploadBanner = '/api/admin/banner'
+export const bannerRoute = '/api/banner';
 
 export const checkupAdminRoute = '/api/admin/checkups'
 export const checkupRoute = '/api/checkups'

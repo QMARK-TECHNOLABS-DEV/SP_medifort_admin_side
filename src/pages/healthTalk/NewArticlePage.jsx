@@ -4,10 +4,10 @@ import Breadcrumbs from "../../components/common/Breadcrumbs";
 import { HiPencilAlt } from "react-icons/hi";
 import Article1 from "../../assets/article/images.png";
 import { FaTrashAlt } from "react-icons/fa";
-import { axiosPrivate } from "../../axios-folder/axios";
 import uploadFile from "../../hooks/uploadFile";
 import { uploadArticles } from "../../utils/Endpoint";
 import { toast } from "react-toastify";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const NewArticlePage = () => {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const NewArticlePage = () => {
   const [content, setContent] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [pdf, setPdf] = useState({ file: null, name: "" });
+  const axiosPrivateHook = useAxiosPrivate();
   const [articleItems, setArticleItems] = useState(
     location.state?.articleItems || []
   );
@@ -98,7 +99,7 @@ const NewArticlePage = () => {
       console.log(articleData);
 
       // Send the article data to the server
-      const response = await axiosPrivate({
+      const response = await axiosPrivateHook({
         method: isEdit ? "PUT" : "POST",
         url: isEdit
           ? `${uploadArticles}/${location.state.article._id}`

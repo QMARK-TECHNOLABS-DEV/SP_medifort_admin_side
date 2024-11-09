@@ -1,6 +1,4 @@
 import { toast } from 'react-toastify';
-// import useAxiosPrivate from '../hooks/useAxiosPrivate'
-
 import { uploadRoute } from '../utils/Endpoint';
 import { axiosPrivate } from '../axios-folder/axios';
 
