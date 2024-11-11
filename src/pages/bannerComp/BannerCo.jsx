@@ -8,6 +8,7 @@ import Testimonials from "../../assets/banners/Testimonials1.png";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { bannerRoute, uploadBanner } from "../../utils/Endpoint";
 import { toast } from "react-toastify";
+import LoadingScreen from "../../components/common/LoadingScreen";
 
 const ImageCard = ({data, onDelete }) => {
   return (
@@ -43,6 +44,7 @@ const BannerCo = () => {
   const [data, setData] = useState([
  
   ]);
+  const [loading, setLoading] = useState(true);
   const breadcrumbsItems = [
     { label: "Banner management", href: "/banner-management" },
     { label: "Home Banner", href: "/banner-management/banner" },
@@ -70,9 +72,13 @@ const BannerCo = () => {
   }
 
   useEffect(() => {
-    getData()
-  }, [])
-  
+   
+    getData();
+    setTimeout(() => {
+      setLoading(false); // Set loading to false after 2 seconds
+    }, 2000);
+  }, []);
+
   const handleDelete = async  (id) => {
     try {
       const res = await axiosPrivate.delete(`${uploadBanner}/${id}`);
@@ -87,7 +93,12 @@ const BannerCo = () => {
 
     setData(data.filter((image) => image.id !== id));
   };
+  if (loading) return(
+    <div className="h-screen w-full overflow-hidden">
 
+      <LoadingScreen/>
+    </div>
+  ) 
 
   return (
     <div className="px-4 pt-4 w-full h-screen overflow-auto relative">

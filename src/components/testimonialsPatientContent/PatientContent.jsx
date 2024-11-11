@@ -3,9 +3,11 @@ import '../../components/page.css'
 import PatientTCard from "./PatientTCard";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { testimonialAdminRoute } from "../../utils/Endpoint";
+import LoadingScreen from "../common/LoadingScreen";
 
 const PatientContent = () => {
   const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
   const axiosPrivateHook = useAxiosPrivate();
 
   const getTestimonials = async () => {
@@ -22,8 +24,17 @@ const PatientContent = () => {
 
   useEffect(() => {
     getTestimonials()
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   }, [])
 
+  if (loading) return(
+    <div className="h-screen w-full overflow-hidden">
+
+      <LoadingScreen/>
+    </div>
+  ) 
   return (
     <div className="w-full overflow-hidden h-screen">
       <div className="flex-1 h-full w-full pb-20 overflow-y-auto scrollbar-hidden">

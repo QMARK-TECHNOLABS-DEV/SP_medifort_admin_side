@@ -6,6 +6,7 @@ import { GoTrash } from "react-icons/go";
 import axios from "../../axios-folder/axios";
 import { testimonialAdminRoute, uploadRoute } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
+import LoadingScreen from "../../components/common/LoadingScreen";
 
 const VidTestimonial = () => {
   const [videos, setVideos] = useState([]);
@@ -19,6 +20,7 @@ const VidTestimonial = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentVideo, setCurrentVideo] = useState(null);
   const [playingVideoId, setPlayingVideoId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const [postData, setPostData] = useState({ name: "", date: "", media: "", thumbnail: "", isVideo: true });
 
@@ -165,7 +167,17 @@ const VidTestimonial = () => {
 
   useEffect(() => {
     fetchTestimonials()
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   }, [])
+
+  if (loading) return(
+    <div className="h-screen w-full overflow-hidden">
+
+      <LoadingScreen/>
+    </div>
+  ) 
 
   return (
     <div className="p-6 w-full">
