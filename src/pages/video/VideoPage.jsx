@@ -6,6 +6,7 @@ import useVideos from "../../hooks/healthTalkHook/useVideos";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { uploadVideos } from "../../utils/Endpoint";
 import { toast } from "react-toastify";
+import LoadingScreen from "../../components/common/LoadingScreen";
 
 const breadcrumbsItems = [
   { label: "Health Talk", href: "/content-management/health-talk" },
@@ -18,6 +19,7 @@ const VideoPage = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentVideo, setCurrentVideo] = useState(null);
+  const [delayedLoading, setDelayedLoading] = useState(true);
   const [newVideo, setNewVideo] = useState({
     title: "",
     date: "",
@@ -26,8 +28,15 @@ const VideoPage = () => {
   });
 
   useEffect(() => {
-    fetchVideos();
-  }, []);
+    const loadWithDelay = async () => {
+      setDelayedLoading(true);
+    await fetchVideos();
+    setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
+  };
+  
+  loadWithDelay();
+}, []);
+
 
   const handleAddNewClick = () => {
     setIsAdding(true);
@@ -117,7 +126,12 @@ const VideoPage = () => {
     resetForm();
   };
 
-  if (loading) return <div>Loading videos...</div>;
+  if (delayedLoading) return(
+    <div className="h-screen w-full overflow-hidden">
+
+      <LoadingScreen/>
+    </div>
+  ) 
 
   return (
     <div className="h-screen w-full overflow-hidden">

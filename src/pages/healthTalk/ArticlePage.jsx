@@ -1,29 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import Breadcrumbs from '../../components/common/Breadcrumbs';
 import CommonCard from '../../components/healthTalk/CommonCard';
+import SkeletonCard from '../../components/healthTalk/SkeletonCard'; // Import SkeletonCard
 import { useNavigate } from 'react-router-dom';
 import DeleteModal from '../../components/common/DeleteModal';
 import useArticles from '../../hooks/healthTalkHook/useArticles';
-
 
 const breadcrumbsItems = [
     { label: "Health Talk", href: "/content-management/health-talk" },
     { label: "Article", href: "/content-management/article" },
 ];
 
+
 const ArticlePage = () => {
     const navigate = useNavigate();
-    const { articles, loading, error,deleteArticle, fetchArticles } = useArticles(); 
+    const { articles, loading, error, deleteArticle, fetchArticles } = useArticles(); 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedArticle, setSelectedArticle] = useState(null);
+    const [delayedLoading, setDelayedLoading] = useState(true);
 
-    // Fetch articles on component mount
     useEffect(() => {
-        fetchArticles();
-    }, []); // Dependency array includes fetchArticles to prevent warnings
-
+        const loadWithDelay = async () => {
+            setDelayedLoading(true);
+            await fetchArticles(); // Fetch articles
+            setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
+        };
+        
+        loadWithDelay();
+    }, []);
     const handleAddNewClick = () => {
-        navigate('/content-management/article/new-article', { state: { isEdit: false, articles } }); 
+        navigate('/content-management/article/new-article', { state: { isEdit: false, articles } });
     };
 
     const handleEditClick = (article) => {
@@ -32,36 +38,29 @@ const ArticlePage = () => {
 
     const handleDeleteClick = (article) => {
         setSelectedArticle(article); 
-        setShowDeleteModal(true); 
+        setShowDeleteModal(true);
     };
 
     const handleDeleteConfirm = async () => {
-      if (selectedArticle) {
-        console.log(selectedArticle)
-          await deleteArticle(selectedArticle._id); // Call the delete function
-          fetchArticles();
-      }
-      setShowDeleteModal(false); 
-      setSelectedArticle(null); 
-  };
+        if (selectedArticle) {
+            await deleteArticle(selectedArticle._id);
+            fetchArticles();
+        }
+        setShowDeleteModal(false); 
+        setSelectedArticle(null); 
+    };
 
     const handleCloseModal = () => {
         setShowDeleteModal(false);
         setSelectedArticle(null);
     };
 
-    // Show a loading state or error message if necessary
-    if (loading) return <div>Loading articles...</div>;
-    // if (error) return <div>Error loading articles: {error.message}</div>;
-
     return (
         <div className="h-screen w-full overflow-hidden">
             <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
                 <div className="flex flex-col">
-                    <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
-                        Articles
-                    </h1>
-                    <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center ">
+                    <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Articles</h1>
+                    <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center">
                         <Breadcrumbs items={breadcrumbsItems} />
                         <div className="flex flex-col lg:flex-row gap-2 lg:gap-2 mt-5 lg:mt-0 w-full lg:w-fit">
                             <button
@@ -73,7 +72,15 @@ const ArticlePage = () => {
                         </div>
                     </div>
                 </div>
-                {articles.length === 0 ? (
+                
+                {/* Display loading skeletons if articles are loading */}
+                {delayedLoading  ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
+                        {Array.from({ length: 4 }).map((_, index) => (
+                            <SkeletonCard key={index} />
+                        ))}
+                    </div>
+                ) : articles.length === 0 ? (
                     <div className="text-center mt-10 text-lg justify-center items-center text-gray-500">
                         No articles available.
                     </div>

@@ -7,6 +7,7 @@ import News3 from "../../assets/news/News 3.jpeg";
 import { useLocation, useNavigate } from "react-router-dom";
 import DeleteModal from "../../components/common/DeleteModal";
 import useNews from "../../hooks/healthTalkHook/useNews";
+import SkeletonCard from "../../components/healthTalk/SkeletonCard";
 
 const breadcrumbsItems = [
   { label: "Content Management", href: "/content-management" },
@@ -18,10 +19,17 @@ const NewsPage = () => {
   const { loading, newsItems, fetchNews, deleteNews } = useNews();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedNews, setSelectedNews] = useState(null);
+  const [delayedLoading, setDelayedLoading] = useState(true);
 
   useEffect(() => {
-    fetchNews();
-  }, []);
+    const loadWithDelay = async () => {
+      setDelayedLoading(true);
+   await fetchNews();
+    setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
+  };
+  
+  loadWithDelay();
+}, []);
 
   const handleAddNewClick = () => {
     navigate("/content-management/news/new-news", {
@@ -53,7 +61,7 @@ const NewsPage = () => {
     setSelectedNews(null);
   };
 
-  if (loading) return <div>Loading ...</div>;
+
 
   return (
     <div className="h-screen w-full overflow-hidden mx-auto">
@@ -76,7 +84,13 @@ const NewsPage = () => {
             </button>
           </div>
         </div>
-        {newsItems.length === 0 ? (
+        {delayedLoading  ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
+                        {Array.from({ length: 4 }).map((_, index) => (
+                            <SkeletonCard key={index} />
+                        ))}
+                    </div>
+                ) : newsItems.length === 0 ? (
           <div className="text-center mt-10 text-lg justify-center items-center text-gray-500">
           No articles available.
       </div>

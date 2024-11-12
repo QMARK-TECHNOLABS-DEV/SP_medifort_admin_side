@@ -7,6 +7,7 @@ import DeleteModal from "../../components/common/DeleteModal";
 import axios from "../../axios-folder/axios";
 import { checkupAdminRoute, checkupRoute } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import LoadingScreen from "../../components/common/LoadingScreen";
 
 const PreventiveHealth = () => {
   const [showAddModal, setShowAddModal] = useState(false);
@@ -15,6 +16,7 @@ const PreventiveHealth = () => {
   const [deleteItemId, setDeleteItemId] = useState(null);
   const [checkups, setCheckups] = useState([]);
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(true);
 
   const [mode, setMode] = useState('add')
 
@@ -84,7 +86,18 @@ const PreventiveHealth = () => {
 
   useEffect(() => {
     getAllCheckups()
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   }, [search])
+
+  if (loading) return(
+    <div className="h-screen w-full overflow-hidden">
+
+      <LoadingScreen/>
+    </div>
+  ) 
 
   return (
     <div className="h-screen w-full overflow-hidden ">

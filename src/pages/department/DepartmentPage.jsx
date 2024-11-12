@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import DeleteModal from "../../components/common/DeleteModal";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { department_admin_route, list_departments } from "../../utils/Endpoint";
+import LoadingScreen from "../../components/common/LoadingScreen";
 
 const breadcrumbsItems = [
   { label: "Department", href: "/Department" },
@@ -21,6 +22,7 @@ const DepartmentPage = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (location.state?.updatedDepartments) {
@@ -73,7 +75,17 @@ const DepartmentPage = () => {
 
   useEffect(()=>{
 getData()
+setTimeout(() => {
+  setLoading(false);
+}, 2000);
   },[])
+
+  if (loading) return(
+    <div className="h-screen w-full overflow-hidden">
+
+      <LoadingScreen/>
+    </div>
+  ) 
 
   return (
     <div className="h-screen w-full overflow-hidden mx-auto">

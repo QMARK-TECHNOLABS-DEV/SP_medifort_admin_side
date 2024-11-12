@@ -4,6 +4,7 @@ import CommonCard from '../../components/healthTalk/CommonCard';
 import { useNavigate } from 'react-router-dom';
 import DeleteModal from '../../components/common/DeleteModal';
 import useResearch from '../../hooks/healthTalkHook/useResearch';
+import SkeletonCard from '../../components/healthTalk/SkeletonCard';
 
 const breadcrumbsItems = [
   { label: "Health Talk", href: "/content-management/health-talk" },
@@ -15,10 +16,17 @@ const ResearchPage = () => {
   const { loading, researchItems, deleteResearch, fetchResearch } = useResearch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedResearch, setSelectedResearch] = useState(null);
+  const [delayedLoading, setDelayedLoading] = useState(true);
 
   useEffect(() => {
-    fetchResearch();
-  }, []); 
+    const loadWithDelay = async () => {
+      setDelayedLoading(true);
+      await fetchResearch();
+    setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
+  };
+  
+  loadWithDelay();
+}, []);
 
   const handleAddNewClick = () => {
     navigate('/content-management/research/new-research', { state: { isEdit: false, researchItems } });
@@ -69,7 +77,13 @@ const ResearchPage = () => {
             </div>
           </div>
         </div>
-        {researchItems.length === 0 ? (
+        {delayedLoading  ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
+                        {Array.from({ length: 4 }).map((_, index) => (
+                            <SkeletonCard key={index} />
+                        ))}
+                    </div>
+                ) : researchItems.length === 0 ? (
           <div className="text-center mt-10 text-lg text-gray-500">
             No articles available.
           </div>

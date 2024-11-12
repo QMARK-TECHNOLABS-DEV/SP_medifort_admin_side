@@ -6,6 +6,7 @@ import Breadcrumbs from "../../components/common/Breadcrumbs";
 import { toast } from 'react-toastify';
 import { galleryRoute,getAllGalleriesRoute,updateGalleryRoute,uploadRoute } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
+import LoadingScreen from "../../components/common/LoadingScreen";
 // import '../../../src/index.css'
 
 // SVG Trash Icon Component
@@ -62,6 +63,7 @@ const Gallery = () => {
 const [editingImageName, setEditingImageName] = useState("");
 const [editingImageFile, setEditingImageFile] = useState(null);
 const [isModalOpen, setIsModalOpen] = useState(false);
+const [loading, setLoading] = useState(true);
 
   const breadcrumbsItems = [
     { label: "Media", href: "/content-management/media" },
@@ -157,6 +159,7 @@ const handleUpdateImage = async () => {
     // Fetch gallery data from the backend
     const fetchGalleryData = async () => {
       try {
+        setLoading(true)
         const response = await axiosPrivate.get(getAllGalleriesRoute);
         if (response?.status === 200) {
           // Assuming `data.galleries` contains an array of gallery objects with `url` properties
@@ -169,8 +172,11 @@ const handleUpdateImage = async () => {
         console.log(error);
       }
     };
-  
     fetchGalleryData();
+  
+    setTimeout(() => {
+      setLoading(false); 
+    }, 2000); 
   }, []);
   
   const handleAddImage = async () => {
@@ -267,6 +273,12 @@ const handleRemoveImage = async (galleryId, index) => {
     setCurrentImage(null);
   };
 
+  if (loading) return(
+    <div className="h-screen w-full overflow-hidden">
+
+      <LoadingScreen/>
+    </div>
+  ) 
   
   return (
     <div className="min-h-screen flex flex-col w-full px-2 py-4"> {/* Reduced padding */}
