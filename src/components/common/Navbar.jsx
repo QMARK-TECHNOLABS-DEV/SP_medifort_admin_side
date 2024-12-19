@@ -42,7 +42,7 @@ const Navbar = () => {
           <CgMenuGridR size={28} className="lg:hidden block" onClick={toggleSidebar} /> {/* Toggle sidebar */}
           <div className="hidden lg:block">
             <img
-              src={require("../../assets/nav/bumy1.png")}
+              src={"/logo192.png"}
               alt="profile"
               className="rounded-full w-10 h-10"
             />
