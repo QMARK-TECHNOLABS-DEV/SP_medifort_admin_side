@@ -3,6 +3,10 @@ import { IoIosSearch } from "react-icons/io";
 import { MdMenu } from "react-icons/md";
 import { CgMenuGridR } from "react-icons/cg";
 import Sidebar from "./Sidebar"; // Import Sidebar component
+import { FiLogOut } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/slices/AuthSlicer";
+import { setAccessToken, setRefreshToken } from "../../redux/slices/TokenReducer";
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to manage sidebar visibility
@@ -10,6 +14,14 @@ const Navbar = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen); // Toggle the sidebar on click
   };
+
+  const dispatch = useDispatch();
+
+  const handleLogout = ()=>{
+    dispatch(setUser(null))
+    dispatch(setAccessToken(null))
+    dispatch(setRefreshToken(null))
+  }
 
   return (
     <>
@@ -35,6 +47,12 @@ const Navbar = () => {
               className="rounded-full w-10 h-10"
             />
           </div>
+
+          <FiLogOut 
+          onClick={handleLogout}
+          size={26}
+          />
+
         </div>
       </main>
 
