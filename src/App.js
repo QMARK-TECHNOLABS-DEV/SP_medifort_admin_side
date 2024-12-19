@@ -44,6 +44,7 @@ import MediaVideoPage from './pages/media/MediaVideoPage';
 import LoadingScreen from './components/common/LoadingScreen';
 import AuthGuard from './guards/AuthGuard';
 import AdminGuard from './guards/AdminGuard';
+import NotFound from './pages/NotFound';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -138,6 +139,8 @@ function App() {
             </Route>
 
           </Route>
+
+          <Route path='*' element={<NotFound />} />
 
         </Routes>
       </Router>
