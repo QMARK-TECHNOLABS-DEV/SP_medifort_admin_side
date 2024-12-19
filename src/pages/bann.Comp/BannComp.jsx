@@ -9,8 +9,11 @@ import { useNavigate } from 'react-router-dom';
 const AddBanner = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadedFile, setUploadedFile] = useState({
-    image: "",
-    title: "", // Add title field here
+    image: {},
+    title: "", 
+    subtitle: "", 
+    title: "", 
+    title: "", 
   });
   const [errorMessage, setErrorMessage] = useState(false);
   const fileInputRef = useRef(null);

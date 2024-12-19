@@ -54,7 +54,7 @@ const BannerCo = () => {
 
    
   const handleAddBanner = () => {
-    navigate("/banner-management/banner/add-banner");
+    navigate("/banner-management/add");
   };
 
   const axiosPrivate = useAxiosPrivate();
