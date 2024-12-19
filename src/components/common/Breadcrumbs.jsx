@@ -6,7 +6,7 @@ const Breadcrumbs = ({ items }) => {
   const currentPath = location.pathname;
 
   return (
-    <nav className="text-left text-[#424242] md:font-[350] ">
+    <nav className="text-left text-[#424242] md:font-[350] capitalize ">
       <ol className="list-none p-0 inline-flex flex-wrap">
         {items.map((item, index) => (
           <li key={index} className="flex items-center">

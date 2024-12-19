@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 // Import images
@@ -10,13 +10,25 @@ import { bannerRoute, uploadBanner } from "../../utils/Endpoint";
 import { toast } from "react-toastify";
 import LoadingScreen from "../../components/common/LoadingScreen";
 
-const ImageCard = ({data, onDelete }) => {
+const ImageCard = ({ data, onDelete }) => {
   return (
     <div className="relative rounded-lg shadow-md overflow-hidden h-40 w-full">
       <img src={data?.image?.location} alt='img' className="w-full h-full object-cover" />
-      <div className="absolute bottom-2 left-2 bg-white text-gray-700 text-sm px-3 py-1 rounded">
-        {data?.title}
+
+      <span className="absolute top-2 left-2 bg-white text-gray-700 text-sm px-3 py-1 rounded">
+        {data?.index}
+      </span>
+
+      <div className="absolute bottom-2 left-2 flex flex-col gap-4">
+        <span className=" bg-white text-gray-700 text-sm px-3 py-1 rounded">
+          {data?.title}
+        </span>
+        <span className=" bg-white text-gray-700 text-sm px-3 py-1 rounded">
+          {data?.subtitle}
+        </span>
       </div>
+
+
       <button
         onClick={onDelete}
         className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-lg"
@@ -41,18 +53,19 @@ const ImageCard = ({data, onDelete }) => {
 };
 
 const BannerCo = () => {
-  const [data, setData] = useState([
- 
-  ]);
+  const [data, setData] = useState([]);
+
   const [loading, setLoading] = useState(true);
+  const { panel } = useParams();
+
   const breadcrumbsItems = [
     { label: "Banner management", href: "/banner-management" },
-    { label: "Home Banner", href: "/banner-management/banner" },
+    { label: `${panel}`, href: `/banner-management/${panel}` },
   ];
 
   const navigate = useNavigate();
 
-   
+
   const handleAddBanner = () => {
     navigate("/banner-management/add");
   };
@@ -64,7 +77,8 @@ const BannerCo = () => {
       const response = await axiosPrivate.get(bannerRoute)
       if (response?.status === 200) {
         console.log(response?.data?.banners)
-        setData(response?.data?.banners)
+        const filtered = response?.data?.banners?.filter(item => item.panel === panel)
+        setData(filtered)
       }
     } catch (error) {
       console.log(error)
@@ -72,33 +86,33 @@ const BannerCo = () => {
   }
 
   useEffect(() => {
-   
+
     getData();
     setTimeout(() => {
       setLoading(false); // Set loading to false after 2 seconds
     }, 2000);
-  }, []);
+  }, [panel]);
 
-  const handleDelete = async  (id) => {
+  const handleDelete = async (id) => {
     try {
       const res = await axiosPrivate.delete(`${uploadBanner}/${id}`);
-      if(res.status === 200 ){
+      if (res.status === 200) {
         toast.success("Banner Delete Successfully")
       }
       getData()
     } catch (error) {
       console.error("Failed to submit banner", error);
-        toast.error("An error occurred while saving the Banner.");
+      toast.error("An error occurred while saving the Banner.");
     }
 
     setData(data.filter((image) => image.id !== id));
   };
-  if (loading) return(
+  if (loading) return (
     <div className="h-screen w-full overflow-hidden">
 
-      <LoadingScreen/>
+      <LoadingScreen />
     </div>
-  ) 
+  )
 
   return (
     <div className="px-4 pt-4 w-full h-screen overflow-auto relative">
@@ -112,12 +126,14 @@ const BannerCo = () => {
         <div className="flex flex-col lg:flex-row items-start lg:items-center space-y-2 lg:space-y-0 space-x-0 lg:space-x-2 mb-2 mt-2 lg:mb-0 text-left lg:ml-[-16px] ml-[-12px]">
           <Breadcrumbs items={breadcrumbsItems} />
         </div>
-        <button
+
+        {/* <button
           onClick={handleAddBanner}
           className="border-primaryColor bg-white text-primaryColor text-sm px-4 py-2 rounded-xl border-2 mt-2 w-[calc(100%+20px)] lg:w-auto lg:ml-0 ml-[-10px]"
         >
           + Add Banner
-        </button>
+        </button> */}
+
       </div>
 
       {/* Image Grid */}

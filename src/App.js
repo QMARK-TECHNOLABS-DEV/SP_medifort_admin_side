@@ -124,8 +124,8 @@ function App() {
 
               <Route path='/banner-management' element={<BannerManagementPage />} />
               {/* Banner */}
-              <Route path='/banner-management/:name' element={<BannerCo />} />
               <Route path='/banner-management/add' element={<BannComp />} />
+              <Route path='/banner-management/:panel' element={<BannerCo />} />
 
               {/* Enquiry */}
               <Route path='/enquiry' element={<EnquiryHomePage />} />

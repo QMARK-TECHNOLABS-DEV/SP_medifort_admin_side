@@ -4,8 +4,11 @@ import ContentCard from '../../components/contentManagement/ContentCards';
 import ContentCardSkeleton from '../../components/common/ContentCardSkeleton';
 import axios from '../../axios-folder/axios';
 import { bannerRoute } from '../../utils/Endpoint';
+import { useNavigate } from 'react-router-dom';
 
 const BannerManagementPage = () => {
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
@@ -50,7 +53,17 @@ const BannerManagementPage = () => {
   return (
     <div className="h-screen w-full overflow-hidden">
       <div className="flex-1 h-full pb-32 overflow-y-auto scrollbar-hide">
+        <div className='flex items-center justify-between'>
         <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Banner Management</h1>
+
+        <button
+          onClick={()=> navigate("/banner-management/add")}
+          className="border-primaryColor bg-white text-primaryColor text-sm px-4 py-2 rounded-xl border-2 mt-2 w-[calc(100%+20px)] lg:w-auto lg:ml-0 ml-[-10px]"
+        >
+          + Add Banner
+        </button>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2px">
           {loading
             ? // Show skeletons if loading
