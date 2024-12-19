@@ -9,8 +9,9 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { bannerRoute, uploadBanner } from "../../utils/Endpoint";
 import { toast } from "react-toastify";
 import LoadingScreen from "../../components/common/LoadingScreen";
+import { FiEdit } from "react-icons/fi";
 
-const ImageCard = ({ data, onDelete }) => {
+const ImageCard = ({ data, onDelete, onEdit }) => {
   return (
     <div className="relative rounded-lg shadow-md overflow-hidden h-40 w-full">
       <img src={data?.image?.location} alt='img' className="w-full h-full object-cover" />
@@ -28,26 +29,35 @@ const ImageCard = ({ data, onDelete }) => {
         </span>
       </div>
 
-
-      <button
-        onClick={onDelete}
-        className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-lg"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="currentColor"
-          className="w-5 h-5 text-gray-700"
+      <div className="absolute top-2 right-2 flex items-center gap-4">
+        <button
+          onClick={onEdit}
+          className=" bg-white p-2 rounded-full shadow-lg"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3 6h18M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2m3 0v12a2 2 0 01-2 2H8a2 2 0 01-2-2V6h12zm-5 4v6m-4-6v6"
-          />
-        </svg>
-      </button>
+          <FiEdit />
+        </button>
+
+        <button
+          onClick={onDelete}
+          className=" bg-white p-2 rounded-full shadow-lg"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="w-5 h-5 text-gray-700"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3 6h18M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2m3 0v12a2 2 0 01-2 2H8a2 2 0 01-2-2V6h12zm-5 4v6m-4-6v6"
+            />
+          </svg>
+        </button>
+
+      </div>
     </div>
   );
 };
@@ -127,13 +137,6 @@ const BannerCo = () => {
           <Breadcrumbs items={breadcrumbsItems} />
         </div>
 
-        {/* <button
-          onClick={handleAddBanner}
-          className="border-primaryColor bg-white text-primaryColor text-sm px-4 py-2 rounded-xl border-2 mt-2 w-[calc(100%+20px)] lg:w-auto lg:ml-0 ml-[-10px]"
-        >
-          + Add Banner
-        </button> */}
-
       </div>
 
       {/* Image Grid */}
@@ -144,6 +147,7 @@ const BannerCo = () => {
               key={index}
               data={item}
               onDelete={() => handleDelete(item._id)}
+              onEdit={()=> navigate(`/banner-management/edit/${item._id}`)}
             />
           ))}
         </div>

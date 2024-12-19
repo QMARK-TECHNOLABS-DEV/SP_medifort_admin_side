@@ -1,13 +1,19 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import uploadFile from '../../hooks/uploadFile';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-import { uploadBanner } from '../../utils/Endpoint';
+import { bannerRoute, uploadBanner } from '../../utils/Endpoint';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { PageData } from '../../data/PageData';
+import axios from '../../axios-folder/axios';
 
 const AddBanner = () => {
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const mode = pathname?.split('/')[2]
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [data, setData] = useState({
     image: {},
@@ -55,16 +61,24 @@ const AddBanner = () => {
 
   const breadcrumbsItems = [
     { label: "Banner management", href: "/banner-management" },
-    { label: "Add Banner", href: "/banner-management/add" },
+    { label: `${mode} Banner`, href: `/banner-management/${mode}` },
   ];
 
   const handleUploadClick = async (e) => {
     e.preventDefault();
     if (data.image && data.title) {
       try {
-        const res = await axiosPrivateHook.post(uploadBanner, data);
+        let res;
+
+        if(mode === 'edit' && data?._id){
+          res = await axiosPrivateHook.put(`${uploadBanner}/${data?._id}`, data);
+        }
+        else{
+          res = await axiosPrivateHook.postt(uploadBanner, data);
+        }
+
         if (res.status === 200) {
-          toast.success("Banner uploaded successfully");
+          toast.success("success");
           navigate("/banner-management");
         }
       } catch (error) {
@@ -90,11 +104,30 @@ const AddBanner = () => {
     navigate("/banner-management");
   };
 
+  const getABanner = async (id) => {
+    try {
+      const res = await axios.get(`${bannerRoute}/${id}`)
+
+      if (res.status === 200) {
+        setData(res.data.banner)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if (mode === 'edit') {
+      const id = pathname.split("/")[3]
+      getABanner(id)
+    }
+  }, [mode, pathname])
+
   return (
     <div className="w-full relative">
       {/* Title */}
-      <h1 className="text-2xl font-bold text-primaryColor text-left lg:hidden">
-        Add Banner
+      <h1 className="text-2xl font-bold text-primaryColor text-left lg:hidden capitalize ">
+        {mode} Banner
       </h1>
 
       {/* Breadcrumbs */}
@@ -108,7 +141,7 @@ const AddBanner = () => {
           Title
         </label>
         <input
-        name='title'
+          name='title'
           type="text"
           value={data.title}
           onChange={handleChange}
@@ -122,7 +155,7 @@ const AddBanner = () => {
           Subtitle
         </label>
         <input
-        name='subtitle'
+          name='subtitle'
           type="text"
           value={data.subtitle}
           onChange={handleChange}
