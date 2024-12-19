@@ -226,7 +226,7 @@ const AddBanner = () => {
               />
             </svg>
             <span className="mt-2 text-sm text-gray-600">
-              Click here to browse or drag and drop image
+              Click here to browse image
             </span>
           </>
         )}
