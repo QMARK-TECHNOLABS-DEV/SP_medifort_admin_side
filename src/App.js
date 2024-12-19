@@ -73,7 +73,7 @@ function App() {
             <Route path='/content-management/preventive-health' element={<PreventiveHealth />} />
 
             {/*Department  */}
-          
+
             <Route path='/department' element={<DepartmentHomePage />} />
             <Route path='/department/add' element={<DepartmentPage />} />
             <Route path='/department/edit/:id' element={<AddDepartmentPage />} />
