@@ -22,10 +22,10 @@ const ImageCard = ({ data, onDelete, onEdit }) => {
 
       <div className="absolute bottom-2 left-2 flex flex-col gap-4">
         <span className=" bg-white text-gray-700 text-sm px-3 py-1 rounded">
-          {data?.title}
+          {data?.title || 'NIL'}
         </span>
         <span className=" bg-white text-gray-700 text-sm px-3 py-1 rounded">
-          {data?.subtitle}
+          {data?.subtitle || 'NIL'}
         </span>
       </div>
 

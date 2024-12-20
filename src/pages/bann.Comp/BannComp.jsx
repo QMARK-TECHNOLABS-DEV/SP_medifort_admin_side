@@ -21,7 +21,7 @@ const AddBanner = () => {
     title: "",
     subtitle: "",
     screenType: "desktop",
-    panel: "",
+    panel: "home",
     index: 0,
   }
 
@@ -70,7 +70,7 @@ const AddBanner = () => {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    if (data.image && data.title) {
+    if (data.image) {
       try {
         let res;
 
