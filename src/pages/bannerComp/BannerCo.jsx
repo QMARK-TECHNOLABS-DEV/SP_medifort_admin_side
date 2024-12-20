@@ -29,6 +29,10 @@ const ImageCard = ({ data, onDelete, onEdit }) => {
         </span>
       </div>
 
+      <span className="absolute bottom-2 right-2 bg-white text-gray-700 text-sm px-3 py-1 rounded">
+        {data?.screenType}
+      </span>
+
       <div className="absolute top-2 right-2 flex items-center gap-4">
         <button
           onClick={onEdit}

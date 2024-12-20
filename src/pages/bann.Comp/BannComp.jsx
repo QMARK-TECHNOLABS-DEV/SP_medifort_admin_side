@@ -15,13 +15,17 @@ const AddBanner = () => {
   const mode = pathname?.split('/')[2]
 
   const [selectedFile, setSelectedFile] = useState(null);
-  const [data, setData] = useState({
+
+  const initialData = {
     image: {},
     title: "",
     subtitle: "",
+    screenType: "desktop",
     panel: "",
     index: 0,
-  });
+  }
+
+  const [data, setData] = useState(initialData);
   const [errorMessage, setErrorMessage] = useState(false);
   const fileInputRef = useRef(null);
   const axiosPrivateHook = useAxiosPrivate();
@@ -64,17 +68,17 @@ const AddBanner = () => {
     { label: `${mode} Banner`, href: `/banner-management/${mode}` },
   ];
 
-  const handleUploadClick = async (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
     if (data.image && data.title) {
       try {
         let res;
 
-        if(mode === 'edit' && data?._id){
+        if (mode === 'edit' && data?._id) {
           res = await axiosPrivateHook.put(`${uploadBanner}/${data?._id}`, data);
         }
-        else{
-          res = await axiosPrivateHook.postt(uploadBanner, data);
+        else {
+          res = await axiosPrivateHook.post(uploadBanner, data);
         }
 
         if (res.status === 200) {
@@ -92,13 +96,7 @@ const AddBanner = () => {
 
   const handleCancelClick = () => {
     setSelectedFile(null);
-    setData({
-      image: {},
-      title: "",
-      subtitle: "",
-      panel: "",
-      index: 0,
-    });
+    setData(initialData);
     setErrorMessage(false);
     fileInputRef.current.value = null;
     navigate("/banner-management");
@@ -165,6 +163,24 @@ const AddBanner = () => {
       </div>
 
       <div className='flex flex-col sm:flex-row items-center gap-4'>
+
+        <div className="mt-4">
+          <label className="block text-sm text-left font-medium text-gray-700">
+            Screen Type
+          </label>
+          <select
+            name='screenType'
+            value={data?.screenType}
+            onChange={handleChange}
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
+          >
+
+            <option value="desktop">Desktop</option>
+            <option value="mobile">Mobile</option>
+
+          </select>
+        </div>
+
         <div className="mt-4">
           <label className="block text-sm text-left font-medium text-gray-700">
             Panel
@@ -242,10 +258,10 @@ const AddBanner = () => {
       <div className="items-center justify-between mt-6 flex">
         <div>
           <button
-            onClick={handleUploadClick}
+            onClick={handleSave}
             className="border-primaryColor text-primaryColor text-sm px-4 py-2 mx-4 rounded-xl border-2"
           >
-            Upload
+            Save
           </button>
           <button
             onClick={handleCancelClick}
