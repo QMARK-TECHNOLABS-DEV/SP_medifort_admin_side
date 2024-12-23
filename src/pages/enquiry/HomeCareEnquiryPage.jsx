@@ -82,7 +82,7 @@ const HomeCareEnquiryPage = () => {
           setSort={setSort}
         />
       </section>
-      <EnquiryTable data={paginatedData} />
+      <EnquiryTable data={paginatedData} kind='homecare' />
     </div>
   );
 };

@@ -45,6 +45,7 @@ import LoadingScreen from './components/common/LoadingScreen';
 import AuthGuard from './guards/AuthGuard';
 import AdminGuard from './guards/AdminGuard';
 import NotFound from './pages/NotFound';
+import FeedbackEnquiryPage from './pages/enquiry/FeedbackEnquiryPage';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -132,6 +133,7 @@ function App() {
               <Route path='/enquiry' element={<EnquiryHomePage />} />
               <Route path='/enquiry/homecare' element={<HomeCareEnquiryPage />} />
               <Route path='/enquiry/insurance' element={<InsuranceEnquiryPage />} />
+              <Route path='/enquiry/feedback' element={<FeedbackEnquiryPage />} />
               <Route path='/enquiry/contact-us' element={<ContactUsEnquiryPage />} />
               <Route path='/enquiry/international-patient-enquiry' element={<InternationalPatientEnquiryPage />} />
 

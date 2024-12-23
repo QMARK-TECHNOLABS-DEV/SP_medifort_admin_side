@@ -1,14 +1,11 @@
-
-
 import React, { useEffect, useState } from 'react';
 import EnquiryTableFilter from '../../components/enquiry/EnquiryTableFilter';
-import { TableData } from '../../data/TableData';
 import EnquiryTable from '../../components/enquiry/EnquiryTable';
-import InsuranceEnquiryTop from '../../components/enquiry/InsuranceEnquiryTop';
+import FeedbackEnquiryTop from '../../components/enquiry/FeedbackEnquiryTop';
 import { inquiryRoute } from '../../utils/Endpoint';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
-const InsuranceEnquiryPage = () => {
+const FeedbackEnquiryPage = () => {
   const [sort, setSort] = useState('latest');
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,7 +24,7 @@ const InsuranceEnquiryPage = () => {
 
   const getData = async () => {
     try {
-      const response = await axiosPrivate.get(`${inquiryRoute}?type=insurance&search=${search}&sort=${sort}`)
+      const response = await axiosPrivate.get(`${inquiryRoute}?type=feedback&search=${search}&sort=${sort}`)
 
       if (response?.status === 200) {
         console.log(response?.data?.inquiries)
@@ -63,7 +60,7 @@ const InsuranceEnquiryPage = () => {
 
   return (
     <div className='w-full'>
-      <InsuranceEnquiryTop
+      <FeedbackEnquiryTop
         onSearchChange={handleSearchChange}
       />
       <section>
@@ -76,11 +73,11 @@ const InsuranceEnquiryPage = () => {
           setSort={setSort}
         />
       </section>
-      <EnquiryTable data={paginatedData} kind="insurance" />
+      <EnquiryTable data={paginatedData} kind="feedback" />
     </div>
   );
 };
 
-export default InsuranceEnquiryPage;
+export default FeedbackEnquiryPage;
 
 
