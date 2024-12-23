@@ -69,7 +69,7 @@ const DoctorHomePage = () => {
 
 
   return (
-    <div>
+    <div className="w-full">
       <header>
         <TopPart title={"Doctor profile"} type={{ name: "search" }} setSearch={setSearch} />
       </header>

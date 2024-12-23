@@ -1,17 +1,31 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import uploadFile from '../../hooks/uploadFile';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-import { uploadBanner } from '../../utils/Endpoint';
+import { bannerRoute, uploadBanner } from '../../utils/Endpoint';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { PageData } from '../../data/PageData';
+import axios from '../../axios-folder/axios';
 
 const AddBanner = () => {
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const mode = pathname?.split('/')[2]
+
   const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadedFile, setUploadedFile] = useState({
-    image: "",
-    title: "", // Add title field here
-  });
+
+  const initialData = {
+    image: {},
+    title: "",
+    subtitle: "",
+    screenType: "desktop",
+    panel: "home",
+    index: 0,
+  }
+
+  const [data, setData] = useState(initialData);
   const [errorMessage, setErrorMessage] = useState(false);
   const fileInputRef = useRef(null);
   const axiosPrivateHook = useAxiosPrivate();
@@ -30,7 +44,7 @@ const AddBanner = () => {
 
       try {
         const uploadResponse = await uploadFile(file);
-        setUploadedFile((prev) => ({
+        setData((prev) => ({
           ...prev,
           image: uploadResponse,
         }));
@@ -41,26 +55,35 @@ const AddBanner = () => {
     }
   };
 
-  const handleTitleChange = (e) => {
-    setUploadedFile((prev) => ({
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setData((prev) => ({
       ...prev,
-      title: e.target.value,
+      [name]: value,
     }));
   };
 
   const breadcrumbsItems = [
-    { label: "Home Banner", href: "/banner-management/banner" },
-    { label: "Add Banner", href: "/banner-management/banner/add-banner" },
+    { label: "Banner management", href: "/banner-management" },
+    { label: `${mode} Banner`, href: `/banner-management/${mode}` },
   ];
 
-  const handleUploadClick = async (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    if (uploadedFile.image && uploadedFile.title) {
+    if (data.image) {
       try {
-        const res = await axiosPrivateHook.post(uploadBanner, uploadedFile);
+        let res;
+
+        if (mode === 'edit' && data?._id) {
+          res = await axiosPrivateHook.put(`${uploadBanner}/${data?._id}`, data);
+        }
+        else {
+          res = await axiosPrivateHook.post(uploadBanner, data);
+        }
+
         if (res.status === 200) {
-          toast.success("Banner uploaded successfully");
-          navigate("/banner-management/banner");
+          toast.success("success");
+          navigate("/banner-management");
         }
       } catch (error) {
         console.error("Failed to submit banner", error);
@@ -73,17 +96,36 @@ const AddBanner = () => {
 
   const handleCancelClick = () => {
     setSelectedFile(null);
-    setUploadedFile({ image: "", title: "" });
+    setData(initialData);
     setErrorMessage(false);
     fileInputRef.current.value = null;
-    navigate("/banner-management/banner");
+    navigate("/banner-management");
   };
+
+  const getABanner = async (id) => {
+    try {
+      const res = await axios.get(`${bannerRoute}/${id}`)
+
+      if (res.status === 200) {
+        setData(res.data.banner)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if (mode === 'edit') {
+      const id = pathname.split("/")[3]
+      getABanner(id)
+    }
+  }, [mode, pathname])
 
   return (
     <div className="w-full relative">
       {/* Title */}
-      <h1 className="text-2xl font-bold text-primaryColor text-left lg:hidden">
-        Add Banner
+      <h1 className="text-2xl font-bold text-primaryColor text-left lg:hidden capitalize ">
+        {mode} Banner
       </h1>
 
       {/* Breadcrumbs */}
@@ -94,26 +136,93 @@ const AddBanner = () => {
       {/* Title Input Field */}
       <div className="mt-4">
         <label className="block text-sm text-left font-medium text-gray-700">
-          Banner Title
+          Title
         </label>
         <input
+          name='title'
           type="text"
-          value={uploadedFile.title}
-          onChange={handleTitleChange}
+          value={data.title}
+          onChange={handleChange}
           placeholder="Enter banner title"
           className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
         />
       </div>
 
+      <div className="mt-4">
+        <label className="block text-sm text-left font-medium text-gray-700">
+          Subtitle
+        </label>
+        <input
+          name='subtitle'
+          type="text"
+          value={data.subtitle}
+          onChange={handleChange}
+          placeholder="Enter banner subtitle"
+          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
+        />
+      </div>
+
+      <div className='flex flex-col sm:flex-row items-center gap-4'>
+
+        <div className="mt-4">
+          <label className="block text-sm text-left font-medium text-gray-700">
+            Screen Type
+          </label>
+          <select
+            name='screenType'
+            value={data?.screenType}
+            onChange={handleChange}
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
+          >
+
+            <option value="desktop">Desktop</option>
+            <option value="mobile">Mobile</option>
+
+          </select>
+        </div>
+
+        <div className="mt-4">
+          <label className="block text-sm text-left font-medium text-gray-700">
+            Panel
+          </label>
+          <select
+            name='panel'
+            value={data?.panel}
+            onChange={handleChange}
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
+          >
+            {
+              PageData?.map((item, index) => (
+                <option key={index} value={item?.panel}>{item?.panel}</option>
+              ))
+            }
+          </select>
+        </div>
+        <div className="mt-4">
+          <label className="block text-sm text-left font-medium text-gray-700">
+            Index
+          </label>
+          <input
+            type="number"
+            min={0}
+            name='index'
+            value={data.index}
+            onChange={handleChange}
+            placeholder="Enter banner index"
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
+          />
+        </div>
+      </div>
+
       {/* File Upload Area */}
-      <div 
+      <div
         className="border-2 border-dashed border-gray-300 rounded-lg h-48 md:h-72 flex flex-col justify-center items-center bg-gray-50 relative cursor-pointer w-full mt-4"
         onClick={() => fileInputRef.current.click()}
       >
         {selectedFile ? (
-          <img 
-            src={URL.createObjectURL(selectedFile)} 
-            alt="Selected" 
+          <img
+            src={URL.createObjectURL(selectedFile)}
+            alt="Selected"
             className="h-full w-full object-cover"
           />
         ) : (
@@ -133,28 +242,28 @@ const AddBanner = () => {
               />
             </svg>
             <span className="mt-2 text-sm text-gray-600">
-              Click here to browse or drag and drop image
+              Click here to browse image
             </span>
           </>
         )}
-        <input 
-          type="file" 
+        <input
+          type="file"
           ref={fileInputRef}
           className="hidden"
-          onChange={handleFileChange} 
+          onChange={handleFileChange}
         />
       </div>
 
       {/* Buttons and Info */}
       <div className="items-center justify-between mt-6 flex">
         <div>
-          <button 
-            onClick={handleUploadClick}
+          <button
+            onClick={handleSave}
             className="border-primaryColor text-primaryColor text-sm px-4 py-2 mx-4 rounded-xl border-2"
           >
-            Upload 
+            Save
           </button>
-          <button 
+          <button
             onClick={handleCancelClick}
             className="text-gray-600 text-sm ml-4"
           >
