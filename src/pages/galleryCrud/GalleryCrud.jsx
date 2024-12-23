@@ -1,7 +1,4 @@
-"use client"
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router";
-import gallery from "../../assets/Gallery/gallery.png";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import { toast } from 'react-toastify';
 import { galleryRoute, getAllGalleriesRoute, updateGalleryRoute, uploadRoute } from "../../utils/Endpoint";
@@ -9,42 +6,8 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate"
 import LoadingScreen from "../../components/common/LoadingScreen";
 // import '../../../src/index.css'
 import { RiCloseCircleFill } from "react-icons/ri";
-
-// SVG Trash Icon Component
-const TrashIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={2}
-    stroke="currentColor"
-    className="w-6 h-6"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M8 7V4a2 2 0 012-2h4a2 2 0 012 2v3"
-    />
-  </svg>
-);
-// SVG Edit Icon Component
-const EditIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={2}
-    stroke="currentColor"
-    className="w-6 h-6"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M15.232 5.232a3 3 0 114.242 4.242l-9 9a3 3 0 01-1.414.707l-3 1a1 1 0 01-1.257-1.257l1-3a3 3 0 01.707-1.414l9-9z"
-    />
-  </svg>
-);
-
+import { FiEdit } from "react-icons/fi";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 
 const Gallery = () => {
@@ -61,7 +24,7 @@ const Gallery = () => {
   const axiosPrivate = useAxiosPrivate();
   const [galleryIds, setGalleryIds] = useState([]); // Track gallery IDs
   const [editingImageIndex, setEditingImageIndex] = useState(null);
-  const [editingImageName, setEditingImageName] = useState("");
+  const [editingCaption, setEditingCaption] = useState("");
   const [editingImageFile, setEditingImageFile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -75,7 +38,7 @@ const Gallery = () => {
   //handleEdit image
   const handleEditImage = (index) => {
     setEditingImageIndex(index); // Set the image index to be edited
-    setEditingImageName(images[index].caption); // Set the current caption
+    setEditingCaption(images[index].caption); // Set the current caption
     setEditingImageFile(null); // Reset the image file input
     setIsModalOpen(true); // Open the modal
   };
@@ -105,7 +68,7 @@ const Gallery = () => {
 
     const imageId = images[editingImageIndex]._id; // Get the ID from the selected image
     const formData = new FormData();
-    formData.append('caption', caption); // Add caption to form data
+    formData.append('caption', editingCaption); // Add caption to form data
     if (editingImageFile) {
       formData.append('image', editingImageFile); // Add image file if provided
     }
@@ -133,7 +96,7 @@ const Gallery = () => {
       // Close the modal and reset editing state
       setIsModalOpen(false);
       setEditingImageIndex(null);
-      setEditingImageName('');
+      setEditingCaption('');
       setEditingImageFile(null);
       toast.success(response.data.msg);
     } catch (error) {
@@ -423,68 +386,65 @@ const Gallery = () => {
               )}
 
               {/* Optional edit and delete buttons */}
-              <div className="absolute top-2 right-2 space-y-2">
-                <button
+              <div className="absolute top-2 right-4 gap-2 flex">
+
+                <FiEdit
                   onClick={(e) => {
                     e.stopPropagation();
                     handleEditImage(index);
                   }}
-                  className="text-gray-600 hover:text-primaryColor"
-                >
-                  <EditIcon />
-                </button>
+                  className="text-blue-900"
+                />
 
-                {isModalOpen && (
-                  <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
-                    <div className="bg-white p-6 rounded-md shadow-md relative w-80">
-                      <h3 className="text-lg mb-4">Edit Image</h3>
-                      <input
-                        type="text"
-                        value={editingImageName}
-                        onChange={(e) => setEditingImageName(e.target.value)}
-                        className="border p-2 mb-4 w-full"
-                        placeholder="Edit caption"
-                      />
-                      <input
-                        type="file"
-                        onChange={handleEditFileChange}
-                        className="mb-4"
-                        accept="image/*"
-                      />
-                      <div className="flex justify-end space-x-2">
-                        <button
-                          onClick={handleUpdateImage}
-                          className="bg-primaryColor text-white px-4 py-2 rounded"
-                        >
-                          Save
-                        </button>
-                        <button
-                          onClick={closeModal}
-                          className="text-gray-500 px-4 py-2 rounded hover:text-gray-700"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-
-                <button
+                <FaRegTrashAlt
                   onClick={(e) => {
                     e.stopPropagation();
                     handleRemoveImage(item._id, index);
                   }}
-                  className="text-gray-600 hover:text-primaryColor"
-                >
-                  <TrashIcon />
-                </button>
+                  className="text-red-900"
+                />
+
               </div>
             </div>
           ))}
         </div>
 
       </div>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-md shadow-md relative w-80">
+            <h3 className="text-lg mb-4">Edit Image</h3>
+            <input
+              type="text"
+              value={editingCaption}
+              onChange={(e) => setEditingCaption(e.target.value)}
+              className="border p-2 mb-4 w-full"
+              placeholder="Edit caption"
+            />
+            <input
+              type="file"
+              onChange={handleEditFileChange}
+              className="mb-4"
+              accept="image/*"
+            />
+            <div className="flex justify-end space-x-2">
+              <button
+                onClick={handleUpdateImage}
+                className="bg-primaryColor text-white px-4 py-2 rounded"
+              >
+                Save
+              </button>
+              <button
+                onClick={closeModal}
+                className="text-gray-500 px-4 py-2 rounded hover:text-gray-700"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
