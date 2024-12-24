@@ -12,12 +12,12 @@ const uploadFile = async (file) => {
     });
 
     // Extracting the file data from the response
-    const { name, key, location } = response.data.file;
+    const { name, key, location, size } = response.data.file;
     
     // Success toast notification
     toast.success("File uploaded successfully!");
 
-    return { name, key, location };
+    return { name, key, location, size };
   } catch (error) {
     // Error toast notification
     toast.error("File upload failed. Please try again.");
