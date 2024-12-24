@@ -28,6 +28,11 @@ export const uploadRoute = '/api/uploads'
 // Articles
 export const uploadArticles = '/api/admin/article'
 export const getArticles = '/api/article'
+
+// Brochures
+export const uploadBrochures = '/api/admin/brochure'
+export const getBrochures = '/api/brochure'
+
 // Research
 export const uploadResearch = '/api/admin/research'
 export const getResearch = '/api/research'

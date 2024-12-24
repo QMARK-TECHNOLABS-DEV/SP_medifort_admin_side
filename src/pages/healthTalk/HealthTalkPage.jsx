@@ -14,6 +14,7 @@ function HealthTalkPage() {
         { imageSrc: content1, title: 'Article', url: '/content-management/article' },
         { imageSrc: content2, title: 'Video', url: '/content-management/video' },
         { imageSrc: content3, title: 'Research', url: '/content-management/research' },
+        { imageSrc: content1, title: 'Brochure', url: '/content-management/brochure' },
     ];
 
     useEffect(() => {
