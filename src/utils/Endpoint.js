@@ -39,6 +39,9 @@ export const getResearch = '/api/research'
 // News
 export const uploadNews = '/api/admin/news'
 export const getNews = '/api/news'
+// Blogs
+export const uploadBlog = '/api/admin/blog'
+export const getBlog = '/api/blog'
 // Videos
 export const uploadVideos = '/api/admin/video'
 export const getVideos = '/api/video'

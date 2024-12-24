@@ -17,6 +17,7 @@ const ContentManagementPage = () => {
     { imageSrc: content4, title: 'News', url: "/content-management/news" },
     { imageSrc: content7, title: 'Media', url: "/content-management/media" },
     { imageSrc: content8, title: 'Doctor case studies', url: "/content-management/casestudies" },
+    { imageSrc: content4, title: 'Blogs', url: "/content-management/blogs" },
   ];
 
   useEffect(() => {

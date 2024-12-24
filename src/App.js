@@ -47,6 +47,8 @@ import AdminGuard from './guards/AdminGuard';
 import NotFound from './pages/NotFound';
 import FeedbackEnquiryPage from './pages/enquiry/FeedbackEnquiryPage';
 import BrochurePage from './pages/healthTalk/BrochurePage';
+import BlogPage from './pages/blogs/BlogPage';
+import AddBlogPage from './pages/blogs/AddBlogPage';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -117,6 +119,10 @@ function App() {
               {/* News */}
               <Route path='/content-management/news' element={<NewsPage />} />
               <Route path='/content-management/news/new-news' element={<AddNewsPage />} />
+
+              {/* Blog */}
+              <Route path='/content-management/blogs' element={<BlogPage />} />
+              <Route path='/content-management/blog/new-blog' element={<AddBlogPage />} />
 
               {/* Case Studies */}
               <Route path='/content-management/casestudies' element={<CaseStudyHomePage />} />
