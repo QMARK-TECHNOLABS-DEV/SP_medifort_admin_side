@@ -62,3 +62,5 @@ export const testimonialRoute = '/api/testimonial'
 
 export const loginRoute = '/api/auth/login'
 
+export const recentUpdatesRoute = '/api/admin/recent-updates'
+
