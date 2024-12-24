@@ -3,19 +3,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import { HiPencilAlt } from "react-icons/hi";
 import BlogPlaceholder from "../../assets/article/images.png";
-import { FaTrashAlt } from "react-icons/fa";
 import uploadFile from "../../hooks/uploadFile";
 import { toast } from "react-toastify";
 import { uploadBlog } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
 
 const AddBlogPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  // const [image, setImage] = useState("");
-  // const [title, setTitle] = useState("");
-  // const [content, setContent] = useState("");
-  // const [pdf, setPdf] = useState();
 
   const [isEdit, setIsEdit] = useState(false);
   const axiosPrivateHook = useAxiosPrivate();
@@ -24,22 +21,25 @@ const AddBlogPage = () => {
     title: '',
     kind: '',
     author: '',
-    content: '',
     image: ''
   }
   const [blog, setBlog] = useState(initialState)
 
+  const [content, setContent] = useState('')
+
   useEffect(() => {
     if (location.state && location.state.isEdit === true) {
       const { blog } = location.state;
-      setBlog(blog)
+      const { content, ...rest } = blog;
+      setBlog(rest)
+      setContent(content)
       setIsEdit(true)
     }
   }, [location]);
 
   const breadcrumbsItems = [
     { label: "Content Management", href: "/content-management" },
-    { label: isEdit ? "Update Blog" : "New Blog", href: "/content-management/Blog/new-Blog" },
+    { label: isEdit ? "Update Blog" : "New Blog", href: "/content-management/blog/new-blog" },
   ];
 
   const handleImageUpload = async (event) => {
@@ -48,7 +48,7 @@ const AddBlogPage = () => {
       try {
         const uploadResponse = await uploadFile(file);
 
-        setBlog((prev)=>({...prev, image: uploadResponse}))
+        setBlog((prev) => ({ ...prev, image: uploadResponse }))
       } catch (error) {
         console.error("Image upload failed", error);
         toast.error("Failed to upload image.");
@@ -59,20 +59,10 @@ const AddBlogPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!blog?.title || !blog?.content) {
+    if (!blog?.title || !content) {
       alert("Please fill in all required fields.");
       return;
     }
-
-    // const newBlog = {
-    //   id: isEdit ? location.state.Blog.id : Date.now(),
-    //   title,
-    //   description: content,
-    //   image: image,
-    //   file: pdf,
-    //   date: new Date().toLocaleDateString(),
-    // };
-
 
     // Send the Blog data to the server
     const response = await axiosPrivateHook({
@@ -80,18 +70,20 @@ const AddBlogPage = () => {
       url: isEdit
         ? `${uploadBlog}/${location.state.blog._id}`
         : uploadBlog,
-      data: blog,
+      data: { ...blog, content },
       headers: { "Content-Type": "application/json" },
     });
     if (response.status === 200) {
-      toast.success("Article uploaded successfully");
+      toast.success("Blog uploaded successfully");
     }
 
+    setBlog(initialState)
+    setContent("")
     navigate("/content-management/blogs");
   };
 
   const handleChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
 
     setBlog((prev) => ({
       ...prev,
@@ -199,22 +191,8 @@ const AddBlogPage = () => {
 
             </div>
 
-            <div className="flex flex-col gap-6">
-              <div>
-                <label className="block text-sm text-left font-medium text-gray-700 mb-2">
-                  Content
-                </label>
-                <textarea
-                  rows="10"
-                  className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                  placeholder="Enter Blog content"
-                  name="content"
-                  value={blog?.content}
-                  onChange={handleChange}
-                />
-              </div>
+            <ReactQuill theme="snow" value={content} onChange={setContent} className="h-[40vh] bg-white" />
 
-            </div>
           </div>
         </form>
       </div>
