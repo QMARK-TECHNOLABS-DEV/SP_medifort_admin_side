@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { getVideos } from "../../utils/Endpoint";
+import { getHealthVideos } from "../../utils/Endpoint";
 import { toast } from "react-toastify";
 import useAxiosPrivate from "../useAxiosPrivate";
 
-const useVideos = () => {
+const useHealthVideos = () => {
   const [videosItems, setVideosItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ const useVideos = () => {
   const fetchVideos = async () => {
     setLoading(true);
     try {
-        const response = await axiosPrivateHook.get(getVideos);
+        const response = await axiosPrivateHook.get(getHealthVideos);
         console.log(response.data);
         setVideosItems(response.data.result);
     } catch (error) {
@@ -35,4 +35,4 @@ const useVideos = () => {
   ;
 };
 
-export default useVideos;
+export default useHealthVideos;

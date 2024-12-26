@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import VideoCard from "../../components/video/VideoCard";
 import AddModal from "../../components/video/AddModal";
-import useVideos from "../../hooks/healthTalkHook/useVideos";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { uploadVideos } from "../../utils/Endpoint";
+import { uploadHealthVideos } from "../../utils/Endpoint";
 import { toast } from "react-toastify";
 import LoadingScreen from "../../components/common/LoadingScreen";
+import useHealthVideos from "../../hooks/healthTalkHook/useHealthVideos";
 
 const breadcrumbsItems = [
   { label: "Health Talk", href: "/content-management/health-talk" },
@@ -15,7 +15,7 @@ const breadcrumbsItems = [
 
 const VideoPage = () => {
   const [videos, setVideos] = useState([]);
-  const { loading, videosItems, fetchVideos } = useVideos();
+  const { loading, videosItems, fetchVideos } = useHealthVideos();
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentVideo, setCurrentVideo] = useState(null);
@@ -84,9 +84,9 @@ const VideoPage = () => {
       try {
         let res;
         if (isAdding) {
-          res = await axiosPrivateHook.post(uploadVideos, videoData);
+          res = await axiosPrivateHook.post(uploadHealthVideos, videoData);
         } else if (isEditing && currentVideo) {
-          res = await axiosPrivateHook.put(`${uploadVideos}/${currentVideo._id}`, videoData);
+          res = await axiosPrivateHook.put(`${uploadHealthVideos}/${currentVideo._id}`, videoData);
         }
 
         if (res && res.status === 200) {
@@ -105,7 +105,7 @@ const VideoPage = () => {
 
   const handleDeleteClick = async (id) => {
     try {
-      const res = await axiosPrivateHook.delete(`${uploadVideos}/${id}`);
+      const res = await axiosPrivateHook.delete(`${uploadHealthVideos}/${id}`);
       if (res.status === 200) {
         fetchVideos();
         toast.success("Video deleted successfully");
