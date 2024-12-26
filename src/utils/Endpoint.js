@@ -48,8 +48,8 @@ export const uploadVideos = '/api/admin/video'
 export const getVideos = '/api/video'
 
 // HealthVideos
-export const uploadHealthVideos = '/api/admin/video'
-export const getHealthVideos = '/api/video'
+export const uploadHealthVideos = '/api/admin/health-video'
+export const getHealthVideos = '/api/health-video'
 
 // CaseStudies
 export const uploadCaseStudies = '/api/admin/case-study'
