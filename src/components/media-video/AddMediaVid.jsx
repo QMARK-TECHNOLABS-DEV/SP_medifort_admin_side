@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { PiLinkSimpleHorizontal } from "react-icons/pi";
 import axios from "../../axios-folder/axios";
 import { uploadRoute } from "../../utils/Endpoint";
+import { toast } from "react-toastify";
 
 const AddMediaVid = ({
   isAdding,
@@ -16,6 +17,12 @@ const AddMediaVid = ({
 }) => {
 
   const [uploading, setUploading] = useState(false)
+  const [isYoutube, setIsYoutube] = useState(() => {
+    if (newVideo?.attachment) {
+      return false
+    }
+    return true
+  })
 
   const handleOverlayClick = (e) => {
 
@@ -29,16 +36,24 @@ const AddMediaVid = ({
     fileInputRef.current.click();
   };
 
+  const MAX_FILE_SIZE = 101 * 1024 * 1024; // 101 MB
+
   const handleFileUpload = async (e) => {
     try {
       setUploading(true)
       const file = e.target.files[0];
-      const formData = new FormData()
-      formData.append('file', file)
-      const res = await axios.post(uploadRoute, formData)
 
-      if (res.status === 200) {
-        setNewVideo((prev)=>({...prev, attachment: res.data.file}))
+      if (file && file.size < MAX_FILE_SIZE) {
+        const formData = new FormData()
+        formData.append('file', file)
+        const res = await axios.post(uploadRoute, formData)
+
+        if (res.status === 200) {
+          setNewVideo((prev) => ({ ...prev, attachment: res.data.file, ytlink: "" }))
+        }
+      }
+      else {
+        toast.info('File size exceeded the limit')
       }
     } catch (error) {
       console.log(error)
@@ -93,41 +108,65 @@ const AddMediaVid = ({
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-1 text-left">
-              YouTube Link
-            </label>
-            <div className="relative">
-              <PiLinkSimpleHorizontal className="absolute left-2 top-1/2 transform -translate-y-1/2 text-black" />
-              <input
-                type="text"
-                name="ytlink"
-                value={newVideo.ytlink}
-                onChange={onAddChange}
-                className="w-full pl-8 p-2 border border-gray-300 rounded-lg bg-gray-300"
-                placeholder="https://www.youtube.com/watch?v="
-              />
-            </div>
+
+          <div className="mb-4 flex flex-col">
+            <label className="text-left">Choose a method</label>
+            <select
+              value={isYoutube}
+              onChange={(e) => setIsYoutube(e.target.value === "true")}
+              className="py-2 outline-none border border-dashed "
+            >
+              <option value="true">Add YouTube Link</option>
+              <option value="false">Upload Video</option>
+            </select>
+
           </div>
 
-          <div className="mb-4">
-            <label className="block mb-2 text-sm text-gray-600 text-left">Upload Video</label>
-            <div className="border border-gray-300 rounded-md p-2 flex items-center justify-between
+          {
+            isYoutube === true
+              ?
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-1 text-left">
+                  YouTube Link
+                </label>
+                <div className="relative">
+                  <PiLinkSimpleHorizontal className="absolute left-2 top-1/2 transform -translate-y-1/2 text-black" />
+                  <input
+                    type="text"
+                    name="ytlink"
+                    value={newVideo.ytlink}
+                    onChange={onAddChange}
+                    className="w-full pl-8 p-2 border border-gray-300 rounded-lg bg-gray-300"
+                    placeholder="https://www.youtube.com/watch?v="
+                  />
+                </div>
+              </div>
+
+              :
+
+              <div className="mb-4">
+                <label className="block mb-2 text-sm text-gray-600 text-left">
+                  Upload Video (Max. Size 100 MB)
+                </label>
+                <div className="border border-gray-300 rounded-md p-2 flex items-center justify-between
                relative bg-gray-300 ">
-              <span
-                className="text-gray-500 cursor-pointer flex items-center"
-                onClick={handleBrowseClick}
-              >
-                🔗 {newVideo?.attachment?.name || "Browse computer"}
-              </span>
-              <input
-                type="file"
-                onChange={handleFileUpload}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-                ref={fileInputRef}
-              />
-            </div>
-          </div>
+                  <span
+                    className="text-gray-500 cursor-pointer flex items-center"
+                    onClick={handleBrowseClick}
+                  >
+                    🔗 {newVideo?.attachment?.name || "Browse computer"}
+                  </span>
+                  <input
+                    type="file"
+                    onChange={handleFileUpload}
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    ref={fileInputRef}
+                  />
+                </div>
+              </div>
+
+          }
+
 
           <div className="flex justify-start items-center space-x-4">
             <button

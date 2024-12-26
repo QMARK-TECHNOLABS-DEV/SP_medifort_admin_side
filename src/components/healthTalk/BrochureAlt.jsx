@@ -7,7 +7,7 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const BrochureAlt = ({ data, setData, mode, setIsOpen, getData }) => {
 
-    const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
+    const MAX_FILE_SIZE = 51 * 1024 * 1024; // 50 MB
 
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
@@ -22,6 +22,9 @@ const BrochureAlt = ({ data, setData, mode, setIsOpen, getData }) => {
                 toast.error("Failed to upload file. Please try again.");
                 console.error("Upload error:", error);
             }
+        }
+        else {
+            toast.info('File size exceeded the limit')
         }
     };
 
@@ -84,7 +87,7 @@ const BrochureAlt = ({ data, setData, mode, setIsOpen, getData }) => {
                         </p>
                     </a>
                 }
-                
+
                 <input
                     type="file"
                     onChange={handleFileChange}

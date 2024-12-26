@@ -39,9 +39,16 @@ const MediaVideoPage = () => {
     setIsEditing(false);
     console.log("isAdding:", isAdding, "isEditing:", isEditing); // Check if states are updating
   };
+  
   const handleAddChange = (e) => {
     const { name, value } = e.target;
-    setNewVideo((prev) => ({ ...prev, [name]: value }));
+    
+    if(name === "ytlink" && value){
+      setNewVideo((prev) => ({ ...prev, [name]: value, attachment: null }));
+    }
+    else{
+      setNewVideo((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleEditClick = (video) => {

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import DepartmentCard from "../../components/department/DepartmentCard";
-import departmentimg1 from "../../assets/department/Department1.jpeg";
-import departmentimg2 from "../../assets/department/Department2.jpeg";
-import departmentimg3 from "../../assets/department/Department3.jpeg";
 import { useLocation, useNavigate } from "react-router-dom";
 import DeleteModal from "../../components/common/DeleteModal";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -11,8 +8,7 @@ import { department_admin_route, list_departments } from "../../utils/Endpoint";
 import LoadingScreen from "../../components/common/LoadingScreen";
 
 const breadcrumbsItems = [
-  { label: "Department", href: "/Department" },
-  { label: "Manage Department", href: "/department/DepartmentPage" },
+  { label: "Manage Departments", href: "/department" },
 ];
 
 const DepartmentPage = () => {
