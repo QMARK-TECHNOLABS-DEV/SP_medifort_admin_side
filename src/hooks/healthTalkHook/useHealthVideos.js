@@ -14,7 +14,7 @@ const useHealthVideos = () => {
     try {
         const response = await axiosPrivateHook.get(getHealthVideos);
         console.log(response.data);
-        setVideosItems(response.data.result);
+        setVideosItems(response.data.result ?? []);
     } catch (error) {
         setError(error);
         toast.error('Failed to fetch Videos');

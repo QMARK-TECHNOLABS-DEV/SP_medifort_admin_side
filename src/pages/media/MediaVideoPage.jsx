@@ -86,7 +86,7 @@ const MediaVideoPage = () => {
     try {
       const response = await axiosPrivateHook.get(getVideos);
       console.log(response.data);
-      setVideos(response.data.result);
+      setVideos(response.data?.result ?? []);
     } catch (error) {
       toast.error('Failed to fetch Videos');
     }
@@ -160,7 +160,7 @@ const MediaVideoPage = () => {
             </button>
           </div>
         </div>
-        {videos.length === 0 ? (
+        {videos?.length === 0 ? (
           <div className="text-center mt-10 text-lg text-gray-500">
             No videos available.
           </div>
