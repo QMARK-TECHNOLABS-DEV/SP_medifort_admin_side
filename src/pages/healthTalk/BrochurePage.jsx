@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Breadcrumbs from '../../components/common/Breadcrumbs';
-import SkeletonCard from '../../components/healthTalk/SkeletonCard'; 
 import DeleteModal from '../../components/common/DeleteModal';
 import useBrochures from '../../hooks/healthTalkHook/useBrochures';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
@@ -14,12 +13,11 @@ const breadcrumbsItems = [
 
 
 const BrochurePage = () => {
-    const { brochures, loading, error, deleteBrochure, fetchBrochures } = useBrochures(); 
+    const { brochures, deleteBrochure, fetchBrochures } = useBrochures();
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedBrochure, setSelectedBrochure] = useState(null);
     const [delayedLoading, setDelayedLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
-    const [selected, setSelected] = useState(false);
     const [mode, setMode] = useState('add');
 
     useEffect(() => {
@@ -28,7 +26,7 @@ const BrochurePage = () => {
             await fetchBrochures(); // Fetch Brochures
             setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
         };
-        
+
         loadWithDelay();
     }, []);
 
@@ -38,13 +36,13 @@ const BrochurePage = () => {
     };
 
     const handleEditClick = (brochure) => {
-        setSelected(brochure)
+        setSelectedBrochure(brochure)
         setMode('edit')
         setIsOpen(true)
     };
 
     const handleDeleteClick = (brochure) => {
-        setSelectedBrochure(brochure); 
+        setSelectedBrochure(brochure);
         setShowDeleteModal(true);
     };
 
@@ -53,8 +51,8 @@ const BrochurePage = () => {
             await deleteBrochure(selectedBrochure._id);
             fetchBrochures();
         }
-        setShowDeleteModal(false); 
-        setSelectedBrochure(null); 
+        setShowDeleteModal(false);
+        setSelectedBrochure(null);
     };
 
     const handleCloseModal = () => {
@@ -79,10 +77,10 @@ const BrochurePage = () => {
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Display loading skeletons if Brochures are loading */}
-                {delayedLoading  ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
+                {delayedLoading ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
                         {Array.from({ length: 4 }).map((_, index) => (
                             <SkeletonBrochure key={index} />
                         ))}
@@ -94,33 +92,27 @@ const BrochurePage = () => {
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
                         {brochures.map((item) => (
-                             <div className="flex flex-col bg-white rounded-2xl mt-6 shadow-lg overflow-hidden w-full mx-auto"> {/* Reduced mt-10 to mt-6 */}
-                                  {/* Adjusted padding on the image to 0 to reduce space */}
-                                  {/* <img src={item.imageUrl} alt={title} className="h-[250px] rounded-t-2xl w-full object-cover" /> */}
-                                  {/* Reduced padding around text */}
-                                  <div className="p-3 text-left"> {/* Reduced padding from p-4 to p-3 */}
+                            <div className="flex flex-col bg-white rounded-2xl mt-6 shadow-lg overflow-hidden w-full mx-auto"> {/* Reduced mt-10 to mt-6 */}
+
+                                <div className="p-3 text-left">
                                     <h3 className="text-lg font-semibold text-gray-900 mb-1">{item?.title}</h3>
-                                    <div className="flex text-sm gap-2 text-gray-500">
-                                      {/* <p>{author}</p> */}
-                                      {/* <p>{formatDate(date)}</p> */}
-                                    </div>
-                                  </div>
-                                  {/* Adjusted padding on the button container */}
-                                  <div className="flex justify-start px-3 py-2 space-x-3"> {/* Reduced padding from p-4 to px-3 py-2 */}
-                                    <button
-                                      className="text-gray-600 bg-white border p-2 rounded-full shadow-md hover:text-blue-600"
-                                      onClick={() => handleEditClick(item)}
-                                    >
-                                      <FaEdit />
-                                    </button>
-                                    <button
-                                      className="text-gray-600 bg-white border p-2 rounded-full shadow-md hover:text-red-600"
-                                      onClick={() => handleDeleteClick(item)}
-                                    >
-                                      <FaTrashAlt />
-                                    </button>
-                                  </div>
+
                                 </div>
+                                <div className="flex justify-start px-3 py-2 space-x-3">
+                                    <button
+                                        className="text-gray-600 bg-white border p-2 rounded-full shadow-md hover:text-blue-600"
+                                        onClick={() => handleEditClick(item)}
+                                    >
+                                        <FaEdit />
+                                    </button>
+                                    <button
+                                        className="text-gray-600 bg-white border p-2 rounded-full shadow-md hover:text-red-600"
+                                        onClick={() => handleDeleteClick(item)}
+                                    >
+                                        <FaTrashAlt />
+                                    </button>
+                                </div>
+                            </div>
                         ))}
                     </div>
                 )}
@@ -134,7 +126,8 @@ const BrochurePage = () => {
             {
                 isOpen
                 &&
-                <BrochureAlt data={selected} setData={setSelected} mode={mode} setIsOpen={setIsOpen} getData={fetchBrochures} />
+                <BrochureAlt data={selectedBrochure} setData={setSelectedBrochure} mode={mode} setIsOpen={setIsOpen}
+                    getData={fetchBrochures} />
             }
         </div>
     );

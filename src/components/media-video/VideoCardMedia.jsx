@@ -22,7 +22,7 @@ const VideoCardMedia = ({ video, onEditClick, onDeleteClick }) => {
   return (
     <div
       className="rounded-lg overflow-hidden shadow-lg bg-white border border-blue-200"
-      style={{ width: "full" }}
+      style={{ width: "300" }}
     >
       <div className="relative h-52">
         {
@@ -36,7 +36,9 @@ const VideoCardMedia = ({ video, onEditClick, onDeleteClick }) => {
               title={video.name}
             ></iframe>
             :
-            <video width="600" controls >
+            <video controls
+            className="w-full h-full"
+            >
               <source src={source} type="video/mp4" />
             </video>
         }

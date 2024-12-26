@@ -125,7 +125,6 @@ const AddNewsPage = () => {
                   className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
                   onClick={() => navigate("/content-management/news")}
                 >
-                  <FaTrashAlt className="mr-2" />
                   Cancel
                 </button>
               )}

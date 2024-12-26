@@ -6,7 +6,6 @@ import { uploadBrochures } from '../../utils/Endpoint';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const BrochureAlt = ({ data, setData, mode, setIsOpen, getData }) => {
-    const navigate = useNavigate();
 
     const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
 
@@ -60,7 +59,7 @@ const BrochureAlt = ({ data, setData, mode, setIsOpen, getData }) => {
         }
     };
 
-    console.log({data})
+    console.log({ data })
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
@@ -74,6 +73,18 @@ const BrochureAlt = ({ data, setData, mode, setIsOpen, getData }) => {
                     placeholder="Title"
                 />
 
+                {
+                    data?.attachment?.location
+                    &&
+                    <a href={data?.attachment?.location}
+                        className='flex'
+                    >
+                        <p className='mb-4'>
+                            {data?.attachment?.name}
+                        </p>
+                    </a>
+                }
+                
                 <input
                     type="file"
                     onChange={handleFileChange}
