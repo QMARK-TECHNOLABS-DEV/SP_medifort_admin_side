@@ -9,7 +9,7 @@ const EnquiryHomePage = () => {
         { id: 2, imageSrc: '/enquiries/enquiriescard2.png', title: 'Insurance', url:"/enquiry/insurance"},
         { id: 3, imageSrc: '/enquiries/enquiriescard3.png', title: 'Contact Us ', url:"/enquiry/contact-us"},
         { id: 4, imageSrc: '/enquiries/enquiriescard4.png', title: 'International Patient Enquiry', url:"/enquiry/international-patient-enquiry"},
-        { id: 4, imageSrc: '/enquiries/enquiriescard3.png', title: 'Feedback Enquiry', url:"/enquiry/feedback"}
+        { id: 5, imageSrc: '/enquiries/feedback.jpg', title: 'Feedback Enquiry', url:"/enquiry/feedback"}
   ];
   useEffect(() => {
     // Simulate loading time

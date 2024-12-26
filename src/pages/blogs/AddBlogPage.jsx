@@ -127,9 +127,9 @@ const AddBlogPage = () => {
                 <img
                   src={blog?.image?.location ? blog?.image.location : BlogPlaceholder}
                   alt="Blog"
-                  className="w-full h-[200px] bg-[#B0BAC366] object-cover rounded-lg"
+                  className="w-full h-full bg-[#B0BAC366] object-contain rounded-lg"
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute inset-0 flex items-center justify-center  ">
                   <label htmlFor="image-upload" className="cursor-pointer">
                     <HiPencilAlt className="text-white text-6xl bg-black bg-opacity-50 rounded-full p-2" />
                   </label>
@@ -143,7 +143,7 @@ const AddBlogPage = () => {
                 </div>
               </div>
 
-              <div className="lg:w-1/2 mt-32 flex flex-col gap-2">
+              <div className="lg:w-1/2 sm:mt-32 flex flex-col gap-2">
                 <div className="">
                   <label className="block text-sm text-left font-medium text-gray-700 mb-2">
                     Title

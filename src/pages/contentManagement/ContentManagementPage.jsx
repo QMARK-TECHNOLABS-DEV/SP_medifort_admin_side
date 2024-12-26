@@ -7,6 +7,7 @@ import content2 from '../../assets/contentManagement/Healthtalk.png';
 import content4 from '../../assets/contentManagement/Content 4.png';
 import content7 from '../../assets/contentManagement/mediaa.jpg';
 import content8 from '../../assets/contentManagement/casestudy.jpg';
+import blogs from '../../assets/contentManagement/blogs.jpg';
 
 const ContentManagementPage = () => {
   const [loading, setLoading] = useState(true);
@@ -17,7 +18,7 @@ const ContentManagementPage = () => {
     { imageSrc: content4, title: 'News', url: "/content-management/news" },
     { imageSrc: content7, title: 'Media', url: "/content-management/media" },
     { imageSrc: content8, title: 'Doctor case studies', url: "/content-management/casestudies" },
-    { imageSrc: content4, title: 'Blogs', url: "/content-management/blogs" },
+    { imageSrc: blogs, title: 'Blogs', url: "/content-management/blogs" },
   ];
 
   useEffect(() => {
