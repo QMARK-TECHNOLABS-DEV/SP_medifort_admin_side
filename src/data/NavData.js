@@ -17,24 +17,30 @@ export const NavData = [
         link: "/department",
         list: []
     },
-    // {
-    //     id: 4,
-    //     name: "Content Management",
-    //     link: "/content-management",
-    //     list: []
-    // },
-    // {
-    //     id: 5,
-    //     name: "Testimonials",
-    //     link: "/testimonials",
-    //     list: []
-    // },
-    // {
-    //     id: 6,
-    //     name: "Enquiries",
-    //     link: "/enquiry",
-    //     list: []
-    // },
+    {
+        id: 4,
+        name: "Content Management",
+        link: "/content-management",
+        list: []
+    },
+    {
+        id: 5,
+        name: "Banner Management",
+        link: "/banner-management",
+        list: []
+    },
+    {
+        id: 6,
+        name: "Testimonials",
+        link: "/testimonials",
+        list: []
+    },
+    {
+        id: 7,
+        name: "Enquiries",
+        link: "/enquiry",
+        list: []
+    },
     // {
     //     "id": 3,
     //     "title": "Media",

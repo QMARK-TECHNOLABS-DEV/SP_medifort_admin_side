@@ -2,6 +2,10 @@ import React from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 const CommonCard = ({ imageUrl, title, author, date, onEditClick, onDeleteClick }) => {
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
   return (
     <div className="flex flex-col bg-white rounded-2xl mt-6 shadow-lg overflow-hidden w-full mx-auto"> {/* Reduced mt-10 to mt-6 */}
       {/* Adjusted padding on the image to 0 to reduce space */}
@@ -11,7 +15,7 @@ const CommonCard = ({ imageUrl, title, author, date, onEditClick, onDeleteClick 
         <h3 className="text-lg font-semibold text-gray-900 mb-1">{title}</h3>
         <div className="flex text-sm gap-2 text-gray-500">
           <p>{author}</p>
-          <p>{date}</p>
+          <p>{formatDate(date)}</p>
         </div>
       </div>
       {/* Adjusted padding on the button container */}

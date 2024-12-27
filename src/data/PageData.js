@@ -1,0 +1,15 @@
+export const PageData = [
+    { id: 1, panel: 'home' },
+    { id: 2, panel: 'about-us' },
+    { id: 3, panel: 'diagnostics' },
+    { id: 4, panel: 'emergency' },
+    { id: 5, panel: 'preventive' },
+    { id: 6, panel: 'departments' },
+    { id: 7, panel: 'specialties' },
+    { id: 8, panel: 'our-team' },
+    { id: 9, panel: 'hospitals' },
+    { id: 10, panel: 'insurance' },
+    { id: 11, panel: 'news' },
+    { id: 12, panel: 'join-us' },
+    { id: 13, panel: 'contact-us' },
+]

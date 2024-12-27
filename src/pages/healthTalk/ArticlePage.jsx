@@ -1,112 +1,112 @@
 import React, { useEffect, useState } from 'react';
 import Breadcrumbs from '../../components/common/Breadcrumbs';
 import CommonCard from '../../components/healthTalk/CommonCard';
-import Article1 from '../../assets/article/Article 1.jpeg';
-import { useLocation, useNavigate } from 'react-router-dom';
+import SkeletonCard from '../../components/healthTalk/SkeletonCard'; // Import SkeletonCard
+import { useNavigate } from 'react-router-dom';
 import DeleteModal from '../../components/common/DeleteModal';
+import useArticles from '../../hooks/healthTalkHook/useArticles';
 
 const breadcrumbsItems = [
     { label: "Health Talk", href: "/content-management/health-talk" },
     { label: "Article", href: "/content-management/article" },
 ];
 
+
 const ArticlePage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [articleItems, setArticleItems] = useState([
-    {
-      id: 1, 
-      title: "Nourishing Recovery Amidst Medical Challenges",
-      imageUrl: Article1,
-      author: "Reo George",
-      date: "03/01/24",
-      content: "Sample content for the article.",
-    },
-    {
-      id: 2,
-      title: "Another Article Title",
-      imageUrl: Article1,
-      author: "John Doe",
-      date: "04/02/24",
-      content: "Another sample content.",
-    },
-  ]);
+    const navigate = useNavigate();
+    const { articles, loading, error, deleteArticle, fetchArticles } = useArticles(); 
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [selectedArticle, setSelectedArticle] = useState(null);
+    const [delayedLoading, setDelayedLoading] = useState(true);
 
-  useEffect(() => {
-    if (location.state?.updatedArticles) {
-      setArticleItems(location.state.updatedArticles);
-    }
-  }, [location.state?.updatedArticles]);
+    useEffect(() => {
+        const loadWithDelay = async () => {
+            setDelayedLoading(true);
+            await fetchArticles(); // Fetch articles
+            setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
+        };
+        
+        loadWithDelay();
+    }, []);
+    const handleAddNewClick = () => {
+        navigate('/content-management/article/new-article', { state: { isEdit: false, articles } });
+    };
 
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedArticle, setSelectedArticle] = useState(null);
+    const handleEditClick = (article) => {
+        navigate('/content-management/article/new-article', { state: { isEdit: true, article } });
+    };
 
-  const handleAddNewClick = () => {
-    navigate('/content-management/article/new-article', { state: { isEdit: false, articleItems } }); 
-  };
+    const handleDeleteClick = (article) => {
+        setSelectedArticle(article); 
+        setShowDeleteModal(true);
+    };
 
-  const handleEditClick = (article) => {
-    navigate('/content-management/article/new-article', { state: { isEdit: true, article, articleItems } });
-  };
+    const handleDeleteConfirm = async () => {
+        if (selectedArticle) {
+            await deleteArticle(selectedArticle._id);
+            fetchArticles();
+        }
+        setShowDeleteModal(false); 
+        setSelectedArticle(null); 
+    };
 
-  const handleDeleteClick = (article) => {
-    setSelectedArticle(article); 
-    setShowDeleteModal(true); 
-  };
-
-  const handleDeleteConfirm = () => {
-    const updatedArticles = articleItems.filter(item => item.id !== selectedArticle.id);
-    setArticleItems(updatedArticles);
-    setShowDeleteModal(false); 
-    setSelectedArticle(null); 
-  };
-
-  const handleCloseModal = () => {
-    setShowDeleteModal(false);
-    setSelectedArticle(null);
-  };
-
+    const handleCloseModal = () => {
+        setShowDeleteModal(false);
+        setSelectedArticle(null);
+    };
 
     return (
         <div className="h-screen w-full overflow-hidden">
-          <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
-            <div className="flex flex-col ">
-            <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
-          Articles
-        </h1>
-              <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center ">
-                <Breadcrumbs items={breadcrumbsItems} />
-                <div className="flex flex-col lg:flex-row gap-2 lg:gap-2 mt-5 lg:mt-0 w-full lg:w-fit">
-                  <button
-                    className="p-2 px-4 mr-5 lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-                    onClick={handleAddNewClick}
-                  >
-                    + Add new
-                  </button>
+            <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
+                <div className="flex flex-col">
+                    <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Articles</h1>
+                    <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center">
+                        <Breadcrumbs items={breadcrumbsItems} />
+                        <div className="flex flex-col lg:flex-row gap-2 lg:gap-2 mt-5 lg:mt-0 w-full lg:w-fit">
+                            <button
+                                className="p-2 px-4 mr-5 lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+                                onClick={handleAddNewClick}
+                            >
+                                + Add new
+                            </button>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                
+                {/* Display loading skeletons if articles are loading */}
+                {delayedLoading  ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
+                        {Array.from({ length: 4 }).map((_, index) => (
+                            <SkeletonCard key={index} />
+                        ))}
+                    </div>
+                ) : articles.length === 0 ? (
+                    <div className="text-center mt-10 text-lg justify-center items-center text-gray-500">
+                        No articles available.
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
+                        {articles.map((item) => (
+                            <CommonCard
+                                key={item.id}
+                                imageUrl={item.image?.location}
+                                title={item.title}
+                                author={item.author}
+                                date={item.updatedAt}
+                                onEditClick={() => handleEditClick(item)}
+                                onDeleteClick={() => handleDeleteClick(item)}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
-                {articleItems.map((item, index) => (
-                    <CommonCard
-                      key={item.id}
-                      imageUrl={item.imageUrl}
-                      title={item.title}
-                      author={item.author}
-                      date={item.date}
-                      onEditClick={() => handleEditClick(item)}
-                      onDeleteClick={() => handleDeleteClick(item)}
-                    />
-                ))}
-            </div>
-          </div>
-          <DeleteModal
-            show={showDeleteModal}
-            onClose={handleCloseModal}
-            onConfirm={handleDeleteConfirm}
-          />
+            <DeleteModal
+                show={showDeleteModal}
+                onClose={handleCloseModal}
+                onConfirm={handleDeleteConfirm}
+            />
         </div>
-      );
-}
+    );
+};
 
 export default ArticlePage;

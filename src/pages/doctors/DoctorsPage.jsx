@@ -11,6 +11,7 @@ const DoctorHomePage = () => {
   const [search, setSearch] = useState('')
   const [deptId, setDeptId] = useState('')
   const [sort, setSort] = useState('asc')
+  const [loading, setLoading] = useState(true);
   const axiosPrivate = useAxiosPrivate()
 
   const addNewDoctor = () => {
@@ -26,6 +27,7 @@ const DoctorHomePage = () => {
 
   const getData = async () => {
     try {
+      setLoading(true); 
       const response = await axiosPrivate.get(`${doctor_admin_route}?search=${search}&deptId=${deptId}`)
 
       console.log(response.data);
@@ -43,6 +45,8 @@ const DoctorHomePage = () => {
 
     } catch (error) {
       console.log(error)
+    }finally {
+      setLoading(false); 
     }
   }
 
@@ -65,12 +69,12 @@ const DoctorHomePage = () => {
 
 
   return (
-    <div>
+    <div className="w-full">
       <header>
         <TopPart title={"Doctor profile"} type={{ name: "search" }} setSearch={setSearch} />
       </header>
       <DoctorFilter onAddDoctor={addNewDoctor} setDeptId={setDeptId} setSort={setSort} />
-      <DoctorsPhotos data={doctors} />
+      <DoctorsPhotos data={doctors} loading={loading} />
     </div>
   );
 };

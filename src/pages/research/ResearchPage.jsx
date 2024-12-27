@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Breadcrumbs from '../../components/common/Breadcrumbs';
 import CommonCard from '../../components/healthTalk/CommonCard';
-import Research1 from '../../assets/research/Research 1.jpeg';
-import Research2 from '../../assets/research/Research 2.jpeg';
-import Research3 from '../../assets/research/Research 3.jpeg';
-import Research4 from '../../assets/research/Research 4.jpeg';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DeleteModal from '../../components/common/DeleteModal';
+import useResearch from '../../hooks/healthTalkHook/useResearch';
+import SkeletonCard from '../../components/healthTalk/SkeletonCard';
 
 const breadcrumbsItems = [
   { label: "Health Talk", href: "/content-management/health-talk" },
@@ -15,57 +13,27 @@ const breadcrumbsItems = [
 
 const ResearchPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [researchItems, setResearchItems] = useState([
-    {
-      id: 1,
-      title: "Advancements in Gene Therapy for Rare Diseases",
-      imageUrl: Research1,
-      author: "Dr. Emily Green",
-      date: "03/01/24",
-      content: "Detailed research content here.",
-    },
-    {
-      id: 2,
-      title: "Nanotechnology in Cancer Treatment",
-      imageUrl: Research2,
-      author: "Dr. John Smith",
-      date: "04/02/24",
-      content: "Detailed research content here.",
-    },
-    {
-      id: 3,
-      title: "AI in Early Diagnosis of Alzheimer’s",
-      imageUrl: Research3,
-      author: "Dr. Sarah Lee",
-      date: "05/03/24",
-      content: "Detailed research content here.",
-    },
-    {
-      id: 4,
-      title: "Breakthrough in Diabetes Management",
-      imageUrl: Research4,
-      author: "Dr. Jane Brown",
-      date: "06/04/24",
-      content: "Detailed research content here.",
-    },
-  ]);
-
-  useEffect(() => {
-    if (location.state?.updatedResearch) {
-      setResearchItems(location.state.updatedResearch);
-    }
-  }, [location.state?.updatedResearch]);
-
+  const { loading, researchItems, deleteResearch, fetchResearch } = useResearch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedResearch, setSelectedResearch] = useState(null);
+  const [delayedLoading, setDelayedLoading] = useState(true);
+
+  useEffect(() => {
+    const loadWithDelay = async () => {
+      setDelayedLoading(true);
+      await fetchResearch();
+    setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
+  };
+  
+  loadWithDelay();
+}, []);
 
   const handleAddNewClick = () => {
     navigate('/content-management/research/new-research', { state: { isEdit: false, researchItems } });
   };
 
   const handleEditClick = (research) => {
-    navigate('/content-management/research/new-research', { state: { isEdit: true, research, researchItems } });
+    navigate('/content-management/research/new-research', { state: { isEdit: true, research } });
   };
 
   const handleDeleteClick = (research) => {
@@ -73,9 +41,10 @@ const ResearchPage = () => {
     setShowDeleteModal(true);
   };
 
-  const handleDeleteConfirm = () => {
-    const updatedResearch = researchItems.filter(item => item.id !== selectedResearch.id);
-    setResearchItems(updatedResearch);
+  const handleDeleteConfirm = async () => {
+    if (selectedResearch) {
+     await deleteResearch(selectedResearch._id); // Call the delete function with the ID
+    }
     setShowDeleteModal(false);
     setSelectedResearch(null);
   };
@@ -84,6 +53,10 @@ const ResearchPage = () => {
     setShowDeleteModal(false);
     setSelectedResearch(null);
   };
+
+  if (loading) {
+    return <div className="text-center mt-10 text-lg text-gray-500">Loading...</div>; // Loading state
+  }
 
   return (
     <div className="h-screen w-full overflow-hidden mx-auto">
@@ -104,20 +77,31 @@ const ResearchPage = () => {
             </div>
           </div>
         </div>
-        {/* Reduced gap between grid items */}
-        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-x-6"> {/* Changed gap-6 to gap-4 */}
-          {researchItems.map((item) => (
-            <CommonCard
-              key={item.id}
-              imageUrl={item.imageUrl}
-              title={item.title}
-              author={item.author}
-              date={item.date}
-              onEditClick={() => handleEditClick(item)}
-              onDeleteClick={() => handleDeleteClick(item)}
-            />
-          ))}
-        </div>
+        {delayedLoading  ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
+                        {Array.from({ length: 4 }).map((_, index) => (
+                            <SkeletonCard key={index} />
+                        ))}
+                    </div>
+                ) : researchItems.length === 0 ? (
+          <div className="text-center mt-10 text-lg text-gray-500">
+            No articles available.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-x-6">
+            {researchItems.map((item) => (
+              <CommonCard
+                key={item.id}
+                imageUrl={item.image?.location}
+                title={item.title}
+                author={item.authors}
+                date={item.publishedDate}
+                onEditClick={() => handleEditClick(item)}
+                onDeleteClick={() => handleDeleteClick(item)}
+              />
+            ))}
+          </div>
+        )}
       </div>
       <DeleteModal
         show={showDeleteModal}

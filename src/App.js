@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -37,82 +37,122 @@ import Gallery from './pages/galleryCrud/GalleryCrud';
 import Dashboard from './pages/Dashboard';
 import DepartmentHomePage from './pages/department/DepartmentHomePage';
 import DepartmentCard from './components/department/DepartmentCard';
+import VidTestimonial from './pages/testimonials/VidTestimonial';
+import BannerManagementPage from './pages/bannerManagement/BannerManagementPage';
+import MediaVideoPage from './pages/media/MediaVideoPage';
+
+import LoadingScreen from './components/common/LoadingScreen';
+import AuthGuard from './guards/AuthGuard';
+import AdminGuard from './guards/AdminGuard';
+import NotFound from './pages/NotFound';
+import FeedbackEnquiryPage from './pages/enquiry/FeedbackEnquiryPage';
+import BrochurePage from './pages/healthTalk/BrochurePage';
+import BlogPage from './pages/blogs/BlogPage';
+import AddBlogPage from './pages/blogs/AddBlogPage';
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  // Simulate loading screen for 2 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div className="App">
       <Router>
         <Routes>
           {/* Login Page */}
-          <Route index path='/login' element={<LoginPage />} />
-          <Route element={<MainLayout />}>
 
-            {/* Dashboard */}
-            <Route exact path='/' element={<Dashboard />} />
+          <Route element={<AuthGuard />} >
+            <Route index path='/login' element={<LoginPage />} />
+          </Route>
 
-            {/* Doctor Profile part */}
-            <Route path='/doctor-profiles' element={<DoctorProfiles />} />
-            <Route path='/doctor-profiles/:id' element={<DoctorDetailedView />} />
-            <Route path='/doctors' element={<DoctorsPage />} />
-            <Route path='/doctors/edit/:id' element={<DoctorsEditPage />} />
+          <Route element={<AdminGuard />} >
+            <Route element={<MainLayout />}>
+              {/* Dashboard */}
+              <Route exact path='/' element={<Dashboard />} />
 
-            {/* Testimonials part */}
-            <Route path='/testimonials' element={<TestimonialsHomePage />} />
-            <Route path='/testimonials/patient' element={<TestimonialsPatientContentPage />} />
-            <Route path='/testimonials/video' element={<TestiComp />} />
+              {/* Doctor Profile part */}
+              <Route path='/doctor-profiles' element={<DoctorProfiles />} />
+              <Route path='/doctor-profiles/:id' element={<DoctorDetailedView />} />
+              <Route path='/doctors' element={<DoctorsPage />} />
+              <Route path='/doctors/edit/:id' element={<DoctorsEditPage />} />
 
-            {/* Banner */}
-            <Route path='/banner' element={<BannerCo />} />
-            <Route path='/add-banner' element={<BannComp />} />
+              {/* Testimonials part */}
+              <Route path='/testimonials' element={<TestimonialsHomePage />} />
+              <Route path='/testimonials/patient' element={<TestimonialsPatientContentPage />} />
+              <Route path='/testimonials/video' element={<VidTestimonial />} />
 
-            {/* Content management media */}
-            <Route path='/content-management/media' element={<Media />} />
+              {/* Banner */}
+              <Route path='/banner' element={<BannerCo />} />
+              <Route path='/add-banner' element={<BannComp />} />
 
-            {/*Content Management part */}
-            <Route path='/content-management' element={<ContentManagementPage />} />
-            <Route path='/content-management/preventive-health' element={<PreventiveHealth />} />
+              {/* Content management media */}
+              <Route path='/content-management/media' element={<Media />} />
 
-            {/*Department  */}
+              {/* Content Management part */}
+              <Route path='/content-management' element={<ContentManagementPage />} />
+              <Route path='/content-management/preventive-health' element={<PreventiveHealth />} />
 
-            <Route path='/department' element={<DepartmentHomePage />} />
-            <Route path='/department/add' element={<DepartmentPage />} />
-            <Route path='/department/edit/:id' element={<AddDepartmentPage />} />
+              {/* Department */}
+              {/* <Route path='/department' element={<DepartmentHomePage />} /> */}
+              <Route path='/department' element={<DepartmentPage />} />
+              <Route path='/department/edit/:id' element={<AddDepartmentPage />} />
 
-            {/*Health Talk  */}
-            <Route path='/content-management/health-talk' element={<HealthTalkPage />} />
-            <Route path='/content-management/article' element={<ArticlePage />} />
-            <Route path='/content-management/article/new-article' element={<NewArticlePage />} />
-            <Route path='/content-management/video' element={<VideoPage />} />
+              {/* Health Talk */}
+              <Route path='/content-management/health-talk' element={<HealthTalkPage />} />
+              <Route path='/content-management/article' element={<ArticlePage />} />
+              <Route path='/content-management/article/new-article' element={<NewArticlePage />} />
+              <Route path='/content-management/video' element={<VideoPage />} />
+              <Route path='/content-management/brochure' element={<BrochurePage />} />
 
-            {/*Research*/}
-            <Route path='/content-management/research' element={<ResearchPage />} />
-            <Route path='/content-management/research/new-research' element={<NewResarchPage />} />
+              {/* Research */}
+              <Route path='/content-management/research' element={<ResearchPage />} />
+              <Route path='/content-management/research/new-research' element={<NewResarchPage />} />
 
-            {/*News */}
-            <Route path='/content-management/news' element={<NewsPage />} />
-            <Route path='/content-management/news/new-news' element={<AddNewsPage />} />
+              {/* News */}
+              <Route path='/content-management/news' element={<NewsPage />} />
+              <Route path='/content-management/news/new-news' element={<AddNewsPage />} />
 
-            {/* Banner */}
-            <Route path='/content-management/banner' element={<BannerCo />} />
-            <Route path='/content-management/banner/add-banner' element={<BannComp />} />
+              {/* Blog */}
+              <Route path='/content-management/blogs' element={<BlogPage />} />
+              <Route path='/content-management/blog/new-blog' element={<AddBlogPage />} />
 
-            {/*Case Studies*/}
-            <Route path='/content-management/casestudies' element={<CaseStudyHomePage />} />
+              {/* Case Studies */}
+              <Route path='/content-management/casestudies' element={<CaseStudyHomePage />} />
 
-            {/*Gallery Crud */}
-            <Route path='/content-management/gallery' element={<Gallery />} />
+              {/* Gallery Crud */}
+              <Route path='/content-management/media/gallery' element={<Gallery />} />
+              <Route path='/content-management/media/video' element={<MediaVideoPage />} />
 
-            {/*Enquiry */}
-            <Route path='/enquiry' element={<EnquiryHomePage />} />
-            <Route path='/enquiry/homecare' element={<HomeCareEnquiryPage />} />
-            <Route path='/enquiry/insurance' element={<InsuranceEnquiryPage />} />
-            <Route path='/enquiry/contact-us' element={<ContactUsEnquiryPage />} />
-            <Route path='/enquiry/international-patient-enquiry' element={<InternationalPatientEnquiryPage />} />
+              <Route path='/banner-management' element={<BannerManagementPage />} />
+              {/* Banner */}
+              <Route path='/banner-management/add' element={<BannComp />} />
+              <Route path='/banner-management/edit/:id' element={<BannComp />} />
+              <Route path='/banner-management/:panel' element={<BannerCo />} />
 
-            {/* Gallery CRUD */}
-            <Route path='/gallery' element={<Gallery />} />
+              {/* Enquiry */}
+              <Route path='/enquiry' element={<EnquiryHomePage />} />
+              <Route path='/enquiry/homecare' element={<HomeCareEnquiryPage />} />
+              <Route path='/enquiry/insurance' element={<InsuranceEnquiryPage />} />
+              <Route path='/enquiry/feedback' element={<FeedbackEnquiryPage />} />
+              <Route path='/enquiry/contact-us' element={<ContactUsEnquiryPage />} />
+              <Route path='/enquiry/international-patient-enquiry' element={<InternationalPatientEnquiryPage />} />
+
+              {/* Gallery CRUD */}
+              <Route path='/gallery' element={<Gallery />} />
+            </Route>
 
           </Route>
+
+          <Route path='*' element={<NotFound />} />
+
         </Routes>
       </Router>
     </div>

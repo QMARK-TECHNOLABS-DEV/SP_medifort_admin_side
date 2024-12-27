@@ -1,62 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import PreventiveHealthCard from "../../components/contentManagement/PreventiveHealthCard";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import AddModal from "../../components/contentManagement/PreventiveHealthAddModal";
 import DeleteModal from "../../components/common/DeleteModal";
+import axios from "../../axios-folder/axios";
+import { checkupAdminRoute, checkupRoute } from "../../utils/Endpoint";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import LoadingScreen from "../../components/common/LoadingScreen";
 
 const PreventiveHealth = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [editItemIndex, setEditItemIndex] = useState(null);
-  const [deleteItemIndex, setDeleteItemIndex] = useState(null);
-  const [healthItems, setHealthItems] = useState([
-    {
-      title: "Cardiac Health Screening",
-      details: [
-        "Complete Lipid Profile",
-        "ECG",
-        "Treadmill Test",
-        "Echocardiography",
-        "Cardiologist Consultation",
-      ],
-      price: "2499/-",
-    },
-    {
-      title: "Cardiac Health Screening",
-      details: [
-        "Complete Lipid Profile",
-        "ECG",
-        "Treadmill Test",
-        "Echocardiography",
-        "Cardiologist Consultation",
-      ],
-      price: "2499/-",
-    },
-    {
-      title: "Cardiac Health Screening",
-      details: [
-        "Complete Lipid Profile",
-        "ECG",
-        "Treadmill Test",
-        "Echocardiography",
-        "Cardiologist Consultation",
-      ],
-      price: "2499/-",
-    },
-    {
-      title: "Cardiac Health Screening",
-      details: [
-        "Complete Lipid Profile",
-        "ECG",
-        "Treadmill Test",
-        "Echocardiography",
-        "Cardiologist Consultation",
-      ],
-      price: "2499/-",
-    },
-    // Add more items here if needed
-  ]);
+  const [editItemId, setEditItemId] = useState(null);
+  const [deleteItemId, setDeleteItemId] = useState(null);
+  const [checkups, setCheckups] = useState([]);
+  const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(true);
+
+  const [mode, setMode] = useState('add')
 
   const breadcrumbsItems = [
     { label: "Content management", href: "/content-management" },
@@ -67,17 +29,18 @@ const PreventiveHealth = () => {
   ];
 
   const handleAddClick = () => {
-    setEditItemIndex(null);
+    setMode('add')
     setShowAddModal(true);
   };
 
-  const handleEditClick = (index) => {
-    setEditItemIndex(index);
+  const handleEditClick = (id) => {
+    setMode('update')
+    setEditItemId(id)
     setShowAddModal(true);
   };
 
-  const handleDeleteClick = (index) => {
-    setDeleteItemIndex(index);
+  const handleDeleteClick = (id) => {
+    setDeleteItemId(id);
     setShowDeleteModal(true);
   };
 
@@ -89,34 +52,52 @@ const PreventiveHealth = () => {
     setShowDeleteModal(false);
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    const newHealthItem = {
-      title: event.target.title.value,
-      details: event.target.content.value
-        .split(",")
-        .map((detail) => detail.trim()),
-      price: `${event.target.price.value}/-`,
-    };
+  const axiosPrivateHook = useAxiosPrivate();
 
-    if (editItemIndex !== null) {
-      const updatedItems = [...healthItems];
-      updatedItems[editItemIndex] = newHealthItem;
-      setHealthItems(updatedItems);
-    } else {
-      setHealthItems([...healthItems, newHealthItem]);
+  const handleDeleteConfirm = async () => {
+    try {
+      const res = await axiosPrivateHook.delete(`${checkupAdminRoute}/${deleteItemId}`)
+
+      if(res.status === 200){
+        const updatedItems = checkups.filter(
+          (item) => String(item?._id) !== String(deleteItemId)
+        );
+
+        setCheckups(updatedItems);
+        handleCloseDeleteModal();
+
+      }
+    } catch (error) {
+      console.log(error)
     }
-
-    handleCloseAddModal();
   };
 
-  const handleDeleteConfirm = () => {
-    const updatedItems = healthItems.filter(
-      (_, index) => index !== deleteItemIndex
-    );
-    setHealthItems(updatedItems);
-    handleCloseDeleteModal();
-  };
+  const getAllCheckups = async () => {
+    try {
+      const res = await axios.get(`${checkupRoute}?search=${search}`)
+
+      if (res.status === 200) {
+        setCheckups(res.data.result)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getAllCheckups()
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, [search])
+
+  if (loading) return(
+    <div className="h-screen w-full overflow-hidden">
+
+      <LoadingScreen/>
+    </div>
+  ) 
 
   return (
     <div className="h-screen w-full overflow-hidden ">
@@ -134,9 +115,10 @@ const PreventiveHealth = () => {
                 <input
                   type="text"
                   placeholder="Search"
+                  onChange={(e)=> setSearch(e.target.value)}
                   className="border rounded-lg p-3 text-sm w-full placeholder:ps-8"
                 />
-                <div className="absolute inset-y-0 left-3 flex items-center">
+                <div className="absolute inset-y-0 right-3 flex items-center">
                   <FiSearch className="w-5 h-5 text-gray-400" />
                 </div>
               </div>
@@ -150,23 +132,27 @@ const PreventiveHealth = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {healthItems.map((item, index) => (
+          {checkups.map((item, index) => (
             <PreventiveHealthCard
               key={index}
               title={item.title}
-              details={item.details}
+              details={item.tests}
               price={item.price}
-              onEditClick={() => handleEditClick(index)}
-              onDeleteClick={() => handleDeleteClick(index)}
+              onEditClick={() => handleEditClick(item?._id)}
+              onDeleteClick={() => handleDeleteClick(item?._id)}
             />
           ))}
         </div>
+
         <AddModal
           show={showAddModal}
           onClose={handleCloseAddModal}
-          onSubmit={handleFormSubmit}
-          editItem={editItemIndex !== null ? healthItems[editItemIndex] : null}
+          mode={mode}
+          editItemId={editItemId}
+          checkups={checkups}
+          setCheckups={setCheckups}
         />
+
         <DeleteModal
           show={showDeleteModal}
           onClose={handleCloseDeleteModal}

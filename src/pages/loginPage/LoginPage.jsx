@@ -1,15 +1,84 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import login from '../../assets/login/loginnn.png';
 import newImage from '../../assets/login/logins.png';
 import symbolImage from '../../assets/login/moon.png';
 import stethoscopeImage from '../../assets/login/stethoscope.png';
+import axios from '../../axios-folder/axios';
+import { loginRoute } from '../../utils/Endpoint';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../redux/slices/AuthSlicer';
+import { setAccessToken, setRefreshToken } from '../../redux/slices/TokenReducer';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function Login() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userData = useSelector((state) => state?.auth?.userInfo);
+
+  useEffect(() => {
+    if (isLoggedIn && userData?.role === "admin") {
+      navigate("/");
+    } else if (userData?.role !== "admin") {
+      navigate("/login");
+    }
+  }, [isLoggedIn, userData, navigate]);
+
+  const [data, setData] = useState({
+    email: '',
+    password: ''
+  })
+
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+
+    setData((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    if (!data.email.trim()) {
+      return toast.info("Email is required")
+    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+      return toast.info("Email is not valid")
+    }
+
+    if (!data.password.trim()) {
+      return toast.info("Password is required")
+    } else if (data.password.length < 8 || data.password.length > 20) {
+      return toast.info("Password must be between 8 and 20 characters")
+    }
+
+    try {
+      const res = await axios.post(loginRoute, data)
+
+      if (res.status === 200) {
+        dispatch(setUser(res.data.userInfo))
+        dispatch(setAccessToken(res.data.accessToken))
+        dispatch(setRefreshToken(res.data.refreshToken))
+
+        toast.success("Authenticated")
+        setIsLoggedIn(true)
+      }
+      else if(res.status === 401){
+        toast.error("Invalid Credentials")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="w-full h-screen flex flex-col md:flex-row bg-primaryColor p-5 lg:p-20 lg:px-40">
       <div
         className="w-full h-full flex flex-col lg:flex-row bg-white rounded-2xl overflow-auto"
-        style={{ 
+        style={{
           /* Hide scrollbar for WebKit browsers */
           scrollbarWidth: 'none', /* Firefox */
           msOverflowStyle: 'none', /* Internet Explorer and Edge */
@@ -70,15 +139,18 @@ export default function Login() {
               <div className="mb-6">
                 <label
                   className="block text-gray-500 text-sm font-bold mb-2 text-left"
-                  htmlFor="username"
+                  htmlFor="email"
                 >
-                  Username / E-mail
+                  E-mail
                 </label>
                 <input
                   className="shadow appearance-none border border-gray-500 rounded w-full py-2 sm:py-3 px-3 sm:px-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline"
-                  id="username"
+                  id="email"
                   type="text"
-                  placeholder="r6o3george@gmail.com"
+                  placeholder="Enter e-mail"
+                  name='email'
+                  value={data?.email}
+                  onChange={changeHandler}
                 />
               </div>
 
@@ -94,23 +166,28 @@ export default function Login() {
                   id="password"
                   type="password"
                   placeholder="********"
+                  name='password'
+                  value={data?.password}
+                  onChange={changeHandler}
                 />
               </div>
 
               <div className="flex flex-col items-start">
                 <button
+                  onClick={submitHandler}
                   className="bg-primaryColor text-white p-2 px-5 text-sm rounded mb-4"
                   type="button"
                 >
                   Log In
                 </button>
 
-                <a
+                {/* <a
                   className="inline-block align-baseline font-bold text-sm text-gray-400 hover:text-gray-800"
                   href="#"
                 >
                   Forgot Password?
-                </a>
+                </a> */}
+
               </div>
             </form>
           </div>
@@ -118,7 +195,7 @@ export default function Login() {
 
         {/* Mobile Right Section */}
         <div className="md:hidden w-full h-full p-2 py-4 flex flex-col bg-white overflow-y-auto"
-          style={{ 
+          style={{
             /* Hide scrollbar for WebKit browsers */
             scrollbarWidth: 'none', /* Firefox */
             msOverflowStyle: 'none', /* Internet Explorer and Edge */
@@ -144,15 +221,18 @@ export default function Login() {
             <div className="mb-4">
               <label
                 className="block text-gray-500 text-sm font-bold mb-2 text-left"
-                htmlFor="username"
+                htmlFor="email"
               >
-                Username / E-mail
+                E-mail
               </label>
               <input
                 className="shadow appearance-none border border-gray-500 rounded w-full py-2 sm:py-3 px-3 sm:px-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
+                id="email"
                 type="text"
-                placeholder="r6o3george@gmail.com"
+                placeholder="Enter e-mail"
+                name='email'
+                value={data?.email}
+                onChange={changeHandler}
               />
             </div>
 
@@ -168,23 +248,28 @@ export default function Login() {
                 id="password"
                 type="password"
                 placeholder="********"
+                name='password'
+                value={data?.password}
+                onChange={changeHandler}
               />
             </div>
 
             <div className="flex flex-col items-start">
               <button
+                onClick={submitHandler}
                 className="bg-primaryColor text-white p-2 px-5 rounded focus:outline-none focus:shadow-outline mb-2"
                 type="button"
               >
                 Log In
               </button>
 
-              <a
+              {/* <a
                 className="inline-block text-sm text-gray-400 hover:text-gray-800"
                 href="#"
               >
                 Forgot Password?
-              </a>
+              </a> */}
+
             </div>
           </form>
 

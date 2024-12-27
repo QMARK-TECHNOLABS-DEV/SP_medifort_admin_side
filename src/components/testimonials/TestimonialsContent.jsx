@@ -37,7 +37,7 @@ const TestimonialsContent = () => {
       {/* Injecting CSS into the document */}
       <style>{styles}</style>
 
-      <div className="flex flex-wrap justify-center gap-6 sm:grid sm:grid-cols-2 md:grid-cols-3 -mt-4 lg:-mt-4 lg:-ml-3 mt-0 sm:mt-4">
+      <div className="flex flex-wrap justify-center gap-6 sm:grid sm:grid-cols-2 md:grid-cols-3 -mt-4 lg:-mt-4 lg:-ml-3 sm:mt-4">
         {galleryItems.map((item) => (
           <Link
             to={item?.path}

@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import VideoCard from "../../components/video/VideoCard";
 import AddModal from "../../components/video/AddModal";
-import thumbnail from "../../assets/testimonials/Client.mp4";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { uploadHealthVideos } from "../../utils/Endpoint";
+import { toast } from "react-toastify";
+import LoadingScreen from "../../components/common/LoadingScreen";
+import useHealthVideos from "../../hooks/healthTalkHook/useHealthVideos";
 
 const breadcrumbsItems = [
   { label: "Health Talk", href: "/content-management/health-talk" },
@@ -10,71 +14,110 @@ const breadcrumbsItems = [
 ];
 
 const VideoPage = () => {
-  const [videos, setVideos] = useState([
-    { id: 1, name: "Reo George", date: "2024-01-03", src: thumbnail, isYouTube: false },
-    { id: 2, name: "Reo George", date: "2024-01-03", src: thumbnail, isYouTube: false },
-    { id: 3, name: "Reo George", date: "2024-01-03", src: thumbnail, isYouTube: false },
-  ]);
+  const [videos, setVideos] = useState([]);
+  const { loading, videosItems, fetchVideos } = useHealthVideos();
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentVideo, setCurrentVideo] = useState(null);
-  const [newVideo, setNewVideo] = useState({ name: "", date: "", src: "", isYouTube: false });
+  const [delayedLoading, setDelayedLoading] = useState(true);
+  const [newVideo, setNewVideo] = useState({
+    title: "",
+    date: "",
+    ytlink: "",
+    isVideo: true,
+  });
 
-  const handleAddNewClick = () => setIsAdding(true);
+  useEffect(() => {
+    const loadWithDelay = async () => {
+      setDelayedLoading(true);
+    await fetchVideos();
+    setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
+  };
+  
+  loadWithDelay();
+}, []);
+
+
+  const handleAddNewClick = () => {
+    setIsAdding(true);
+    setIsEditing(false);
+  };
 
   const handleAddChange = (e) => {
     const { name, value } = e.target;
     setNewVideo((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleDateChange = (e) => setNewVideo((prev) => ({ ...prev, date: e.target.value }));
+  const handleEditClick = (video) => {
+    setIsEditing(true);
+    setCurrentVideo(video);
+    setNewVideo({
+      title: video.title,
+      date: video.date,
+      ytlink: video.ytlink,
+      isVideo: true,
+    });
+  };
+
+  const handleDateChange = (e) =>
+    setNewVideo((prev) => ({ ...prev, date: e.target.value }));
 
   const extractYouTubeID = (url) => {
-    const regex = /(?:youtube\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const regex =
+      /(?:youtube\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const match = url.match(regex);
     return match ? match[1] : null;
   };
 
-  const handleAddSubmit = (e) => {
+  const axiosPrivateHook = useAxiosPrivate();
+
+  const handlePostData = async (e) => {
     e.preventDefault();
-    const youTubeID = extractYouTubeID(newVideo.src);
-    const isYouTube = !!youTubeID;
+    const youTubeID = extractYouTubeID(newVideo.ytlink);
 
-    const newId = videos.length ? videos[videos.length - 1].id + 1 : 1;
-    setVideos((prev) => [...prev, {
-      id: newId,
-      ...newVideo,
-      src: youTubeID ? `https://www.youtube.com/embed/${youTubeID}` : newVideo.src,
-      isYouTube,
-    }]);
-    setIsAdding(false);
-    resetForm();
+    if (youTubeID) {
+      const videoData = {
+        ...newVideo,
+        ytlink: `https://www.youtube.com/embed/${youTubeID}`, // Embed link format
+      };
+
+      try {
+        let res;
+        if (isAdding) {
+          res = await axiosPrivateHook.post(uploadHealthVideos, videoData);
+        } else if (isEditing && currentVideo) {
+          res = await axiosPrivateHook.put(`${uploadHealthVideos}/${currentVideo._id}`, videoData);
+        }
+
+        if (res && res.status === 200) {
+          toast.success(isAdding ? "Video added successfully" : "Video updated successfully");
+          fetchVideos();
+          handleCloseModal();
+        }
+      } catch (error) {
+        console.error("Failed to save video:", error);
+        toast.error("An error occurred while saving the video.");
+      }
+    } else {
+      toast.error("Invalid YouTube URL");
+    }
   };
 
-  const handleEditClick = (video) => {
-    setIsEditing(true);
-    setCurrentVideo(video);
-    setNewVideo({ name: video.name, date: video.date, src: video.src, isYouTube: video.isYouTube });
+  const handleDeleteClick = async (id) => {
+    try {
+      const res = await axiosPrivateHook.delete(`${uploadHealthVideos}/${id}`);
+      if (res.status === 200) {
+        fetchVideos();
+        toast.success("Video deleted successfully");
+      }
+    } catch (error) {
+      console.error("Failed to delete video:", error);
+      toast.error("An error occurred while deleting the video.");
+    }
   };
 
-  const handleEditSubmit = (e) => {
-    e.preventDefault();
-    const youTubeID = extractYouTubeID(newVideo.src);
-    const isYouTube = !!youTubeID;
-
-    setVideos((prev) => prev.map((video) =>
-      video.id === currentVideo.id
-        ? { ...video, ...newVideo, src: youTubeID ? `https://www.youtube.com/embed/${youTubeID}` : newVideo.src, isYouTube }
-        : video
-    ));
-    setIsEditing(false);
-    setCurrentVideo(null);
-    resetForm();
-  };
-
-  const handleDeleteClick = (id) => setVideos((prev) => prev.filter((video) => video.id !== id));
-
-  const resetForm = () => setNewVideo({ name: "", date: "", src: "", isYouTube: false });
+  const resetForm = () =>
+    setNewVideo({ title: "", date: "", ytlink: "", isVideo: true });
 
   const handleCloseModal = () => {
     setIsAdding(false);
@@ -83,37 +126,44 @@ const VideoPage = () => {
     resetForm();
   };
 
+  if (delayedLoading) return(
+    <div className="h-screen w-full overflow-hidden">
+
+      <LoadingScreen/>
+    </div>
+  ) 
+
   return (
     <div className="h-screen w-full overflow-hidden">
       <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
         <div className="flex flex-col mb-6">
-        <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
-          Video
-        </h1>
-       
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center px-4px">
-  <Breadcrumbs items={breadcrumbsItems} className="custom-breadcrumbs" />
-  <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
-    <button
-      className="p-2 px-4px mr-5px lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-      onClick={handleAddNewClick}
-    >
-      + Add video
-    </button>
-  </div>
-</div>
-
+          <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Video</h1>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center px-4px">
+            <Breadcrumbs items={breadcrumbsItems} className="custom-breadcrumbs" />
+            <button
+              className="p-2 px-4px mr-5px lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+              onClick={handleAddNewClick}
+            >
+              + Add video
+            </button>
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-1">
-          {videos.map((video) => (
-            <VideoCard
-              key={video.id}
-              video={video}
-              onEditClick={handleEditClick}
-              onDeleteClick={handleDeleteClick}
-            />
-          ))}
-        </div>
+        {videosItems.length === 0 ? (
+          <div className="text-center mt-10 text-lg text-gray-500">
+            No videos available.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-1">
+            {videosItems.map((video) => (
+              <VideoCard
+                key={video._id}
+                video={video}
+                onEditClick={handleEditClick}
+                onDeleteClick={handleDeleteClick}
+              />
+            ))}
+          </div>
+        )}
       </div>
       {(isAdding || isEditing) && (
         <AddModal
@@ -122,7 +172,7 @@ const VideoPage = () => {
           newVideo={newVideo}
           onAddChange={handleAddChange}
           onDateChange={handleDateChange}
-          onSubmit={isAdding ? handleAddSubmit : handleEditSubmit}
+          onSubmit={handlePostData}
           onClose={handleCloseModal}
           onReset={resetForm}
         />

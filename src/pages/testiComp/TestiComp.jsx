@@ -233,7 +233,7 @@ const TestiComp = () => {
             <h2 className="text-2xl font-bold mb-4">{isAdding ? "Add Video" : "Edit Video"}</h2>
             <form onSubmit={isAdding ? handleAddSubmit : handleEditSubmit}>
               <div className="mb-4">
-                <label className="block text-gray-700 mb-2">Name</label>
+                <label className="block text-gray-700 mb-2 text-left">Name</label>
                 <input
                   type="text"
                   name="name"
@@ -244,7 +244,7 @@ const TestiComp = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 mb-2">Date</label>
+                <label className="block text-gray-700 mb-2 text-left">Date</label>
                 <input
                   type="date"
                   name="date"
@@ -254,8 +254,9 @@ const TestiComp = () => {
                   required
                 />
               </div>
+
               <div className="mb-4">
-                <label className="block text-gray-700 mb-2">Video URL</label>
+                <label className="block text-gray-700 mb-2 text-left">Video URL</label>
                 <input
                   type="text"
                   name="src"
@@ -265,6 +266,7 @@ const TestiComp = () => {
                   required
                 />
               </div>
+
               <div className="flex justify-end">
                 <button
                   type="button"

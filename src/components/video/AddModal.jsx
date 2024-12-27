@@ -39,15 +39,15 @@ const AddModal = ({
         <form onSubmit={onSubmit} className="flex flex-col">
           <div className="mb-4">
             <label className="block text-gray-700 mb-1 text-left">
-              Patient Name
+              Title
             </label>
             <input
               type="text"
-              name="name"
-              value={newVideo.name}
+              name="title"
+              value={newVideo.title}
               onChange={onAddChange}
               className="w-full p-2 border border-gray-300 rounded-lg bg-gray-300"
-              placeholder="General health checkup"
+              placeholder="Enter Title"
               required
             />
           </div>
@@ -72,8 +72,8 @@ const AddModal = ({
               <PiLinkSimpleHorizontal className="absolute left-2 top-1/2 transform -translate-y-1/2 text-black" />
               <input
                 type="text"
-                name="src"
-                value={newVideo.src}
+                name="ytlink"
+                value={newVideo.ytlink}
                 onChange={onAddChange}
                 className="w-full pl-8 p-2 border border-gray-300 rounded-lg bg-gray-300"
                 placeholder="https://www.youtube.com/watch?v="

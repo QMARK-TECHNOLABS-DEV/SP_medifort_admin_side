@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   return (
-    <main className="w-screen h-screen overflow-hidden">
+    <main className="w-screen h-auto overflow-hidden">
       <nav className="border-b-2">
         <Navbar />
       </nav>
@@ -18,9 +18,7 @@ const MainLayout = () => {
         <Outlet />
         </div>
       </section>
-      <footer>
-        <Footer />
-      </footer>
+     
     </main>
   );
 };
