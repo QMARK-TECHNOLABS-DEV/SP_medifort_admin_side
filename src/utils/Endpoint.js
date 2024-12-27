@@ -1,5 +1,5 @@
-// export const baseUrl = 'https://spserver.qmarkdesk.com';
-export const baseUrl = 'http://localhost:8800';
+export const baseUrl = 'https://spserver.qmarkdesk.com';
+// export const baseUrl = 'http://localhost:8800';
 
 // Admin routes
 export const regenerateRoute = '/api/auth/refresh-token';
@@ -28,15 +28,29 @@ export const uploadRoute = '/api/uploads'
 // Articles
 export const uploadArticles = '/api/admin/article'
 export const getArticles = '/api/article'
+
+// Brochures
+export const uploadBrochures = '/api/admin/brochure'
+export const getBrochures = '/api/brochure'
+
 // Research
 export const uploadResearch = '/api/admin/research'
 export const getResearch = '/api/research'
 // News
 export const uploadNews = '/api/admin/news'
 export const getNews = '/api/news'
+// Blogs
+export const uploadBlog = '/api/admin/blog'
+export const getBlog = '/api/blog'
+
 // Videos
 export const uploadVideos = '/api/admin/video'
 export const getVideos = '/api/video'
+
+// HealthVideos
+export const uploadHealthVideos = '/api/admin/health-video'
+export const getHealthVideos = '/api/health-video'
+
 // CaseStudies
 export const uploadCaseStudies = '/api/admin/case-study'
 export const getCaseStudies = '/api/case-study'
@@ -53,4 +67,6 @@ export const testimonialAdminRoute = '/api/admin/testimonial'
 export const testimonialRoute = '/api/testimonial'
 
 export const loginRoute = '/api/auth/login'
+
+export const recentUpdatesRoute = '/api/admin/recent-updates'
 

@@ -45,6 +45,10 @@ import LoadingScreen from './components/common/LoadingScreen';
 import AuthGuard from './guards/AuthGuard';
 import AdminGuard from './guards/AdminGuard';
 import NotFound from './pages/NotFound';
+import FeedbackEnquiryPage from './pages/enquiry/FeedbackEnquiryPage';
+import BrochurePage from './pages/healthTalk/BrochurePage';
+import BlogPage from './pages/blogs/BlogPage';
+import AddBlogPage from './pages/blogs/AddBlogPage';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -97,8 +101,8 @@ function App() {
               <Route path='/content-management/preventive-health' element={<PreventiveHealth />} />
 
               {/* Department */}
-              <Route path='/department' element={<DepartmentHomePage />} />
-              <Route path='/department/add' element={<DepartmentPage />} />
+              {/* <Route path='/department' element={<DepartmentHomePage />} /> */}
+              <Route path='/department' element={<DepartmentPage />} />
               <Route path='/department/edit/:id' element={<AddDepartmentPage />} />
 
               {/* Health Talk */}
@@ -106,6 +110,7 @@ function App() {
               <Route path='/content-management/article' element={<ArticlePage />} />
               <Route path='/content-management/article/new-article' element={<NewArticlePage />} />
               <Route path='/content-management/video' element={<VideoPage />} />
+              <Route path='/content-management/brochure' element={<BrochurePage />} />
 
               {/* Research */}
               <Route path='/content-management/research' element={<ResearchPage />} />
@@ -114,6 +119,10 @@ function App() {
               {/* News */}
               <Route path='/content-management/news' element={<NewsPage />} />
               <Route path='/content-management/news/new-news' element={<AddNewsPage />} />
+
+              {/* Blog */}
+              <Route path='/content-management/blogs' element={<BlogPage />} />
+              <Route path='/content-management/blog/new-blog' element={<AddBlogPage />} />
 
               {/* Case Studies */}
               <Route path='/content-management/casestudies' element={<CaseStudyHomePage />} />
@@ -132,6 +141,7 @@ function App() {
               <Route path='/enquiry' element={<EnquiryHomePage />} />
               <Route path='/enquiry/homecare' element={<HomeCareEnquiryPage />} />
               <Route path='/enquiry/insurance' element={<InsuranceEnquiryPage />} />
+              <Route path='/enquiry/feedback' element={<FeedbackEnquiryPage />} />
               <Route path='/enquiry/contact-us' element={<ContactUsEnquiryPage />} />
               <Route path='/enquiry/international-patient-enquiry' element={<InternationalPatientEnquiryPage />} />
 

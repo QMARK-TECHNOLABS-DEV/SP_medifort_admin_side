@@ -125,16 +125,12 @@ const NewArticlePage = () => {
       <div className="pb-36 overflow-y-auto h-full px-6 scrollbar-hide">
         <div className="flex flex-col mb-6">
           <h1
-            className={`text-2xl font-bold text-primaryColor mb-2 text-left ${
-              isEdit ? "-ml-4 md:-ml-6 lg:-ml-8 -mt-1 md:-mt-2 lg:-mt-1" : ""
-            }`}
+            className={`text-2xl font-bold text-primaryColor mb-2 text-left `}
           >
             {isEdit ? "Update Article" : "New Article"}
           </h1>
           <div
-            className={`flex flex-col sm:flex-row sm:justify-between ${
-              isEdit ? "-ml-4 md:-ml-6 lg:-ml-8" : ""
-            }`}
+            className={`flex flex-col sm:flex-row sm:justify-between`}
           >
             <Breadcrumbs items={breadcrumbsItems} />
             <div className="flex flex-col sm:flex-row gap-4 mt-4 sm:mt-0">
@@ -151,7 +147,6 @@ const NewArticlePage = () => {
                   className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
                   onClick={() => navigate("/content-management/article")}
                 >
-                  <FaTrashAlt className="mr-2" />
                   Cancel
                 </button>
               )}
@@ -187,7 +182,7 @@ const NewArticlePage = () => {
                 <input
                   type="text"
                   className="w-full sm:w-1/2 h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                  placeholder="Nourishing Recovery Amidst Medical Challenges"
+                  placeholder="Title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required

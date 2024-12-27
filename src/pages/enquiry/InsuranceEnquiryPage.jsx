@@ -76,7 +76,7 @@ const InsuranceEnquiryPage = () => {
           setSort={setSort}
         />
       </section>
-      <EnquiryTable data={paginatedData} />
+      <EnquiryTable data={paginatedData} kind="insurance" />
     </div>
   );
 };

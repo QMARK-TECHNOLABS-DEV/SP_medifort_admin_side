@@ -14,7 +14,7 @@ const useVideos = () => {
     try {
         const response = await axiosPrivateHook.get(getVideos);
         console.log(response.data);
-        setVideosItems(response.data.video);
+        setVideosItems(response.data.result);
     } catch (error) {
         setError(error);
         toast.error('Failed to fetch Videos');

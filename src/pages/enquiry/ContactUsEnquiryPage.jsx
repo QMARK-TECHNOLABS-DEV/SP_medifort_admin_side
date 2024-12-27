@@ -76,7 +76,7 @@ const ContactUsEnquiryPage = () => {
           setSort={setSort}
         />
       </section>
-      <EnquiryTable data={paginatedData} />
+      <EnquiryTable data={paginatedData} kind='contact' />
     </div>
   );
 };

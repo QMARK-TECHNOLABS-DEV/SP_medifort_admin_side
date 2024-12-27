@@ -56,8 +56,7 @@ const AddDepartmentPage = () => {
   }, [location]);
 
   const breadcrumbsItems = [
-    { label: "Content Management", href: "/content-management" },
-    { label: "Manage Department", href: "/content-management/department" },
+    { label: "Manage Department", href: "/department" },
     {
       label: isEdit ? "Update Department" : "New Department",
       href: "#",
@@ -208,7 +207,7 @@ const AddDepartmentPage = () => {
     try {
       const response = await axiosPrivate.put(`${department_admin_route}/${id}`, updateObj)
       if (response.status === 200) {
-        navigate("/content-management/department")
+        navigate("/department")
       }
     } catch (error) {
       console.log(error)

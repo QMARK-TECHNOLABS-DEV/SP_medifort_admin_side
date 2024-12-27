@@ -39,7 +39,7 @@ const AddModal = ({
         <form onSubmit={onSubmit} className="flex flex-col">
           <div className="mb-4">
             <label className="block text-gray-700 mb-1 text-left">
-              Patient Name
+              Title
             </label>
             <input
               type="text"
@@ -47,7 +47,7 @@ const AddModal = ({
               value={newVideo.title}
               onChange={onAddChange}
               className="w-full p-2 border border-gray-300 rounded-lg bg-gray-300"
-              placeholder="General health checkup"
+              placeholder="Enter Title"
               required
             />
           </div>

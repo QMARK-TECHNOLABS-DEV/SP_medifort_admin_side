@@ -78,7 +78,7 @@ const InternationalPatientEnquiryPage = () => {
           setSort={setSort}
         />
       </section>
-      <EnquiryTable data={paginatedData} />
+      <EnquiryTable data={paginatedData} kind='international' />
     </div>
   );
 };

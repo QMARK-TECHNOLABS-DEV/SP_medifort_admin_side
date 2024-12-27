@@ -6,6 +6,7 @@ import ContentCardSkeleton from '../../components/common/ContentCardSkeleton';
 import content1 from '../../assets/contentManagement/Content 1.png';
 import content2 from '../../assets/contentManagement/Content 2.jpeg';
 import content3 from '../../assets/contentManagement/Content 3.png';
+import content8 from '../../assets/contentManagement/Content 8.jpg';
 
 function HealthTalkPage() {
     const [loading, setLoading] = useState(true);
@@ -14,6 +15,7 @@ function HealthTalkPage() {
         { imageSrc: content1, title: 'Article', url: '/content-management/article' },
         { imageSrc: content2, title: 'Video', url: '/content-management/video' },
         { imageSrc: content3, title: 'Research', url: '/content-management/research' },
+        { imageSrc: content8, title: 'Brochure', url: '/content-management/brochure' },
     ];
 
     useEffect(() => {
