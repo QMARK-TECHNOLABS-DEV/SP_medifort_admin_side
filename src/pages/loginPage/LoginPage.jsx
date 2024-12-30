@@ -10,9 +10,15 @@ import { setUser } from '../../redux/slices/AuthSlicer';
 import { setAccessToken, setRefreshToken } from '../../redux/slices/TokenReducer';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ForgotModal from '../../components/forgot/ForgotModal';
 
 export default function Login() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -66,11 +72,13 @@ export default function Login() {
         toast.success("Authenticated")
         setIsLoggedIn(true)
       }
-      else if(res.status === 401){
-        toast.error("Invalid Credentials")
-      }
     } catch (error) {
       console.log(error)
+
+      if (error.response.status === 401) {
+        console.log("Error code 401")
+        toast.error("Invalid Credentials")
+      }
     }
   }
 
@@ -119,7 +127,7 @@ export default function Login() {
         </div>
 
         {/* Right Section */}
-        <div className="hidden md:flex p-5 w-full flex-col items-center justify-center overflow-hidden">
+        <div className="hidden md:flex p-5 w-full flex-col items-center justify-center overflow-y-scroll">
           <div className="flex flex-col items-start justify-center w-2/3">
             <div className="flex items-center mb-4">
               <img
@@ -181,12 +189,13 @@ export default function Login() {
                   Log In
                 </button>
 
-                {/* <a
-                  className="inline-block align-baseline font-bold text-sm text-gray-400 hover:text-gray-800"
-                  href="#"
+                <span
+                  onClick={openModal}
+                  className="inline-block align-baseline font-bold text-sm 
+                  text-gray-400 hover:text-gray-800 cursor-pointer "
                 >
                   Forgot Password?
-                </a> */}
+                </span>
 
               </div>
             </form>
@@ -263,12 +272,12 @@ export default function Login() {
                 Log In
               </button>
 
-              {/* <a
-                className="inline-block text-sm text-gray-400 hover:text-gray-800"
-                href="#"
+              <span
+                className="inline-block text-sm text-gray-400 hover:text-gray-800 cursor-pointer "
+                onClick={openModal}
               >
                 Forgot Password?
-              </a> */}
+              </span>
 
             </div>
           </form>
@@ -276,6 +285,13 @@ export default function Login() {
           <div className="pt-4 px-4"></div>
         </div>
       </div>
+
+      {
+        isModalOpen
+        &&
+        <ForgotModal onClose={closeModal} />
+      }
+
     </div>
   );
 }
