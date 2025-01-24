@@ -5,19 +5,21 @@ import SkeletonCard from '../../components/healthTalk/SkeletonCard'; // Import S
 import { useNavigate } from 'react-router-dom';
 import DeleteModal from '../../components/common/DeleteModal';
 import useArticles from '../../hooks/healthTalkHook/useArticles';
+import useGetAllDoctors from '../../hooks/doctor/useGetAllDoctors';
 
 const breadcrumbsItems = [
     { label: "Health Talk", href: "/content-management/health-talk" },
     { label: "Article", href: "/content-management/article" },
 ];
 
-
 const ArticlePage = () => {
     const navigate = useNavigate();
-    const { articles, loading, error, deleteArticle, fetchArticles } = useArticles(); 
+    const { articles, loading, error, deleteArticle, fetchArticles } = useArticles();
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [delayedLoading, setDelayedLoading] = useState(true);
+    const { doctors } = useGetAllDoctors();
+    const [articlesWithAuthors, setArticlesWithAuthors] = useState([]); // Corrected name
 
     useEffect(() => {
         const loadWithDelay = async () => {
@@ -25,9 +27,27 @@ const ArticlePage = () => {
             await fetchArticles(); // Fetch articles
             setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
         };
-        
         loadWithDelay();
     }, []);
+
+    useEffect(() => {
+        // Set the articles with author names by fetching the doctor name based on the doctorId
+        const fetchArticlesWithAuthors = () => {
+            const updatedArticles = articles.map((item) => {
+                const authorDoctor = doctors.find((doctor) => doctor._id === item.author);
+                return {
+                    ...item,
+                    author: authorDoctor ? authorDoctor.doctor_name : item.author, // Fallback if no doctor is found
+                };
+            });
+            setArticlesWithAuthors(updatedArticles);
+        };
+
+        if (articles.length > 0) {
+            fetchArticlesWithAuthors();
+        }
+    }, [articles, doctors]);
+
     const handleAddNewClick = () => {
         navigate('/content-management/article/new-article', { state: { isEdit: false, articles } });
     };
@@ -37,7 +57,7 @@ const ArticlePage = () => {
     };
 
     const handleDeleteClick = (article) => {
-        setSelectedArticle(article); 
+        setSelectedArticle(article);
         setShowDeleteModal(true);
     };
 
@@ -46,8 +66,8 @@ const ArticlePage = () => {
             await deleteArticle(selectedArticle._id);
             fetchArticles();
         }
-        setShowDeleteModal(false); 
-        setSelectedArticle(null); 
+        setShowDeleteModal(false);
+        setSelectedArticle(null);
     };
 
     const handleCloseModal = () => {
@@ -72,21 +92,21 @@ const ArticlePage = () => {
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Display loading skeletons if articles are loading */}
-                {delayedLoading  ? (
+                {delayedLoading ? (
                     <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
                         {Array.from({ length: 4 }).map((_, index) => (
                             <SkeletonCard key={index} />
                         ))}
                     </div>
-                ) : articles.length === 0 ? (
+                ) : articlesWithAuthors.length === 0 ? (
                     <div className="text-center mt-10 text-lg justify-center items-center text-gray-500">
                         No articles available.
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
-                        {articles.map((item) => (
+                        {articlesWithAuthors.map((item) => (
                             <CommonCard
                                 key={item.id}
                                 imageUrl={item.image?.location}

@@ -74,3 +74,5 @@ export const sendOtpRoute = '/api/auth/send-otp'
 export const verifyOtpRoute = '/api/auth/verify-otp'
 export const setPasswordRoute = '/api/auth/set-password'
 
+export const doctorsRoute = '/api/doctors'
+
