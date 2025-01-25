@@ -9,33 +9,46 @@ import { uploadBlog } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
+import useGetAllDoctors from "../../hooks/doctor/useGetAllDoctors";
 
 const AddBlogPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [isEdit, setIsEdit] = useState(false);
+  const [isCustomAuthor, setIsCustomAuthor] = useState(false);
   const axiosPrivateHook = useAxiosPrivate();
+  const { doctors, loading, error } = useGetAllDoctors();
 
   const initialState = {
     title: '',
     kind: '',
     author: '',
     image: ''
-  }
-  const [blog, setBlog] = useState(initialState)
+  };
 
-  const [content, setContent] = useState('')
+  const [blog, setBlog] = useState(initialState);
+  const [content, setContent] = useState('');
 
   useEffect(() => {
     if (location.state && location.state.isEdit === true) {
       const { blog } = location.state;
-      const { content, ...rest } = blog;
-      setBlog(rest)
-      setContent(content)
-      setIsEdit(true)
+      const { content, author, ...rest } = blog;
+      
+      // Check if the author is a doctor ID
+      const doctorExists = doctors.some(doctor => doctor._id === author);
+      if (doctorExists) {
+        setBlog({ ...rest, author: author }); // Set doctor ID as author
+      } else {
+        setIsCustomAuthor(true); // Set custom author
+        setBlog({ ...rest, author: author }); // Set custom author name
+      }
+      
+      setContent(content);
+      setIsEdit(true);
     }
-  }, [location]);
+  }, [location, doctors]); // Added doctors as dependency to handle changes in doctors list
+  
 
   const breadcrumbsItems = [
     { label: "Content Management", href: "/content-management" },
@@ -47,8 +60,7 @@ const AddBlogPage = () => {
     if (file) {
       try {
         const uploadResponse = await uploadFile(file);
-
-        setBlog((prev) => ({ ...prev, image: uploadResponse }))
+        setBlog((prev) => ({ ...prev, image: uploadResponse }));
       } catch (error) {
         console.error("Image upload failed", error);
         toast.error("Failed to upload image.");
@@ -67,18 +79,17 @@ const AddBlogPage = () => {
     // Send the Blog data to the server
     const response = await axiosPrivateHook({
       method: isEdit ? "PUT" : "POST",
-      url: isEdit
-        ? `${uploadBlog}/${location.state.blog._id}`
-        : uploadBlog,
+      url: isEdit ? `${uploadBlog}/${location.state.blog._id}` : uploadBlog,
       data: { ...blog, content },
       headers: { "Content-Type": "application/json" },
     });
+
     if (response.status === 200) {
       toast.success("Blog uploaded successfully");
     }
 
-    setBlog(initialState)
-    setContent("")
+    setBlog(initialState);
+    setContent("");
     navigate("/content-management/blogs");
   };
 
@@ -88,8 +99,8 @@ const AddBlogPage = () => {
     setBlog((prev) => ({
       ...prev,
       [name]: value
-    }))
-  }
+    }));
+  };
 
   return (
     <div className="h-screen w-full overflow-hidden">
@@ -129,7 +140,7 @@ const AddBlogPage = () => {
                   alt="Blog"
                   className="w-full h-full bg-[#B0BAC366] object-contain rounded-lg"
                 />
-                <div className="absolute inset-0 flex items-center justify-center  ">
+                <div className="absolute inset-0 flex items-center justify-center">
                   <label htmlFor="image-upload" className="cursor-pointer">
                     <HiPencilAlt className="text-white text-6xl bg-black bg-opacity-50 rounded-full p-2" />
                   </label>
@@ -174,25 +185,57 @@ const AddBlogPage = () => {
                   />
                 </div>
 
-                <div className="">
+                <div className="mt-5">
                   <label className="block text-sm text-left font-medium text-gray-700 mb-2">
                     Author
                   </label>
-                  <input
-                    type="text"
-                    className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                    placeholder="Enter author name"
-                    name="author"
-                    value={blog?.author}
-                    onChange={handleChange}
-                  />
+                  <div className="flex flex-col gap-4">
+                    <select
+                      className="w-full  h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                      value={isCustomAuthor ? "Other" : blog.author}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (value === "Other") {
+                          setIsCustomAuthor(true);
+                          setBlog({ ...blog, author: "" });
+                        } else {
+                          setIsCustomAuthor(false);
+                          setBlog({ ...blog, author: value });
+                        }
+                      }}
+                    >
+                      <option value="" disabled>
+                        Select Doctor
+                      </option>
+                      {loading && <option>Loading doctors...</option>}
+                      {error && <option>Error loading doctors</option>}
+                      {!loading && !error && (
+                        <>
+                          {doctors.map((doctor) => (
+                            <option key={doctor.id} value={doctor._id}>
+                              {doctor.doctor_name}
+                            </option>
+                          ))}
+                          <option value="Other">Other</option>
+                        </>
+                      )}
+                    </select>
+
+                    {isCustomAuthor && (
+                      <input
+                        type="text"
+                        className="w-full  h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                        placeholder="Enter Author Name"
+                        value={blog.author}
+                        onChange={(e) => setBlog({ ...blog, author: e.target.value })}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
-
             </div>
 
             <ReactQuill theme="snow" value={content} onChange={setContent} className="h-[40vh] bg-white" />
-
           </div>
         </form>
       </div>

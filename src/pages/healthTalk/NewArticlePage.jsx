@@ -8,6 +8,7 @@ import uploadFile from "../../hooks/uploadFile";
 import { uploadArticles } from "../../utils/Endpoint";
 import { toast } from "react-toastify";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useGetAllDoctors from "../../hooks/doctor/useGetAllDoctors";
 
 const NewArticlePage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const NewArticlePage = () => {
   const [image, setImage] = useState({ file: null, location: Article1 });
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  const [isCustomAuthor, setIsCustomAuthor] = useState(false);
   const [content, setContent] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [pdf, setPdf] = useState({ file: null, name: "" });
@@ -22,18 +24,27 @@ const NewArticlePage = () => {
   const [articleItems, setArticleItems] = useState(
     location.state?.articleItems || []
   );
+  const { doctors, loading, error } = useGetAllDoctors();
 
   useEffect(() => {
     if (location.state && location.state.isEdit) {
       const { article } = location.state;
       setTitle(article.title);
-      setAuthor(article.author);
       setContent(article.content);
       setImage(article.image);
       setPdf(article.file);
       setIsEdit(true);
+  
+      // Check if the author is a doctor ID
+      const doctorExists = doctors.some(doctor => doctor._id === article.author);
+      if (doctorExists) {
+        setAuthor(article.author); // Set the doctor's ID
+      } else {
+        setIsCustomAuthor(true); // Set custom author
+        setAuthor(article.author); // Set custom author name
+      }
     }
-  }, [location]);
+  }, [location, doctors]);
 
   const breadcrumbsItems = [
     { label: "Health Talk", href: "/content-management/health-talk" },
@@ -129,9 +140,7 @@ const NewArticlePage = () => {
           >
             {isEdit ? "Update Article" : "New Article"}
           </h1>
-          <div
-            className={`flex flex-col sm:flex-row sm:justify-between`}
-          >
+          <div className={`flex flex-col sm:flex-row sm:justify-between`}>
             <Breadcrumbs items={breadcrumbsItems} />
             <div className="flex flex-col sm:flex-row gap-4 mt-4 sm:mt-0">
               <button
@@ -187,17 +196,55 @@ const NewArticlePage = () => {
                   onChange={(e) => setTitle(e.target.value)}
                   required
                 />
-                <label className="block text-sm text-left font-medium text-gray-700 mt-5 mb-2">
-                  Author
-                </label>
-                <input
-                  type="text"
-                  className="w-full sm:w-1/2 h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                  placeholder="Author Name"
-                  value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
-                  required
-                />
+                <div className="mt-5">
+                  <label className="block text-sm text-left font-medium text-gray-700 mb-2">
+                    Author
+                  </label>
+                  <div className="flex flex-col gap-4">
+                    <select
+                      className="w-full sm:w-1/2 h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                      value={isCustomAuthor ? "Other" : author}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (value === "Other") {
+                          setIsCustomAuthor(true);
+                          setAuthor("");
+                        } else {
+                          setIsCustomAuthor(false);
+                          setAuthor(value);
+                        }
+                      }}
+                    >
+                      <option value="" disabled>
+                        Select Doctor
+                      </option>
+                      {/* Dynamically render doctors */}
+                      {loading && <option>Loading doctors...</option>}
+                      {error && <option>Error loading doctors</option>}
+                      {!loading && !error && (
+                        <>
+                          {doctors.map((doctor) => (
+                            <option key={doctor.id} value={doctor._id}>
+                              {doctor.doctor_name}
+                            </option>
+                          ))}
+                          <option value="Other">Other</option>
+                        </>
+                      )}
+                    </select>
+
+                    {/* Conditionally render input for custom author name */}
+                    {isCustomAuthor && (
+                      <input
+                        type="text"
+                        className="w-full sm:w-1/2 h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                        placeholder="Enter Author Name"
+                        value={author}
+                        onChange={(e) => setAuthor(e.target.value)}
+                      />
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
             <div className="flex flex-col gap-6">
