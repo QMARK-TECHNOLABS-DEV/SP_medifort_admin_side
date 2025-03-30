@@ -8,6 +8,7 @@ import LoadingScreen from "../../components/common/LoadingScreen";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { FaRegTrashAlt } from "react-icons/fa";
+import useImageCompression from "../../hooks/useImageCompression";
 
 
 const Gallery = () => {
@@ -29,7 +30,7 @@ const Gallery = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [caption, setCaption] = useState("")
-
+const {compressImage} = useImageCompression()
   const breadcrumbsItems = [
     { label: "Media", href: "/content-management/media" },
     { label: "Gallery", href: "/content-management/media/gallery" },
@@ -70,7 +71,8 @@ const Gallery = () => {
     const formData = new FormData();
     formData.append('caption', editingCaption); // Add caption to form data
     if (editingImageFile) {
-      formData.append('image', editingImageFile); // Add image file if provided
+      const compressedFile = await compressImage(editingImageFile);
+      formData.append('image', compressedFile); // Add image file if provided
     }
 
     try {
@@ -152,8 +154,8 @@ const Gallery = () => {
 
     const formData = new FormData();
     const file = fileInputRef.current?.files[0]; // Get file from the input
-
-    formData.append("image", file);
+    const compressedFile = await compressImage(file);
+    formData.append("image", compressedFile);
     formData.append("caption", caption);
 
     try {

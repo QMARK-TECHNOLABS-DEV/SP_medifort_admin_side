@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PageData } from '../../data/PageData';
 import axios from '../../axios-folder/axios';
+import useImageCompression from '../../hooks/useImageCompression';
 
 const AddBanner = () => {
   const location = useLocation();
@@ -30,7 +31,8 @@ const AddBanner = () => {
   const fileInputRef = useRef(null);
   const axiosPrivateHook = useAxiosPrivate();
   const navigate = useNavigate();
-
+  const {compressImage} = useImageCompression()
+  
   const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
 
   const handleFileChange = async (event) => {
@@ -43,6 +45,8 @@ const AddBanner = () => {
       setErrorMessage(false);
 
       try {
+        const compressedFile = await compressImage(file); // Compress the image before upload
+        setSelectedFile(compressedFile);
         const uploadResponse = await uploadFile(file);
         setData((prev) => ({
           ...prev,

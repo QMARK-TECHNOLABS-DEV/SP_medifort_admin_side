@@ -9,6 +9,7 @@ import { uploadArticles } from "../../utils/Endpoint";
 import { toast } from "react-toastify";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useGetAllDoctors from "../../hooks/doctor/useGetAllDoctors";
+import imageCompression from "browser-image-compression";
 
 const NewArticlePage = () => {
   const navigate = useNavigate();
@@ -56,21 +57,38 @@ const NewArticlePage = () => {
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
+  
     if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("File size exceeds 5MB. Please upload a smaller file.");
+        return;
+      }
+  
       try {
-        const uploadResponse = await uploadFile(file);
+        // Compression options
+        const options = {
+          maxSizeMB: 1, // Target file size
+          maxWidthOrHeight: 1024, // Resize if needed
+          useWebWorker: true,
+        };
+  
+        const compressedFile = await imageCompression(file, options);
+  
+        const uploadResponse = await uploadFile(compressedFile);
         setImage({
           key: uploadResponse.key,
           name: uploadResponse.name,
           location: uploadResponse.location,
         });
+  
+        toast.success("Image uploaded successfully!");
       } catch (error) {
         console.error("Image upload failed", error);
         toast.error("Failed to upload image.");
       }
     }
   };
-
+  
   const handlePdfUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {

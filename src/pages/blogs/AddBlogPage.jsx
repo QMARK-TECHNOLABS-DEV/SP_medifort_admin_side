@@ -10,6 +10,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import useGetAllDoctors from "../../hooks/doctor/useGetAllDoctors";
+import imageCompression from "browser-image-compression";
 
 const AddBlogPage = () => {
   const navigate = useNavigate();
@@ -58,8 +59,20 @@ const AddBlogPage = () => {
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
+       if (file.size > 5 * 1024 * 1024) {
+              toast.error("File size exceeds 5MB. Please upload a smaller file.");
+              return;
+            }
       try {
-        const uploadResponse = await uploadFile(file);
+           // Compression options
+                const options = {
+                  maxSizeMB: 1, // Target file size
+                  maxWidthOrHeight: 1024, // Resize if needed
+                  useWebWorker: true,
+                };
+          
+                const compressedFile = await imageCompression(file, options);
+        const uploadResponse = await uploadFile(compressedFile);
         setBlog((prev) => ({ ...prev, image: uploadResponse }));
       } catch (error) {
         console.error("Image upload failed", error);
