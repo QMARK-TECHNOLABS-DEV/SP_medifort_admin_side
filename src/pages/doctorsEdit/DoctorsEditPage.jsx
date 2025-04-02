@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 
 const DoctorsEditPage = () => {
   const [updateObj, setUpdateObj] = useState({})
-
   const { id } = useParams();
   const axiosPrivate = useAxiosPrivate();
 

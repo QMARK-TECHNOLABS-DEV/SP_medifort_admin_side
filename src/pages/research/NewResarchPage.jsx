@@ -8,6 +8,7 @@ import uploadFile from "../../hooks/uploadFile";
 import { toast } from "react-toastify";
 import { uploadResearch } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useImageCompression from "../../hooks/useImageCompression";
 
 const NewResearchPage = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const NewResearchPage = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [researchItems, setResearchItems] = useState(location.state?.researchItems || []);
   const axiosPrivateHook = useAxiosPrivate();
+  const {compressImage} = useImageCompression()
 
   useEffect(() => {
     if (location.state && location.state.isEdit) {
@@ -59,7 +61,8 @@ const NewResearchPage = () => {
     const file = event.target.files[0];
     if (file) {
       try {
-        const uploadResponse = await uploadFile(file);
+        const compressedFile = await compressImage(file); 
+        const uploadResponse = await uploadFile(compressedFile);
         setPdf({
           key: uploadResponse.key,
           name: uploadResponse.name,

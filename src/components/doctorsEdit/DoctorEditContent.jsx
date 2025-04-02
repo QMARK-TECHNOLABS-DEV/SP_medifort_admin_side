@@ -2,18 +2,20 @@ import React, { useRef, useState } from 'react'
 import { FiEdit } from "react-icons/fi";
 import axios from '../../axios-folder/axios';
 import { uploadRoute } from '../../utils/Endpoint';
+import useImageCompression from '../../hooks/useImageCompression';
 
 
 const DoctorEditContent = ({ updateObj, setUpdateObj, handleChange }) => {
   const fileInputRef = useRef()
-
+  const {compressImage} = useImageCompression()
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
 
     try {
       const formdata = new FormData();
+      const compressedFile = await compressImage(file);
 
-      formdata.append('file', file);
+      formdata.append('file', compressedFile);
 
       const response = await axios.post(uploadRoute, formdata)
 
