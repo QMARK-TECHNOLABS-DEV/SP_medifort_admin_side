@@ -7,13 +7,14 @@ import Article1 from "../../assets/article/images.png";
 import axios from "../../axios-folder/axios";
 import { department_admin_route, uploadRoute } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useImageCompression from "../../hooks/useImageCompression";
 
 const AddDepartmentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isEdit, setIsEdit] = useState(false);
   const axiosPrivate = useAxiosPrivate();
-
+  const {compressImage} = useImageCompression()
   const { id } = useParams();
 
   const [updateObj, setUpdateObj] = useState({
@@ -170,8 +171,8 @@ const AddDepartmentPage = () => {
 
     try {
       const formdata = new FormData();
-
-      formdata.append('file', file);
+      const compressedFile = await compressImage(file);
+      formdata.append('file', compressedFile);
 
       const response = await axios.post(uploadRoute, formdata)
 

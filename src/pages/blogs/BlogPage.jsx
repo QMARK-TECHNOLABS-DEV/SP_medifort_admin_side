@@ -79,7 +79,7 @@ const BlogPage = () => {
   };
 
   return (
-    <div className="h-screen w-full overflow-hidden mx-auto">
+    <div className="h-screen w-full overflow-hidden mx-auto p-2">
       <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
         {/* ----- Mobile view only--------- */}
         <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Blog</h1>

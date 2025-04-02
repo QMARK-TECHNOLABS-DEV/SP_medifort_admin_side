@@ -16,7 +16,7 @@ const useBlog = () => {
 
       if(response.status === 200){
         setBlogItems(response.data.blogs);
-
+        console.log(response.data.blogs)
       }
     } catch (error) {
       setError(error);
