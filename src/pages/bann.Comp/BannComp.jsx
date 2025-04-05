@@ -47,7 +47,7 @@ const AddBanner = () => {
       try {
         const compressedFile = await compressImage(file); // Compress the image before upload
         setSelectedFile(compressedFile);
-        const uploadResponse = await uploadFile(file);
+        const uploadResponse = await uploadFile(compressedFile);
         setData((prev) => ({
           ...prev,
           image: uploadResponse,
