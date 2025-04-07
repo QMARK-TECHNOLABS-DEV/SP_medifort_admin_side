@@ -49,6 +49,8 @@ import FeedbackEnquiryPage from './pages/enquiry/FeedbackEnquiryPage';
 import BrochurePage from './pages/healthTalk/BrochurePage';
 import BlogPage from './pages/blogs/BlogPage';
 import AddBlogPage from './pages/blogs/AddBlogPage';
+import SpecialtiesPage from './pages/specialties/SpecialtiesPage';
+import AddSpecialitiesPage from './pages/specialties/AddSpecialitiesPage';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -123,6 +125,9 @@ function App() {
               {/* Blog */}
               <Route path='/content-management/blogs' element={<BlogPage />} />
               <Route path='/content-management/blog/new-blog' element={<AddBlogPage />} />
+              {/* Specialties */}
+              <Route path='/content-management/specialities' element={<SpecialtiesPage />} />
+              <Route path='/content-management/specialities/new-speciality' element={<AddSpecialitiesPage />} />
 
               {/* Case Studies */}
               <Route path='/content-management/casestudies' element={<CaseStudyHomePage />} />
