@@ -18,7 +18,7 @@ const Sidebar = () => {
               <li
                 className={`${
                   isActive
-                    ? "border-b-2 border-primaryColor text-[#475467]"
+                    ? "border-b-2 bg-primaryColor text-white"
                     : ""
                 } p-2 hover:bg-primaryColor text-black hover:text-white rounded cursor-pointer font-[600] text-[18px] text-start h-[50px]`}
               >
