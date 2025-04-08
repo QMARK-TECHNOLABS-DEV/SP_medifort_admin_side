@@ -25,7 +25,7 @@ const Navbar = () => {
 
   return (
     <>
-      <main className="max-w-screen-2xl mx-auto p-3 lg:p-5 flex items-center justify-between">
+      <main className="max-w-screen-2xl mx-auto p-3 border-b lg:p-5 flex items-center justify-between fixed w-full bg-white z-50">
         {/* logo side */}
         <div className="flex items-center gap-2">
           <img
@@ -38,15 +38,15 @@ const Navbar = () => {
 
         {/* Profile and search option */}
         <div className="flex items-center gap-2 lg:gap-5">
-          <IoIosSearch size={28} className="hidden lg:block" />
+          {/* <IoIosSearch size={28} className="hidden lg:block" /> */}
           <CgMenuGridR size={28} className="lg:hidden block" onClick={toggleSidebar} /> {/* Toggle sidebar */}
-          <div className="hidden lg:block">
+          {/* <div className="hidden lg:block">
             <img
               src={"/logo192.png"}
               alt="profile"
               className="rounded-full w-10 h-10"
             />
-          </div>
+          </div> */}
 
           <FiLogOut 
           onClick={handleLogout}
