@@ -14,7 +14,7 @@ const DoctorsPhotos = ({ data,loading }) => {
   return (
     <div className="w-full overflow-hidden h-screen">
     <div className="flex-1 h-full pb-32 overflow-y-auto scrollbar-hidden">
-      <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-6 md:grid-cols-3 -mr-3 -ml-3 pb-60">
+      <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:grid-cols-4 md:grid-cols-3 -mr-3 -ml-3 pb-60">
         {loading
           ? Array.from({ length: 6 }).map((_, index) => (
               <DoctorCardSkeleton key={index} />

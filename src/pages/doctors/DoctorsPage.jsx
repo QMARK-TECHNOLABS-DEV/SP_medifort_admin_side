@@ -5,6 +5,8 @@ import DoctorsPhotos from "../../components/doctors/DoctorsPhotos";
 import axios from "../../axios-folder/axios";
 import { doc_in_dept_route, doctor_admin_route } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import PageHeaderpart from "../../components/common/PageHeaderpart";
+import { CiSearch } from "react-icons/ci";
 
 const DoctorHomePage = () => {
   const [doctors, setDoctors] = useState([]);
@@ -67,13 +69,46 @@ const DoctorHomePage = () => {
 
   console.log({sort})
 
+  const breadcrumbsItems = [
+    { label: "Home", href: "/" },
+    { label: "Doctor", href: "/doctors" },
+  ];
 
   return (
     <div className="w-full">
-      <header>
-        <TopPart title={"Doctor profile"} type={{ name: "search" }} setSearch={setSearch} />
-      </header>
-      <DoctorFilter onAddDoctor={addNewDoctor} setDeptId={setDeptId} setSort={setSort} />
+<header>
+  <PageHeaderpart
+    items={breadcrumbsItems}
+    pageTitle="Doctor page"
+    setSearch={setSearch}
+  >
+    <div className="flex flex-col  items-end D gap-4 w-full justify-end">
+      {/* Search Input */}
+      <div className="relative w-full lg:w-[300px]">
+        <input
+          type="text"
+          name="search"
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full rounded-lg text-sm bg-lightGray p-3 px-5 pl-12 placeholder:text-[#475467] placeholder:font-[500] placeholder:text-xl focus:outline-none"
+          placeholder="Search"
+        />
+        <CiSearch size={25} className="absolute top-2 left-4" />
+      </div>
+
+      {/* Doctor Filter */}
+      <DoctorFilter
+        onAddDoctor={addNewDoctor}
+        setDeptId={setDeptId}
+        setSort={setSort}
+      />
+    </div>
+  </PageHeaderpart>
+</header>
+
+
+
+        {/* <TopPart title={"Doctor profile"} type={{ name: "search" }} setSearch={setSearch} /> */}
+      {/* <DoctorFilter onAddDoctor={addNewDoctor} setDeptId={setDeptId} setSort={setSort} /> */}
       <DoctorsPhotos data={doctors} loading={loading} />
     </div>
   );
