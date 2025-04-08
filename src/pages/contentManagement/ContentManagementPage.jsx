@@ -8,6 +8,7 @@ import content4 from '../../assets/contentManagement/Content 4.png';
 import content7 from '../../assets/contentManagement/mediaa.jpg';
 import content8 from '../../assets/contentManagement/casestudy.jpg';
 import blogs from '../../assets/contentManagement/blogs.jpg';
+import Specialties from '../../assets/contentManagement/Specialties.webp';
 
 const ContentManagementPage = () => {
   const [loading, setLoading] = useState(true);
@@ -19,7 +20,7 @@ const ContentManagementPage = () => {
     { imageSrc: content7, title: 'Media', url: "/content-management/media" },
     { imageSrc: content8, title: 'Doctor case studies', url: "/content-management/casestudies" },
     { imageSrc: blogs, title: 'Blogs', url: "/content-management/blogs" },
-    { imageSrc: blogs, title: 'Specialties', url: "/content-management/specialities" },
+    { imageSrc: Specialties, title: 'Specialties', url: "/content-management/specialities" },
   ];
 
   useEffect(() => {
