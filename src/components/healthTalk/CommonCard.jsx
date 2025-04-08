@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import BlogPlaceholder from "../../assets/article/images.png";
 
 const CommonCard = ({ imageUrl, title, author, date, onEditClick, onDeleteClick }) => {
   const formatDate = (dateString) => {
@@ -9,7 +10,15 @@ const CommonCard = ({ imageUrl, title, author, date, onEditClick, onDeleteClick 
   return (
     <div className="flex flex-col bg-white rounded-2xl mt-6 shadow-lg overflow-hidden w-full mx-auto"> {/* Reduced mt-10 to mt-6 */}
       {/* Adjusted padding on the image to 0 to reduce space */}
-      <img src={imageUrl} alt={title} className="h-[250px] rounded-t-2xl w-full object-cover" />
+      <img
+        src={imageUrl || BlogPlaceholder }
+        alt={title}
+        className="h-[250px] rounded-t-2xl w-full object-cover"
+        onError={(e) => {
+          e.target.onerror = null; // Prevents infinite loop if fallback also fails
+          e.target.src = {BlogPlaceholder}; // Replace with your fallback image path
+        }}
+      />
       {/* Reduced padding around text */}
       <div className="p-3 text-left"> {/* Reduced padding from p-4 to p-3 */}
         <h3 className="text-lg font-semibold text-gray-900 mb-1">{title}</h3>
