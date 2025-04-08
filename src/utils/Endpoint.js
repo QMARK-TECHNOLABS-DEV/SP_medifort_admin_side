@@ -51,6 +51,10 @@ export const getVideos = '/api/video'
 export const uploadHealthVideos = '/api/admin/health-video'
 export const getHealthVideos = '/api/health-video'
 
+// Specialities
+export const uploadSpecialities ='/api/admin/speciality'
+export const getSpecialities ='/api/speciality'
+
 // CaseStudies
 export const uploadCaseStudies = '/api/admin/case-study'
 export const getCaseStudies = '/api/case-study'
@@ -75,4 +79,6 @@ export const verifyOtpRoute = '/api/auth/verify-otp'
 export const setPasswordRoute = '/api/auth/set-password'
 
 export const doctorsRoute = '/api/doctors'
+
+export const departmentsRoute = '/api/departments'
 
