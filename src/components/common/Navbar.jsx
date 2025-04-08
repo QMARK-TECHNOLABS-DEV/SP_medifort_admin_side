@@ -17,7 +17,7 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
 
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     dispatch(setUser(null))
     dispatch(setAccessToken(null))
     dispatch(setRefreshToken(null))
@@ -33,24 +33,28 @@ const Navbar = () => {
             alt="Logo"
             className="w-10"
           />
-          <h1 className="font-[500] text-2xl object-contain">SP Medifort Admin</h1>
+          <h1 className="font-[500] text-2xl object-contain text-primaryColor">SP Medifort</h1>
         </div>
 
         {/* Profile and search option */}
         <div className="flex items-center gap-2 lg:gap-5">
           {/* <IoIosSearch size={28} className="hidden lg:block" /> */}
           <CgMenuGridR size={28} className="lg:hidden block" onClick={toggleSidebar} /> {/* Toggle sidebar */}
-          {/* <div className="hidden lg:block">
+          <div className="hidden lg:block flex">
             <img
               src={"/logo192.png"}
               alt="profile"
               className="rounded-full w-10 h-10"
             />
-          </div> */}
+            <div>
+              <h2>Admin</h2>
+              <p>spmedifort@gmail.com</p>
+            </div>
+          </div>
 
-          <FiLogOut 
-          onClick={handleLogout}
-          size={26}
+          <FiLogOut
+            onClick={handleLogout}
+            size={26}
           />
 
         </div>

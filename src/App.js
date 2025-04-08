@@ -1,8 +1,7 @@
+import "./App.css";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
 
-import Home from "./pages/Home";
 import DoctorProfiles from "./pages/doctorProfile/DoctorProfiles";
 import DoctorDetailedView from "./pages/doctorProfile/DoctorDetailedView";
 import BannerCo from "./pages/bannerComp/BannerCo";
@@ -20,7 +19,6 @@ import ArticlePage from "./pages/healthTalk/ArticlePage";
 import NewArticlePage from "./pages/healthTalk/NewArticlePage";
 import NewsPage from "./pages/news/NewsPage";
 import AddNewsPage from "./pages/news/AddNewsPage";
-import TestiComp from "./pages/testiComp/TestiComp";
 import LoginPage from "./pages/loginPage/LoginPage";
 import EnquiryHomePage from "./pages/enquiry/EnquiryHomePage";
 import HomeCareEnquiryPage from "./pages/enquiry/HomeCareEnquiryPage";
@@ -35,12 +33,9 @@ import ContactUsEnquiryPage from "./pages/enquiry/ContactUsEnquiryPage";
 import InternationalPatientEnquiryPage from "./pages/enquiry/InternationalPatientEnquiryPage";
 import Gallery from "./pages/galleryCrud/GalleryCrud";
 import Dashboard from "./pages/Dashboard";
-import DepartmentHomePage from "./pages/department/DepartmentHomePage";
-import DepartmentCard from "./components/department/DepartmentCard";
 import VidTestimonial from "./pages/testimonials/VidTestimonial";
 import BannerManagementPage from "./pages/bannerManagement/BannerManagementPage";
 import MediaVideoPage from "./pages/media/MediaVideoPage";
-
 import LoadingScreen from "./components/common/LoadingScreen";
 import AuthGuard from "./guards/AuthGuard";
 import AdminGuard from "./guards/AdminGuard";
@@ -51,6 +46,10 @@ import BlogPage from "./pages/blogs/BlogPage";
 import AddBlogPage from "./pages/blogs/AddBlogPage";
 import SpecialtiesPage from "./pages/specialties/SpecialtiesPage";
 import AddSpecialitiesPage from "./pages/specialties/AddSpecialitiesPage";
+import DepartmentCard from "./components/department/DepartmentCard";
+import DepartmentHomePage from "./pages/department/DepartmentHomePage";
+import TestiComp from "./pages/testiComp/TestiComp";
+import Home from "./pages/Home";
 
 function App() {
   const [loading, setLoading] = useState(true);
