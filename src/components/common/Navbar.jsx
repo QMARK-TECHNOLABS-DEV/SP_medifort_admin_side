@@ -40,15 +40,15 @@ const Navbar = () => {
         <div className="flex items-center gap-2 lg:gap-5">
           {/* <IoIosSearch size={28} className="hidden lg:block" /> */}
           <CgMenuGridR size={28} className="lg:hidden block" onClick={toggleSidebar} /> {/* Toggle sidebar */}
-          <div className="hidden lg:block flex">
+          <div className="hidden  md:flex gap-2 items-center">
             <img
               src={"/logo192.png"}
               alt="profile"
               className="rounded-full w-10 h-10"
             />
-            <div>
-              <h2>Admin</h2>
-              <p>spmedifort@gmail.com</p>
+            <div className="flex flex-col ">
+              <span className="text-lg font-medium leading-none">Admin</span>
+              <span className="">admin@gmail.com</span>
             </div>
           </div>
 
