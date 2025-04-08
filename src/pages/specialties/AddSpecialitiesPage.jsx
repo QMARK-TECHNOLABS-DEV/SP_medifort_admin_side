@@ -4,7 +4,7 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import Breadcrumbs from '../../components/common/Breadcrumbs';
 import ReactQuill, { Quill } from 'react-quill';
 import "react-quill/dist/quill.snow.css";
-import {  uploadSpecialities } from '../../utils/Endpoint';
+import { uploadSpecialities } from '../../utils/Endpoint';
 import { toast } from 'react-toastify';
 import BlogPlaceholder from "../../assets/article/images.png";
 import { HiPencilAlt } from "react-icons/hi";
@@ -42,11 +42,11 @@ const AddSpecialitiesPage = () => {
     ];
     useEffect(() => {
         if (location.state?.isEdit && location.state?.speciality) {
-          setIsEdit(true);
-          setSpecialities(location.state.speciality);
+            setIsEdit(true);
+            setSpecialities(location.state.speciality);
         }
-      }, [location.state]);
-      
+    }, [location.state]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setSpecialities(prev => ({ ...prev, [name]: value }));
@@ -64,6 +64,7 @@ const AddSpecialitiesPage = () => {
             try {
 
                 const compressedFile = await compressImage(file);
+                console.log(compressedFile)
                 const uploadResponse = await uploadFile(compressedFile);
                 setSpecialities((prev) => ({ ...prev, image: uploadResponse }));
             } catch (error) {
@@ -85,7 +86,7 @@ const AddSpecialitiesPage = () => {
         const response = await axiosPrivateHook({
             method: isEdit ? "PUT" : "POST",
             url: isEdit ? `${uploadSpecialities}/${specialities._id}` : uploadSpecialities,
-            data: specialities ,
+            data: specialities,
             headers: { "Content-Type": "application/json" },
         });
 
@@ -191,9 +192,9 @@ const AddSpecialitiesPage = () => {
                     </div>
                 </div>
                 <form id="Specialities-form" onSubmit={handleSubmit}>
-                    <div className="p-6">
-                        <div className="flex flex-col lg:flex-row gap-6 mb-6">
-                            <div className="relative  lg:w-1/2">
+                    <div className="pt-6">
+                        <div className="flex flex-col lg:flex-row  gap-6 mb-6">
+                            <div className="relative flex  justify-start items-start  lg:w-1/2 lg:h-[400px]">
                                 <img
                                     src={specialities?.image?.location ? specialities?.image.location : BlogPlaceholder}
                                     alt="Blog"
@@ -214,67 +215,70 @@ const AddSpecialitiesPage = () => {
                             </div>
 
                             <div className="lg:w-1/2 sm:mt-32 flex flex-col gap-2">
-                                <div className="">
-                                    <label className="block text-sm text-left font-medium text-gray-700 mb-2">
-                                        Title
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                                        placeholder="Enter Blog title"
-                                        name="name"
-                                        value={specialities?.name}
-                                        onChange={handleChange}
-                                        required
-                                    />
+                                {/* Row with Title and Description */}
+                                <div className="flex flex-col lg:flex-row gap-4">
+                                    {/* Title */}
+                                    <div className="w-full lg:w-1/2">
+                                        <label className="block text-sm text-left font-medium text-gray-700 mb-2">
+                                            Title
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                                            placeholder="Enter Blog title"
+                                            name="name"
+                                            value={specialities?.name}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+
+                                    {/* Description */}
+                                    <div className="w-full lg:w-1/2">
+                                        <label className="block text-sm text-left font-medium text-gray-700 mb-2">
+                                            Description
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                                            placeholder="Enter Description"
+                                            name="description"
+                                            value={specialities?.description}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
                                 </div>
 
-                                <div className="">
-                                    <label className="block text-sm text-left font-medium text-gray-700 mb-2">
-                                        Description
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                                        placeholder="Enter Description"
-                                        name="description"
-                                        value={specialities?.description}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
+                                {/* Remaining fields */}
                                 <div className="">
                                     <label className="block text-sm text-left font-medium text-gray-700 mb-2">
                                         Department
                                     </label>
                                     <div className="flex flex-col gap-4">
                                         <select
-                                            className="w-full  h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                                            className="w-full h-12 p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
                                             value={specialities?.department}
-                                            onChange={(e) => {
-                                                const value = e.target.value;
-                                                setSpecialities({ ...specialities, department: value });
-
-                                            }}
+                                            onChange={(e) =>
+                                                setSpecialities({ ...specialities, department: e.target.value })
+                                            }
                                         >
                                             <option value="" disabled>
                                                 Select Department
                                             </option>
                                             {loading && <option>Loading doctors...</option>}
                                             {error && <option>Error loading doctors</option>}
-                                            {!loading && !error && (
-                                                <>
-                                                    {department.map((dep) => (
-                                                        <option key={dep._id} value={dep._id}>
-                                                            {dep.dept_name}
-                                                        </option>
-                                                    ))}
-
-                                                </>
-                                            )}
+                                            {!loading &&
+                                                !error &&
+                                                department.map((dep) => (
+                                                    <option key={dep._id} value={dep._id}>
+                                                        {dep.dept_name}
+                                                    </option>
+                                                ))}
                                         </select>
                                     </div>
                                 </div>
+
                                 <div className="">
                                     <label className="block text-sm text-left font-medium text-gray-700 mb-2">
                                         Banner Button Name
@@ -282,7 +286,7 @@ const AddSpecialitiesPage = () => {
                                     <input
                                         type="text"
                                         className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
-                                        placeholder="Enter  Banner Button Name"
+                                        placeholder="Enter Banner Button Name"
                                         name="bannerBtnTxt"
                                         value={specialities?.bannerBtnTxt}
                                         onChange={handleChange}
@@ -290,6 +294,7 @@ const AddSpecialitiesPage = () => {
                                     />
                                 </div>
                             </div>
+
                         </div>
                         <div className="quill-container relative">
                             <label className="block text-lg text-left font-semibold text-gray-700 mb-2">
@@ -303,7 +308,7 @@ const AddSpecialitiesPage = () => {
                                 value={specialities.content}
                                 onChange={handleEditorChange}
                                 placeholder="Write your speciality content here..."
-                                className="min-h-[500px] mb-12 [&_.ql-editor]:min-h-[500px]"
+                               className="mb-12 [&_.ql-editor]:h-[450px] [&_.ql-editor]:overflow-y-auto"
                             />
                             {uploading && (
                                 <div className="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-10">
