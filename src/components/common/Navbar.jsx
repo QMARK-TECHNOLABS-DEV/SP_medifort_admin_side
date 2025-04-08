@@ -25,7 +25,7 @@ const Navbar = () => {
 
   return (
     <>
-      <main className="max-w-screen-2xl mx-auto p-3 border-b lg:p-5 flex items-center justify-between fixed w-full bg-white z-50">
+      <main className=" mx-auto p-3 border-b lg:p-5 flex items-center justify-between fixed w-full bg-white z-50">
         {/* logo side */}
         <div className="flex items-center gap-2">
           <img
@@ -63,10 +63,17 @@ const Navbar = () => {
       {/* Sidebar - render only if `isSidebarOpen` is true */}
       {isSidebarOpen && (
         <div className="fixed inset-0 z-50 bg-gray-800 bg-opacity-50" onClick={toggleSidebar}>
-          <div
-            className="fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50"
+          <div className="fixed top-0 left-0 w-[80%] md:w-[45%]  h-full bg-white shadow-lg z-50 p-3"
             onClick={(e) => e.stopPropagation()} // Prevent closing sidebar when clicking inside
           >
+            <div className="flex items-center gap-2 my-5">
+              <img
+                src={require("../../assets/nav/logoNav.png")}
+                alt="Logo"
+                className="w-10"
+              />
+              <h1 className="font-[500] text-2xl object-contain text-primaryColor">SP Medifort</h1>
+            </div>
             <Sidebar /> {/* Render Sidebar */}
           </div>
         </div>
