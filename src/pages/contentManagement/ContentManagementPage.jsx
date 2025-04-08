@@ -22,7 +22,7 @@ const ContentManagementPage = () => {
     { imageSrc: blogs, title: 'Blogs', url: "/content-management/blogs" },
     { imageSrc: Specialties, title: 'Specialties', url: "/content-management/specialities" },
   ];
-
+    
   useEffect(() => {
     // Simulate loading time
     const timer = setTimeout(() => setLoading(false), 2000);
