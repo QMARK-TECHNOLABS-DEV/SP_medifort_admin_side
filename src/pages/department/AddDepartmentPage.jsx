@@ -8,6 +8,7 @@ import axios from "../../axios-folder/axios";
 import { department_admin_route, uploadRoute } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useImageCompression from "../../hooks/useImageCompression";
+import PageHeaderpart from "../../components/common/PageHeaderpart";
 
 const AddDepartmentPage = () => {
   const navigate = useNavigate();
@@ -217,10 +218,27 @@ const AddDepartmentPage = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
-        <div className="flex flex-col mb-6">
+       <header>
+    <PageHeaderpart
+    items={breadcrumbsItems}
+    pageTitle={"Content Management"}
+    >
+      <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+       
+          <button
+                type="submit"
+                form="department-form"
+                className="py-2 lg:w-[150px] inline-flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+              >
+                Save and submit
+              </button>
+      </div>
+    </PageHeaderpart>
+    </header>
+      <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
+        {/* <div className="flex flex-col mb-6"> */}
           {/* Conditionally render the heading based on the edit state */}
-          {isEdit
+          {/* {isEdit
             ?
             (
               <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
@@ -236,13 +254,7 @@ const AddDepartmentPage = () => {
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
             <div className="flex flex-row gap-4 mt-4 sm:mt-0">
-              <button
-                type="submit"
-                form="department-form"
-                className="py-2 lg:w-[150px] inline-flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-              >
-                Save and submit
-              </button>
+             */}
 
               {/* {isEdit && (
                 <button
@@ -254,10 +266,10 @@ const AddDepartmentPage = () => {
                   Delete
                 </button>
               )} */}
-
+{/* 
             </div>
           </div>
-        </div>
+        </div> */}
         <form id="department-form" onSubmit={submitHandler}>
           <div className="mt-10">
             <div className="flex flex-col lg:flex-row mb-6 gap-4">

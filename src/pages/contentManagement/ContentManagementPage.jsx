@@ -9,10 +9,12 @@ import content7 from '../../assets/contentManagement/mediaa.jpg';
 import content8 from '../../assets/contentManagement/casestudy.jpg';
 import blogs from '../../assets/contentManagement/blogs.jpg';
 import Specialties from '../../assets/contentManagement/Specialties.webp';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
+import SearchInput from '../../components/common/SearchInput';
 
 const ContentManagementPage = () => {
   const [loading, setLoading] = useState(true);
-
+  const [search, setSearch] = useState('')
   const contentItems = [
     { imageSrc: content1, title: 'Preventive Health', url: "/content-management/preventive-health" },
     { imageSrc: content2, title: 'Health talk', url: "/content-management/health-talk" },
@@ -22,7 +24,11 @@ const ContentManagementPage = () => {
     { imageSrc: blogs, title: 'Blogs', url: "/content-management/blogs" },
     { imageSrc: Specialties, title: 'Specialties', url: "/content-management/specialities" },
   ];
-    
+  const breadcrumbsItems = [
+    { label: "Home", href: "/" },
+    { label: "Content Management", href: "/content-management" },
+  ];
+
   useEffect(() => {
     // Simulate loading time
     const timer = setTimeout(() => setLoading(false), 2000);
@@ -30,9 +36,23 @@ const ContentManagementPage = () => {
   }, []);
 
   return (
-    <div className="h-screen w-full overflow-hidden">
-      <div className="flex-1 h-full pb-32 overflow-y-auto scrollbar-hide">
-        <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Content Management</h1>
+    <main className="w-full ">
+        <div className="h-screen w-full overflow-hidden  mx-auto "> 
+  <header>
+    <PageHeaderpart
+    items={breadcrumbsItems}
+    pageTitle={"Content Management"}
+    >
+      <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+        <SearchInput
+        setSearch={setSearch}
+        />
+
+      </div>
+    </PageHeaderpart>
+    </header>
+    <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
+        {/* <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Content Management</h1> */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2px">
           {loading
             ? // Show skeletons if loading
@@ -49,6 +69,7 @@ const ContentManagementPage = () => {
         </div>
       </div>
     </div>
+    </main>
   );
 };
 

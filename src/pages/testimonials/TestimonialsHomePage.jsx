@@ -3,9 +3,12 @@ import TopPartTestimonial from '../../components/testimonials/TopPartTestimonial
 import TestimonialsContent from '../../components/testimonials/TestimonialsContent'
 import ContentCardSkeleton from '../../components/common/ContentCardSkeleton'
 import ContentCard from '../../components/contentManagement/ContentCards'
+import PageHeaderpart from '../../components/common/PageHeaderpart'
+import SearchInput from '../../components/common/SearchInput'
 
 const TestimonialsHomePage = () => {
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('')
   const contentItems = [
     {
       id: 1,
@@ -26,10 +29,28 @@ const TestimonialsHomePage = () => {
     return () => clearTimeout(timer);
 }, []);
 
+const breadcrumbsItems = [
+  { label: "Home", href: "/" },
+  { label: "Testimonials", href: "/testimonials" },
+];
+
   return (
     <div className="h-screen w-full overflow-hidden">
-    <div className="flex-1 h-full pb-32 overflow-y-auto scrollbar-hide">
-      <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Testimonials</h1>
+      <header>
+      <PageHeaderpart
+    items={breadcrumbsItems}
+    pageTitle={"Testimonials"}
+    >
+      <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+        <SearchInput
+        setSearch={setSearch}
+        />
+
+      </div>
+    </PageHeaderpart>
+      </header>
+    <div className="flex-1 h-full pb-80 overflow-y-auto scrollbar-hide">
+      {/* <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Testimonials</h1> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2px">
         {loading
           ? // Show skeletons if loading
