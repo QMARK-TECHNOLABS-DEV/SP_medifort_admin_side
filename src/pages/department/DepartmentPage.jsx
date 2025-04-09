@@ -22,7 +22,7 @@ const DepartmentPage = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [search, setSearch] = useState('')
   useEffect(() => {
     if (location.state?.updatedDepartments) {
       setDepartmentItems(location.state.updatedDepartments);
@@ -95,7 +95,7 @@ setTimeout(() => {
     >
       <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
         <SearchInput
-        setSearch={""}
+        setSearch={setSearch}
         />
 
       </div>
