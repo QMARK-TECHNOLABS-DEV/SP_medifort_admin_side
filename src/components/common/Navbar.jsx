@@ -52,10 +52,10 @@ const Navbar = () => {
             </div>
           </div>
 
-          <FiLogOut
+          {/* <FiLogOut
             onClick={handleLogout}
             size={26}
-          />
+          /> */}
 
         </div>
       </main>
