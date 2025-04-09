@@ -7,6 +7,7 @@ import CommonCard from '../../components/healthTalk/CommonCard';
 import DeleteModal from '../../components/common/DeleteModal';
 import useSpecialities from '../../hooks/specialitiesHooks/useSpecialities';
 import useGetAllDepartment from '../../hooks/departmentHook/useGetAllDepartment';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
 
 const breadcrumbsItems = [
     { label: "Content Management", href: "/content-management" },
@@ -60,23 +61,27 @@ function SpecialtiesPage() {
     };
     return (
         <div className="h-screen w-full overflow-hidden mx-auto p-2">
-            <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
-                {/* ----- Mobile view only--------- */}
-                <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Specialties</h1>
-                <div className="flex flex-col space-y-2">
-                    <Breadcrumbs items={breadcrumbsItems} />
-                    <div className="flex justify-between items-center mt-2">
-                        <div className="flex flex-col sm:flex-row sm:items-center"></div>
+            <header>
+                <PageHeaderpart
+                    items={breadcrumbsItems}
+                    pageTitle={"Our Specialties"}
+                >
+                    <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
                         <button
-                            className="p-2 px-4 w-full sm:w-auto lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg mt-2 sm:mt-[-50px]"
+                             className="w-full sm:w-auto p-2 px-4 lg:w-[150px] flex items-center justify-center bg-white border border-primaryColor text-primaryColor font-medium rounded-lg"
                             onClick={handleAddNewClick}
                         >
                             + Add new
                         </button>
                     </div>
-                </div>
+                </PageHeaderpart>
+            </header>
+            <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
+                {/* ----- Mobile view only--------- */}
+                {/* <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Specialties</h1>
+                */}
                 {delayedLoading ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 lg:gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 lg:gap-6">
                         {Array.from({ length: 4 }).map((_, index) => (
                             <SkeletonCard key={index} />
                         ))}
@@ -86,7 +91,7 @@ function SpecialtiesPage() {
                         No Specialties available.
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-x-6 gap-y-2px py-1px">
+                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-x-6 gap-y-2px py-1px">
                         {specialitiesItems.map((item) => {
                             const deptName = department?.find(dep => dep._id === item.department)?.dept_name || "Unknown Department";
 

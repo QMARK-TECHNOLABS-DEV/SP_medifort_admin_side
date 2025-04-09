@@ -39,7 +39,7 @@ const breadcrumbsItems = [
       </div>
     </PageHeaderpart>
     </header>
-    <div className="flex-1 h-full pb-32 overflow-y-auto scrollbar-hide">
+    <div className="flex-1 h-full pb-80 overflow-y-auto scrollbar-hide">
       {/* <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Enquiries</h1> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2px">
         {loading

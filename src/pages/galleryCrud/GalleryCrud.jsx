@@ -9,6 +9,7 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import useImageCompression from "../../hooks/useImageCompression";
+import PageHeaderpart from "../../components/common/PageHeaderpart";
 
 
 const Gallery = () => {
@@ -32,7 +33,7 @@ const Gallery = () => {
   const [caption, setCaption] = useState("")
 const {compressImage} = useImageCompression()
   const breadcrumbsItems = [
-    { label: "Media", href: "/content-management/media" },
+    { label: "Our Media", href: "/content-management/media" },
     { label: "Gallery", href: "/content-management/media/gallery" },
   ];
 
@@ -248,24 +249,26 @@ const {compressImage} = useImageCompression()
   )
 
   return (
-    <div className="min-h-screen flex flex-col w-full px-2 py-4"> {/* Reduced padding */}
-      <h1 className="text-2xl font-bold text-primaryColor lg:hidden mt-[-10px] sm:mt-[-20px] text-left -ml-4">
-        Gallery
-      </h1>
-
-      {/* Header and Button */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 lg:-mt-4 -ml-4">
-        <div className="text-lg text-gray-500 mb-2 sm:mb-0">
-          <Breadcrumbs items={breadcrumbsItems} />
-        </div>
-        <button
+    <div className="h-screen w-full overflow-hidden  mx-auto ">
+     <header>
+          <PageHeaderpart
+            items={breadcrumbsItems}
+            pageTitle={"Gallery"}
+          >
+            <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+            <button
           onClick={toggleAddBox}
           className="border border-primaryColor text-primaryColor bg-white px-4 py-2 rounded-xl w-full sm:w-auto mt-2 sm:mt-0 sm:ml-auto"
         >
           + Add new
         </button>
-      </div>
 
+            </div>
+          </PageHeaderpart>
+        </header>
+
+    
+      <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
       {showAddBox && (
         <div className="fixed inset-0 flex items-center justify-center z-10">
           <div className="bg-white p-6 rounded-md shadow-md relative w-80">
@@ -447,6 +450,7 @@ const {compressImage} = useImageCompression()
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };

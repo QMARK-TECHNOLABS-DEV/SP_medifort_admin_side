@@ -7,6 +7,8 @@ import EnquiryTable from '../../components/enquiry/EnquiryTable';
 import InsuranceEnquiryTop from '../../components/enquiry/InsuranceEnquiryTop';
 import { inquiryRoute } from '../../utils/Endpoint';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
+import SearchInput from '../../components/common/SearchInput';
 
 const InsuranceEnquiryPage = () => {
   const [sort, setSort] = useState('latest');
@@ -15,6 +17,12 @@ const InsuranceEnquiryPage = () => {
 
   const itemsPerPage = 9; // Number of items per page
   const [totalItems, setTotalItems] = useState(0)
+  const [isEdit, setIsEdit] = useState(false);
+
+  const breadcrumbsItems = [
+    { label: "Enquiries", href: "/enquiry" },
+    { label: isEdit ? "Edit Article" : "Insurance enquiry", href: "/enquiry/insurance" },
+  ];
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -63,9 +71,22 @@ const InsuranceEnquiryPage = () => {
 
   return (
     <div className='w-full'>
-      <InsuranceEnquiryTop
+        <header>
+          <PageHeaderpart
+            items={breadcrumbsItems}
+            pageTitle={"Insurance enquiry"}
+          >
+            <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+              <SearchInput
+                setSearch={setSearch}
+              />
+
+            </div>
+          </PageHeaderpart>
+        </header>
+      {/* <InsuranceEnquiryTop
         onSearchChange={handleSearchChange}
-      />
+      /> */}
       <section>
         <EnquiryTableFilter
           currentPage={currentPage}

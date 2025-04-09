@@ -8,10 +8,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import DeleteModal from "../../components/common/DeleteModal";
 import useNews from "../../hooks/healthTalkHook/useNews";
 import SkeletonCard from "../../components/healthTalk/SkeletonCard";
+import PageHeaderpart from "../../components/common/PageHeaderpart";
 
 const breadcrumbsItems = [
   { label: "Content Management", href: "/content-management" },
-  { label: "News", href: "/content-management/news" },
+  { label: "our News", href: "/content-management/news" },
 ];
 
 const NewsPage = () => {
@@ -65,25 +66,24 @@ const NewsPage = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden mx-auto">
-      <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
-        {/* ----- Mobile view only--------- */}
-        <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
-          News
-        </h1>
-        <div className="flex flex-col space-y-2">
-          <Breadcrumbs items={breadcrumbsItems} />
-          <div className="flex justify-between items-center mt-2">
-            {" "}
-            {/* Adjusted margin-top */}
-            <div className="flex flex-col sm:flex-row sm:items-center"></div>
+       <header>
+          <PageHeaderpart
+            items={breadcrumbsItems}
+            pageTitle={"Our News"}
+          >
+            <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-center justify-center ">
+            
             <button
-              className="p-2 px-4 w-full sm:w-auto lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg mt-2 sm:mt-[-50px]"
+              className="w-full sm:w-auto p-2 px-4 lg:w-[150px] flex items-center justify-center bg-white border border-primaryColor text-primaryColor font-medium rounded-lg"
               onClick={handleAddNewClick}
             >
               + Add new
             </button>
-          </div>
-        </div>
+            </div>
+          </PageHeaderpart>
+        </header>
+      <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
+     
         {delayedLoading  ? (
                     <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
                         {Array.from({ length: 4 }).map((_, index) => (

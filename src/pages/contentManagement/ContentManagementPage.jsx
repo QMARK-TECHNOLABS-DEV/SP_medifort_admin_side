@@ -37,38 +37,38 @@ const ContentManagementPage = () => {
 
   return (
     <main className="w-full ">
-        <div className="h-screen w-full overflow-hidden  mx-auto "> 
-  <header>
-    <PageHeaderpart
-    items={breadcrumbsItems}
-    pageTitle={"Content Management"}
-    >
-      <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
-        <SearchInput
-        setSearch={setSearch}
-        />
+      <div className="h-screen w-full overflow-hidden  mx-auto ">
+        <header>
+          <PageHeaderpart
+            items={breadcrumbsItems}
+            pageTitle={"Content Management"}
+          >
+            <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+              <SearchInput
+                setSearch={setSearch}
+              />
 
-      </div>
-    </PageHeaderpart>
-    </header>
-    <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
-        {/* <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Content Management</h1> */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2px">
-          {loading
-            ? // Show skeletons if loading
+            </div>
+          </PageHeaderpart>
+        </header>
+        <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
+          {/* <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Content Management</h1> */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2px">
+            {loading
+              ? // Show skeletons if loading
               Array.from({ length: contentItems.length }).map((_, index) => (
                 <ContentCardSkeleton key={index} />
               ))
-            : // Show content cards once loading is complete
+              : // Show content cards once loading is complete
               contentItems.map((item, index) => (
                 <div key={index}>
                   <ContentCard imageSrc={item.imageSrc} title={item.title} url={item.url} />
                 </div>
               ))
-          }
+            }
+          </div>
         </div>
       </div>
-    </div>
     </main>
   );
 };

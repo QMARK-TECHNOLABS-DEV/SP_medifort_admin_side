@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import DeleteModal from '../../components/common/DeleteModal';
 import useArticles from '../../hooks/healthTalkHook/useArticles';
 import useGetAllDoctors from '../../hooks/doctor/useGetAllDoctors';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
+import SearchInput from '../../components/common/SearchInput';
 
 const breadcrumbsItems = [
     { label: "Health Talk", href: "/content-management/health-talk" },
@@ -18,6 +20,7 @@ const ArticlePage = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [delayedLoading, setDelayedLoading] = useState(true);
+    const [search, setSearch] = useState('')
     const { doctors } = useGetAllDoctors();
     const [articlesWithAuthors, setArticlesWithAuthors] = useState([]); // Corrected name
 
@@ -77,21 +80,34 @@ const ArticlePage = () => {
 
     return (
         <div className="h-screen w-full overflow-hidden">
-            <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
-                <div className="flex flex-col">
+            <header>
+                <PageHeaderpart
+                    items={breadcrumbsItems}
+                    pageTitle={"Article"}
+                >
+                    <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+                        <SearchInput
+                            setSearch={setSearch}
+                        />
+                        <button
+                            className="p-2 px-4 mr-5 lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+                            onClick={handleAddNewClick}
+                        >
+                            + Add new
+                        </button>
+                    </div>
+                </PageHeaderpart>
+            </header>
+            <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
+                {/* <div className="flex flex-col">
                     <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Articles</h1>
                     <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center">
                         <Breadcrumbs items={breadcrumbsItems} />
                         <div className="flex flex-col lg:flex-row gap-2 lg:gap-2 mt-5 lg:mt-0 w-full lg:w-fit">
-                            <button
-                                className="p-2 px-4 mr-5 lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-                                onClick={handleAddNewClick}
-                            >
-                                + Add new
-                            </button>
+
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* Display loading skeletons if articles are loading */}
                 {delayedLoading ? (

@@ -7,6 +7,8 @@ import EnquiryTable from '../../components/enquiry/EnquiryTable';
 import ContactUsEnquiryTop from '../../components/enquiry/ContactUsEnquiryTop';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { inquiryRoute } from '../../utils/Endpoint';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
+import SearchInput from '../../components/common/SearchInput';
 
 const ContactUsEnquiryPage = () => {
   const [sort, setSort] = useState('latest');
@@ -15,7 +17,12 @@ const ContactUsEnquiryPage = () => {
 
   const itemsPerPage = 9; // Number of items per page
   const [totalItems, setTotalItems] = useState(0)
+  const [isEdit, setIsEdit] = useState(false);
 
+  const breadcrumbsItems = [
+    { label: "Enquiries", href: "/enquiry" },
+    { label: isEdit ? "Edit Article" : "ContactUs enquiry", href: "/enquiry/contact-us" },
+  ];
   const handleSearchChange = (e) => {
     setSearch(e.target.value.toLowerCase());
     setCurrentPage(1); // Reset to first page on new search
@@ -63,9 +70,22 @@ const ContactUsEnquiryPage = () => {
 
   return (
     <div className='w-full'>
-      <ContactUsEnquiryTop
+        <header>
+          <PageHeaderpart
+            items={breadcrumbsItems}
+            pageTitle={"ContactUs enquiry"}
+          >
+            <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+              <SearchInput
+                setSearch={setSearch}
+              />
+
+            </div>
+          </PageHeaderpart>
+        </header>
+      {/* <ContactUsEnquiryTop
         onSearchChange={handleSearchChange}
-      />
+      /> */}
       <section>
         <EnquiryTableFilter
           currentPage={currentPage}

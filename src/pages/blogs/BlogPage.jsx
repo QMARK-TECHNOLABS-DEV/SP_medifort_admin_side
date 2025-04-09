@@ -6,10 +6,11 @@ import DeleteModal from "../../components/common/DeleteModal";
 import useBlog from "../../hooks/healthTalkHook/useBlog";
 import SkeletonCard from "../../components/healthTalk/SkeletonCard";
 import useGetAllDoctors from "../../hooks/doctor/useGetAllDoctors";
+import PageHeaderpart from "../../components/common/PageHeaderpart";
 
 const breadcrumbsItems = [
   { label: "Content Management", href: "/content-management" },
-  { label: "Blog", href: "/content-management/blog" },
+  { label: "Our Blogs", href: "/content-management/blog" },
 ];
 
 const BlogPage = () => {
@@ -37,7 +38,7 @@ const BlogPage = () => {
         const authorDoctor = doctors.find((doctor) => doctor._id === blogItem.author);
         return {
           ...blogItem,
-          author: authorDoctor ? authorDoctor.doctor_name :  blogItem.author, // Fallback if no doctor is found
+          author: authorDoctor ? authorDoctor.doctor_name : blogItem.author, // Fallback if no doctor is found
         };
       });
       setBlogWithAuthors(updatedBlogs);
@@ -80,21 +81,34 @@ const BlogPage = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden mx-auto p-2">
-      <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
-        {/* ----- Mobile view only--------- */}
-        <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Blog</h1>
-        <div className="flex flex-col space-y-2">
-          <Breadcrumbs items={breadcrumbsItems} />
-          <div className="flex justify-between items-center mt-2">
-            <div className="flex flex-col sm:flex-row sm:items-center"></div>
+      <header>
+        <PageHeaderpart
+          items={breadcrumbsItems}
+          pageTitle={"Our Blogs"}
+        >
+          <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+            {/* <SearchInput
+                setSearch={setSearch}
+              /> */}
             <button
-              className="p-2 px-4 w-full sm:w-auto lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg mt-2 sm:mt-[-50px]"
+             className="w-full sm:w-auto p-2 px-4 lg:w-[150px] flex items-center justify-center bg-white border border-primaryColor text-primaryColor font-medium rounded-lg"
               onClick={handleAddNewClick}
             >
               + Add new
             </button>
           </div>
-        </div>
+        </PageHeaderpart>
+      </header>
+      <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
+        {/* ----- Mobile view only--------- */}
+        {/* <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Blog</h1>
+        <div className="flex flex-col space-y-2">
+          <Breadcrumbs items={breadcrumbsItems} />
+          <div className="flex justify-between items-center mt-2">
+            <div className="flex flex-col sm:flex-row sm:items-center"></div>
+
+          </div>
+        </div> */}
         {delayedLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
             {Array.from({ length: 4 }).map((_, index) => (

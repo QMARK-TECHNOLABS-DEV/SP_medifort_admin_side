@@ -9,11 +9,12 @@ import { toast } from "react-toastify";
 import { uploadResearch } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useImageCompression from "../../hooks/useImageCompression";
+import PageHeaderpart from "../../components/common/PageHeaderpart";
 
 const NewResearchPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [image, setImage] = useState({file: null, location:ResearchPlaceholder});
+  const [image, setImage] = useState({ file: null, location: ResearchPlaceholder });
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
@@ -21,7 +22,7 @@ const NewResearchPage = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [researchItems, setResearchItems] = useState(location.state?.researchItems || []);
   const axiosPrivateHook = useAxiosPrivate();
-  const {compressImage} = useImageCompression()
+  const { compressImage } = useImageCompression()
 
   useEffect(() => {
     if (location.state && location.state.isEdit) {
@@ -36,8 +37,8 @@ const NewResearchPage = () => {
   }, [location]);
 
   const breadcrumbsItems = [
-    { label: "Health Talk", href: "/content-management/health-talk" },
-    { label: isEdit ? "Update Research" : "New Research", href: "/content-management/research/new-research" },
+    { label: "our Research", href: "/content-management/research" },
+    { label: isEdit ? "Update Research" : "Add Research", href: "/content-management/research/new-research" },
   ];
 
   const handleImageUpload = async (event) => {
@@ -61,7 +62,7 @@ const NewResearchPage = () => {
     const file = event.target.files[0];
     if (file) {
       try {
-        const compressedFile = await compressImage(file); 
+        const compressedFile = await compressImage(file);
         const uploadResponse = await uploadFile(compressedFile);
         setPdf({
           key: uploadResponse.key,
@@ -76,7 +77,7 @@ const NewResearchPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (!title || !content || !pdf) {
       toast.error("Please fill in all required fields and upload a PDF.");
@@ -84,49 +85,46 @@ const NewResearchPage = () => {
     }
 
     const newResearch = {
-     
+
       title,
-      journal:content,
-      image: image ,
+      journal: content,
+      image: image,
       file: pdf,
-      authors:author,
+      authors: author,
       publishedDate: new Date().toLocaleDateString(),
     };
     console.log(newResearch)
     try {
-    const response = await axiosPrivateHook({
-      method: isEdit ? "PUT" : "POST",
-      url: isEdit
-        ? `${uploadResearch}/${location.state.research._id}`
-        : uploadResearch,
-      data: newResearch,
-      headers: { "Content-Type": "application/json" },
-    });
-    if (response.status === 200) {
-      toast.success("Article uploaded successfully");
+      const response = await axiosPrivateHook({
+        method: isEdit ? "PUT" : "POST",
+        url: isEdit
+          ? `${uploadResearch}/${location.state.research._id}`
+          : uploadResearch,
+        data: newResearch,
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.status === 200) {
+        toast.success("Article uploaded successfully");
+      }
+      // Redirect with the updated articles data
+      navigate("/content-management/research", {
+        state: { updatedArticles: response.data },
+      });
+    } catch (error) {
+      console.error("Failed to submit article", error);
+      toast.error("An error occurred while saving the article.");
     }
-    // Redirect with the updated articles data
-    navigate("/content-management/research", {
-      state: { updatedArticles: response.data },
-    });
-  } catch (error) {
-    console.error("Failed to submit article", error);
-    toast.error("An error occurred while saving the article.");
-  }
-};
+  };
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      <div className="pb-36 overflow-y-auto h-full px-6 scrollbar-hide">
-        <div className="flex flex-col mb-6">
-          <div className="flex flex-col sm:flex-row sm:justify-between items-start w-full">
-            <div className="flex flex-col w-full -ml-4 sm:w-auto">
-              <h1 className="text-2xl -ml-60 font-bold text-primaryColor lg:hidden">
-                {isEdit ? "Update Research" : "New Research"}
-              </h1>
-              <Breadcrumbs items={breadcrumbsItems} />
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 mt-4 sm:mt-0 w-full sm:w-auto">
+      <header>
+        <PageHeaderpart
+          items={breadcrumbsItems}
+          pageTitle={isEdit ? "Update Research" : "New Research"}
+        >
+          <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+          <div className="flex flex-col sm:flex-row gap-4 mt-4 sm:mt-0 w-full sm:w-auto">
               <button
                 type="submit"
                 form="research-form"
@@ -134,7 +132,7 @@ const NewResearchPage = () => {
               >
                 Save and submit
               </button>
-              {isEdit && (
+              
                 <button
                   type="button"
                   className="w-full sm:w-auto py-2 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
@@ -142,10 +140,24 @@ const NewResearchPage = () => {
                 >
                   Cancel
                 </button>
-              )}
+             
             </div>
+
           </div>
-        </div>
+        </PageHeaderpart>
+      </header>
+      <div className="pb-80 overflow-y-auto h-full px-6 scrollbar-hide">
+        {/* <div className="flex flex-col mb-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between items-start w-full">
+            <div className="flex flex-col w-full -ml-4 sm:w-auto">
+              <h1 className="text-2xl -ml-60 font-bold text-primaryColor lg:hidden">
+                {isEdit ? "Update Research" : "New Research"}
+              </h1>
+              <Breadcrumbs items={breadcrumbsItems} />
+            </div>
+           
+          </div>
+        </div> */}
         <form id="research-form" onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex flex-col lg:flex-row gap-6 mb-6">

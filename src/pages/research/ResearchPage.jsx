@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import DeleteModal from '../../components/common/DeleteModal';
 import useResearch from '../../hooks/healthTalkHook/useResearch';
 import SkeletonCard from '../../components/healthTalk/SkeletonCard';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
 
 const breadcrumbsItems = [
   { label: "Health Talk", href: "/content-management/health-talk" },
-  { label: "Research", href: "/content-management/research" },
+  { label: "our Research", href: "/content-management/research" },
 ];
 
 const ResearchPage = () => {
@@ -22,11 +23,11 @@ const ResearchPage = () => {
     const loadWithDelay = async () => {
       setDelayedLoading(true);
       await fetchResearch();
-    setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
-  };
-  
-  loadWithDelay();
-}, []);
+      setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
+    };
+
+    loadWithDelay();
+  }, []);
 
   const handleAddNewClick = () => {
     navigate('/content-management/research/new-research', { state: { isEdit: false, researchItems } });
@@ -43,7 +44,7 @@ const ResearchPage = () => {
 
   const handleDeleteConfirm = async () => {
     if (selectedResearch) {
-     await deleteResearch(selectedResearch._id); // Call the delete function with the ID
+      await deleteResearch(selectedResearch._id); // Call the delete function with the ID
     }
     setShowDeleteModal(false);
     setSelectedResearch(null);
@@ -60,30 +61,40 @@ const ResearchPage = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden mx-auto">
-      <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
-        <div className="flex flex-col">
+      <header>
+        <PageHeaderpart
+          items={breadcrumbsItems}
+          pageTitle={"Our Research"}
+        >
+          <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+            <button
+              className="w-full sm:w-auto p-2 px-4 lg:w-[150px] flex items-center justify-center bg-white border border-primaryColor text-primaryColor font-medium rounded-lg"
+              onClick={handleAddNewClick}
+            >
+              + Add new
+            </button>
+          </div>
+        </PageHeaderpart>
+      </header>
+      <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
+        {/* <div className="flex flex-col">
           <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
             Research
           </h1>
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Breadcrumbs items={breadcrumbsItems} />
             <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
-              <button
-                className="w-full sm:w-auto p-2 px-4 lg:w-[150px] flex items-center justify-center bg-white border border-primaryColor text-primaryColor font-medium rounded-lg"
-                onClick={handleAddNewClick}
-              >
-                + Add new
-              </button>
+
             </div>
           </div>
-        </div>
-        {delayedLoading  ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
-                        {Array.from({ length: 4 }).map((_, index) => (
-                            <SkeletonCard key={index} />
-                        ))}
-                    </div>
-                ) : researchItems.length === 0 ? (
+        </div> */}
+        {delayedLoading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <SkeletonCard key={index} />
+            ))}
+          </div>
+        ) : researchItems.length === 0 ? (
           <div className="text-center mt-10 text-lg text-gray-500">
             No articles available.
           </div>

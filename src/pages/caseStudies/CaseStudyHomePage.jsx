@@ -5,15 +5,26 @@ import AddNewModal from '../../components/caseStudies/AddNewModal';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { getCaseStudies } from '../../utils/Endpoint';
 import { toast } from 'react-toastify';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
+import { FaPlus } from 'react-icons/fa6';
 
 const CaseStudyHomePage = () => {
   const [caseStudies, setCaseStudies] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentStudy, setCurrentStudy] = useState(null); 
+  const [currentStudy, setCurrentStudy] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const axiosPrivateHook = useAxiosPrivate();
+  const [showAddNewModal, setShowAddNewModal] = useState(false);
 
+  const handleOpenModal = () => {
+    setCurrentStudy(null);
+    setIsModalOpen(true);
+  };
+  
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   useEffect(() => {
     const fetchCaseStudies = async () => {
       setLoading(true);
@@ -57,8 +68,28 @@ const CaseStudyHomePage = () => {
   };
 
   return (
-    <div className="w-full">
-      <CaseStudyTopPart title="Content management" />
+    <div className="h-screen w-full overflow-hidden  mx-auto ">
+      <header>
+        <PageHeaderpart
+          items={[
+            { label: "Content management", href: "/content-management" },
+            { label: "Case Studies", href: "/content-management/casestudies" },
+          ]}
+          pageTitle={"Case Studies"}
+        >
+          <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+            <button
+              className="flex items-center border border-primaryColor justify-center gap-2 p-2 lg:w-fit rounded-lg sm:min-w-full xs:min-w-full min-w-full"
+              onClick={handleOpenModal}
+            >
+              <FaPlus className="text-primaryColor text-xs" />
+              <span className="text-sm text-primaryColor">Add new</span>
+            </button>
+          </div>
+        </PageHeaderpart>
+      </header>
+      {/* <CaseStudyTopPart title="Content management" /> */}
+      <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
       <section
         className="mt-5"
         style={{
@@ -79,13 +110,14 @@ const CaseStudyHomePage = () => {
       </section>
 
       {isModalOpen && (
-        <AddNewModal
-          show={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          addNewCaseStudy={addNewCaseStudy}  // Pass the success handler for adding/editing
-          initialStudy={currentStudy !== null ? caseStudies[currentStudy] : null}
-        />
-      )}
+  <AddNewModal
+    show={isModalOpen}
+    onClose={handleCloseModal}
+    addNewCaseStudy={addNewCaseStudy}
+    initialStudy={currentStudy !== null ? caseStudies[currentStudy] : null}
+  />
+)}
+    </div>
     </div>
   );
 };

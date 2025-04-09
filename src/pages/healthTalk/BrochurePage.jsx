@@ -5,10 +5,11 @@ import useBrochures from '../../hooks/healthTalkHook/useBrochures';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import BrochureAlt from '../../components/healthTalk/BrochureAlt';
 import SkeletonBrochure from '../../components/healthTalk/SkeletonBrochure';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
 
 const breadcrumbsItems = [
     { label: "Health Talk", href: "/content-management/health-talk" },
-    { label: "Brochure", href: "/content-management/Brochure" },
+    { label: "Brochure", href: "/content-management/brochure" },
 ];
 
 
@@ -62,21 +63,32 @@ const BrochurePage = () => {
 
     return (
         <div className="h-screen w-full overflow-hidden">
+            <header>
+                <PageHeaderpart
+                    items={breadcrumbsItems}
+                    pageTitle={"Brochure"}
+                >
+                    <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+                        <button
+                            className="p-2 px-4 mr-5 lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+                            onClick={handleAddNewClick}
+                        >
+                            + Add new
+                        </button>
+
+                    </div>
+                </PageHeaderpart>
+            </header>
             <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
-                <div className="flex flex-col">
+                {/* <div className="flex flex-col">
                     <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Brochures</h1>
                     <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center">
                         <Breadcrumbs items={breadcrumbsItems} />
                         <div className="flex flex-col lg:flex-row gap-2 lg:gap-2 mt-5 lg:mt-0 w-full lg:w-fit">
-                            <button
-                                className="p-2 px-4 mr-5 lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-                                onClick={handleAddNewClick}
-                            >
-                                + Add new
-                            </button>
+
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/* Display loading skeletons if Brochures are loading */}
                 {delayedLoading ? (
