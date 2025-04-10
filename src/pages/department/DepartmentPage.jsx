@@ -8,7 +8,7 @@ import { department_admin_route, list_departments } from "../../utils/Endpoint";
 import LoadingScreen from "../../components/common/LoadingScreen";
 import PageHeaderpart from "../../components/common/PageHeaderpart";
 import SearchInput from "../../components/common/SearchInput";
-
+import ContentCardSkeleton from '../../components/common/ContentCardSkeleton';
 const breadcrumbsItems = [
   { label: "Home", href: "/" },
   { label: "Manage Departments", href: "/department" },
@@ -79,12 +79,12 @@ setTimeout(() => {
 }, 2000);
   },[])
 
-  if (loading) return(
-    <div className="h-screen w-full overflow-hidden">
+  // if (loading) return(
+  //   <div className="h-screen w-full overflow-hidden">
 
-      <LoadingScreen/>
-    </div>
-  ) 
+  //     <LoadingScreen/>
+  //   </div>
+  // ) 
 
   return (
     <main className="w-full">
@@ -125,8 +125,14 @@ setTimeout(() => {
           {/* </div>
         </div> */}
        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 mt-3 gap-x-6  p-1">
-          {departmentItems.map((item, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
+          {loading
+                        ? // Show skeleton if loading
+                          Array.from({ length: departmentItems.length }).map((_, index) => (
+                              <ContentCardSkeleton key={index} />
+                          ))
+                        : 
+          departmentItems.map((item, index) => (
             <div className="custom-item-spacing ">
               <DepartmentCard
                 key={index}

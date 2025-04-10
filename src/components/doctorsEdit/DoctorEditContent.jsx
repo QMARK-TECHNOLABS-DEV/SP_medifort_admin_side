@@ -7,15 +7,15 @@ import useImageCompression from '../../hooks/useImageCompression';
 
 const DoctorEditContent = ({ updateObj, setUpdateObj, handleChange }) => {
   const fileInputRef = useRef()
-  const {compressImage} = useImageCompression()
+  // const {compressImage} = useImageCompression()
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
 
     try {
       const formdata = new FormData();
-      const compressedFile = await compressImage(file);
+      // const compressedFile = await compressImage(file);
 
-      formdata.append('file', compressedFile);
+      formdata.append('file', file);
 
       const response = await axios.post(uploadRoute, formdata)
 
