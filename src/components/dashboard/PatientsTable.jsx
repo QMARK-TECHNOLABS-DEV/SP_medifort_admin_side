@@ -43,7 +43,7 @@ const PatientsTable = () => {
         <div className="bg-white p-6 rounded-xl shadow-md mt-10">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="font-semibold text-lg">Patients</h2>
-                <a className="text-sm text-blue-600 font-medium hover:underline cursor-pointer flex items-center gap-1">
+                <a className="text-sm text-primaryColor font-medium hover:text- cursor-pointer flex items-center gap-1">
                     View all <span className="text-md">→</span>
                 </a>
             </div>
@@ -64,7 +64,7 @@ const PatientsTable = () => {
                             <FiRefreshCw /> Refresh
                         </button>
                         <div className="relative">
-                            <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm flex items-center gap-1">
+                            <button className="bg-primaryColor text-white px-4 py-2 rounded-md text-sm flex items-center gap-1">
                                 <HiPlus /> Add patient
                             </button>
                         </div>

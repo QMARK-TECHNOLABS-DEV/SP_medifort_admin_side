@@ -1,19 +1,27 @@
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Legend } from 'chart.js';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Legend);
+// Register required components for the chart
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 const data = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
   datasets: [
     {
       label: 'Medical patients',
-      backgroundColor: '#3B82F6',
+      backgroundColor: '#9C2677', // primary dark
       data: [1200, 1900, 3000, 2250, 2750, 2200, 2000, 2100],
     },
     {
       label: 'Appointed patients',
-      backgroundColor: '#93C5FD',
+      backgroundColor: '#D48ABB', // lighter shade of #9C2677
       data: [1000, 1600, 2500, 1700, 1800, 1600, 1500, 1800],
     },
   ],
@@ -21,8 +29,37 @@ const data = {
 
 const options = {
   responsive: true,
+  plugins: {
+    tooltip: {
+      // Custom tooltip options
+      enabled: true,
+      backgroundColor: '#333',
+      titleColor: '#fff',
+      bodyColor: '#fff',
+      padding: 10,
+      bodyFont: {
+        size: 14,
+        weight: 'bold',
+      },
+    },
+    legend: {
+      labels: {
+        color: '#333',
+      },
+    },
+  },
   scales: {
-    y: { beginAtZero: true },
+    y: {
+      beginAtZero: true,
+      ticks: {
+        color: '#555',
+      },
+    },
+    x: {
+      ticks: {
+        color: '#555',
+      },
+    },
   },
 };
 
