@@ -4,11 +4,19 @@ import EnquiryTable from '../../components/enquiry/EnquiryTable';
 import FeedbackEnquiryTop from '../../components/enquiry/FeedbackEnquiryTop';
 import { inquiryRoute } from '../../utils/Endpoint';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
+import SearchInput from '../../components/common/SearchInput';
 
 const FeedbackEnquiryPage = () => {
   const [sort, setSort] = useState('latest');
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+ const [isEdit, setIsEdit] = useState(false);
+
+  const breadcrumbsItems = [
+    { label: "Enquiries", href: "/enquiry" },
+    { label: isEdit ? "Edit Article" : "Feedback enquiry", href: "/enquiry/feedback" },
+  ];
 
   const itemsPerPage = 9; // Number of items per page
   const [totalItems, setTotalItems] = useState(0)
@@ -60,9 +68,22 @@ const FeedbackEnquiryPage = () => {
 
   return (
     <div className='w-full'>
-      <FeedbackEnquiryTop
+       <header>
+          <PageHeaderpart
+            items={breadcrumbsItems}
+            pageTitle={"Feedback enquiry"}
+          >
+            <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+              <SearchInput
+                setSearch={setSearch}
+              />
+
+            </div>
+          </PageHeaderpart>
+        </header>
+      {/* <FeedbackEnquiryTop
         onSearchChange={handleSearchChange}
-      />
+      /> */}
       <section>
         <EnquiryTableFilter
           currentPage={currentPage}

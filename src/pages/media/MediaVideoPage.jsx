@@ -5,9 +5,11 @@ import AddMediaVid from '../../components/media-video/AddMediaVid';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { toast } from 'react-toastify';
 import { getVideos, uploadVideos } from '../../utils/Endpoint';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
+import SearchInput from '../../components/common/SearchInput';
 
 const breadcrumbsItems = [
-  { label: "Media", href: "/content-management/media" },
+  { label: "Our Media", href: "/content-management/media" },
   { label: "Video", href: "/content-management/media/video" },
 ];
 
@@ -31,7 +33,7 @@ const MediaVideoPage = () => {
   const [newVideo, setNewVideo] = useState(newVidInitialState);
 
   const [loading, setLoading] = useState(false);
-
+   const [search, setSearch] = useState('')
 
   const handleAddNewClick = () => {
     console.log("Add button clicked"); // Check if this logs on click
@@ -154,19 +156,32 @@ const MediaVideoPage = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
-        <div className="flex flex-col mb-6">
-          <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Video</h1>
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center px-4px">
-            <Breadcrumbs items={breadcrumbsItems} className="custom-breadcrumbs" />
-            <button
+      <header>
+          <PageHeaderpart
+            items={breadcrumbsItems}
+            pageTitle={"Video"}
+          >
+            <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+              {/* <SearchInput
+                setSearch={setSearch}
+              /> */}
+               <button
               className="p-2 px-4px mr-5px lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
               onClick={handleAddNewClick}
             >
               + Add video
             </button>
+            </div>
+          </PageHeaderpart>
+        </header>
+      <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
+        {/* <div className="flex flex-col mb-6">
+          <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Video</h1>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center px-4px">
+            <Breadcrumbs items={breadcrumbsItems} className="custom-breadcrumbs" />
+           
           </div>
-        </div>
+        </div> */}
         {videos?.length === 0 ? (
           <div className="text-center mt-10 text-lg text-gray-500">
             No videos available.

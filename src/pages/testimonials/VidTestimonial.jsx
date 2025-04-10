@@ -7,6 +7,7 @@ import axios from "../../axios-folder/axios";
 import { testimonialAdminRoute, uploadRoute } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
 import LoadingScreen from "../../components/common/LoadingScreen";
+import PageHeaderpart from "../../components/common/PageHeaderpart";
 
 const VidTestimonial = () => {
   const [videos, setVideos] = useState([]);
@@ -180,24 +181,26 @@ const VidTestimonial = () => {
   ) 
 
   return (
-    <div className="p-6 w-full">
-      <div className="flex flex-col sm:flex-row justify-start items-start sm:justify-between sm:items-center mb-1">
-        <h1 className="text-2xl font-bold text-primaryColor lg:hidden sm:mt-[-20px] ml-[-1.5rem] mt-[-40px] text-left">
-          Video
-        </h1>
-        <div className="mt-1 sm:mt-0 sm:ml-4 flex sm:flex-col ml-[-1.5rem] items-start lg:ml-[-1rem] lg:mt-[-2.5rem]">
-          <Breadcrumbs items={breadcrumbsItems} />
-        </div>
-
-        <button
-          className="border-2 py-2 px-4 ml-[-1.5rem] rounded-lg text-primaryColor border-primaryColor mt-1 sm:mt-0 sm:w-auto w-[110%] sm:ml-0 relative lg:top-[-1rem]"
+    <div className="h-screen w-full overflow-hidden  mx-auto ">
+      <header>
+          <PageHeaderpart
+            items={breadcrumbsItems}
+            pageTitle={"Content Management"}
+          >
+            <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+            <button
+             className="w-full sm:w-auto p-2 px-4 lg:w-[150px] flex items-center justify-center bg-white border border-primaryColor text-primaryColor font-medium rounded-lg"
           onClick={handleAddClick}
         >
           + Add Video
         </button>
-      </div>
 
+            </div>
+          </PageHeaderpart>
+        </header>
+      
       {/* Scrollable Video Grid */}
+      <div className="pb-80 px-8 overflow-y-auto h-full scrollbar-hide">
       <div
         className="grid grid-cols-2 gap-6 max-h-[70vh] overflow-y-auto mx-auto mt-6 sm:mt-0" // Added margin-top for smaller screens
         style={{
@@ -354,6 +357,7 @@ const VidTestimonial = () => {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };

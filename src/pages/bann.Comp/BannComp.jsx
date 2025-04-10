@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { PageData } from '../../data/PageData';
 import axios from '../../axios-folder/axios';
 import useImageCompression from '../../hooks/useImageCompression';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
 
 const AddBanner = () => {
   const location = useLocation();
@@ -31,8 +32,8 @@ const AddBanner = () => {
   const fileInputRef = useRef(null);
   const axiosPrivateHook = useAxiosPrivate();
   const navigate = useNavigate();
-  const {compressImage} = useImageCompression()
-  
+  const { compressImage } = useImageCompression()
+
   const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
 
   const handleFileChange = async (event) => {
@@ -126,172 +127,184 @@ const AddBanner = () => {
   }, [mode, pathname])
 
   return (
-    <div className="w-full relative">
+    <div className="h-screen w-full overflow-hidden  mx-auto ">
       {/* Title */}
-      <h1 className="text-2xl font-bold text-primaryColor text-left lg:hidden capitalize ">
+      {/* <h1 className="text-2xl font-bold text-primaryColor text-left lg:hidden capitalize ">
         {mode} Banner
-      </h1>
+      </h1> */}
 
-      {/* Breadcrumbs */}
+      <header>
+        <PageHeaderpart
+          items={breadcrumbsItems}
+          pageTitle={"Home Banners"}
+        >
+          <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+
+
+          </div>
+        </PageHeaderpart>
+      </header>
+      {/* Breadcrumbs
       <div className="flex items-center space-x-2">
         <Breadcrumbs items={breadcrumbsItems} />
-      </div>
-
-      {/* Title Input Field */}
-      <div className="mt-4">
-        <label className="block text-sm text-left font-medium text-gray-700">
-          Title
-        </label>
-        <input
-          name='title'
-          type="text"
-          value={data.title}
-          onChange={handleChange}
-          placeholder="Enter banner title"
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
-        />
-      </div>
-
-      <div className="mt-4">
-        <label className="block text-sm text-left font-medium text-gray-700">
-          Subtitle
-        </label>
-        <input
-          name='subtitle'
-          type="text"
-          value={data.subtitle}
-          onChange={handleChange}
-          placeholder="Enter banner subtitle"
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
-        />
-      </div>
-
-      <div className='flex flex-col sm:flex-row items-center gap-4'>
-
+      </div> */}
+      <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
+        {/* Title Input Field */}
         <div className="mt-4">
           <label className="block text-sm text-left font-medium text-gray-700">
-            Screen Type
-          </label>
-          <select
-            name='screenType'
-            value={data?.screenType}
-            onChange={handleChange}
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
-          >
-
-            <option value="desktop">Desktop</option>
-            <option value="mobile">Mobile</option>
-
-          </select>
-        </div>
-
-        <div className="mt-4">
-          <label className="block text-sm text-left font-medium text-gray-700">
-            Panel
-          </label>
-          <select
-            name='panel'
-            value={data?.panel}
-            onChange={handleChange}
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
-          >
-            {
-              PageData?.map((item, index) => (
-                <option key={index} value={item?.panel}>{item?.panel}</option>
-              ))
-            }
-          </select>
-        </div>
-        <div className="mt-4">
-          <label className="block text-sm text-left font-medium text-gray-700">
-            Index
+            Title
           </label>
           <input
-            type="number"
-            min={0}
-            name='index'
-            value={data.index}
+            name='title'
+            type="text"
+            value={data.title}
             onChange={handleChange}
-            placeholder="Enter banner index"
+            placeholder="Enter banner title"
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
           />
         </div>
-      </div>
 
-      {/* File Upload Area */}
-      <div
-        className="border-2 border-dashed border-gray-300 rounded-lg h-48 md:h-72 flex flex-col justify-center items-center bg-gray-50 relative cursor-pointer w-full mt-4"
-        onClick={() => fileInputRef.current.click()}
-      >
-        {selectedFile ? (
-          <img
-            src={URL.createObjectURL(selectedFile)}
-            alt="Selected"
-            className="h-full w-full object-cover"
+        <div className="mt-4">
+          <label className="block text-sm text-left font-medium text-gray-700">
+            Subtitle
+          </label>
+          <input
+            name='subtitle'
+            type="text"
+            value={data.subtitle}
+            onChange={handleChange}
+            placeholder="Enter banner subtitle"
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
           />
-        ) : (
-          <>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-12 h-12 text-gray-400"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-            <span className="mt-2 text-sm text-gray-600">
-              Click here to browse image
-            </span>
-          </>
-        )}
-        <input
-          type="file"
-          ref={fileInputRef}
-          className="hidden"
-          onChange={handleFileChange}
-        />
-      </div>
-
-      {/* Buttons and Info */}
-      <div className="items-center justify-between mt-6 flex">
-        <div>
-          <button
-            onClick={handleSave}
-            className="border-primaryColor text-primaryColor text-sm px-4 py-2 mx-4 rounded-xl border-2"
-          >
-            Save
-          </button>
-          <button
-            onClick={handleCancelClick}
-            className="text-gray-600 text-sm ml-4"
-          >
-            Cancel
-          </button>
         </div>
-        <div className="text-sm text-right">
-          <div className="flex items-center">
-            {errorMessage && (
+
+        <div className='flex flex-col sm:flex-row items-center gap-4'>
+
+          <div className="mt-4">
+            <label className="block text-sm text-left font-medium text-gray-700">
+              Screen Type
+            </label>
+            <select
+              name='screenType'
+              value={data?.screenType}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
+            >
+
+              <option value="desktop">Desktop</option>
+              <option value="mobile">Mobile</option>
+
+            </select>
+          </div>
+
+          <div className="mt-4">
+            <label className="block text-sm text-left font-medium text-gray-700">
+              Panel
+            </label>
+            <select
+              name='panel'
+              value={data?.panel}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
+            >
+              {
+                PageData?.map((item, index) => (
+                  <option key={index} value={item?.panel}>{item?.panel}</option>
+                ))
+              }
+            </select>
+          </div>
+          <div className="mt-4">
+            <label className="block text-sm text-left font-medium text-gray-700">
+              Index
+            </label>
+            <input
+              type="number"
+              min={0}
+              name='index'
+              value={data.index}
+              onChange={handleChange}
+              placeholder="Enter banner index"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primaryColor focus:border-primaryColor sm:text-sm"
+            />
+          </div>
+        </div>
+
+        {/* File Upload Area */}
+        <div
+          className="border-2 border-dashed border-gray-300 rounded-lg h-48 md:h-72 flex flex-col justify-center items-center bg-gray-50 relative cursor-pointer w-full mt-4"
+          onClick={() => fileInputRef.current.click()}
+        >
+          {selectedFile ? (
+            <img
+              src={URL.createObjectURL(selectedFile)}
+              alt="Selected"
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
+                fill="none"
                 viewBox="0 0 24 24"
-                className="w-4 h-4 text-red-500 mr-1"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-12 h-12 text-gray-400"
               >
-                <circle cx="12" cy="12" r="10" fill="red" />
-                <text x="12" y="16" fontSize="14" textAnchor="middle" fill="white">!</text>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
               </svg>
-            )}
-            <p className={errorMessage ? "text-red-500" : "text-gray-500"}>
-              Max file size: 50 MB
-            </p>
+              <span className="mt-2 text-sm text-gray-600">
+                Click here to browse image
+              </span>
+            </>
+          )}
+          <input
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </div>
+
+        {/* Buttons and Info */}
+        <div className="items-center justify-between mt-6 flex">
+          <div>
+            <button
+              onClick={handleSave}
+              className="border-primaryColor text-primaryColor text-sm px-4 py-2 mx-4 rounded-xl border-2"
+            >
+              Save
+            </button>
+            <button
+              onClick={handleCancelClick}
+              className="text-gray-600 text-sm ml-4"
+            >
+              Cancel
+            </button>
           </div>
-          <p className="text-gray-500 mt-1">Resolution: 1920 x 220</p>
+          <div className="text-sm text-right">
+            <div className="flex items-center">
+              {errorMessage && (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  className="w-4 h-4 text-red-500 mr-1"
+                >
+                  <circle cx="12" cy="12" r="10" fill="red" />
+                  <text x="12" y="16" fontSize="14" textAnchor="middle" fill="white">!</text>
+                </svg>
+              )}
+              <p className={errorMessage ? "text-red-500" : "text-gray-500"}>
+                Max file size: 50 MB
+              </p>
+            </div>
+            <p className="text-gray-500 mt-1">Resolution: 1920 x 220</p>
+          </div>
         </div>
       </div>
     </div>

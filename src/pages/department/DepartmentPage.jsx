@@ -88,6 +88,7 @@ setTimeout(() => {
 
   return (
     <main className="w-full">
+      <div className="h-screen w-full overflow-hidden mx-auto">
     <header>
     <PageHeaderpart
     items={breadcrumbsItems}
@@ -101,8 +102,8 @@ setTimeout(() => {
       </div>
     </PageHeaderpart>
   </header>
-    <div className="h-screen w-full overflow-hidden mx-auto">
-      <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
+    
+      <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
         {/* <div className="flex flex-col"> */}
           {/* ----- Mobile view only--------- */}
           {/* <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">

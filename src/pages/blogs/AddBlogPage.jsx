@@ -11,6 +11,7 @@ import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import useGetAllDoctors from "../../hooks/doctor/useGetAllDoctors";
 import imageCompression from "browser-image-compression";
+import PageHeaderpart from "../../components/common/PageHeaderpart";
 
 const AddBlogPage = () => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const AddBlogPage = () => {
   
 
   const breadcrumbsItems = [
-    { label: "Content Management", href: "/content-management" },
+    { label: "Our Blogs", href: "/content-management/blogs" },
     { label: isEdit ? "Update Blog" : "New Blog", href: "/content-management/blog/new-blog" },
   ];
 
@@ -117,13 +118,12 @@ const AddBlogPage = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      <div className="pb-36 overflow-y-auto h-full px-6 scrollbar-hide">
-        <div className="flex flex-col -ml-4 mb-6">
-          <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
-            {isEdit ? "Update Blog" : "New Blog"}
-          </h1>
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-            <Breadcrumbs items={breadcrumbsItems} />
+      <header>
+          <PageHeaderpart
+            items={breadcrumbsItems}
+            pageTitle= {isEdit ? "Update Blog" : "New Blog"}
+          >
+            <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-4 mt-4 sm:mt-0">
               <button
                 type="submit"
@@ -132,7 +132,7 @@ const AddBlogPage = () => {
               >
                 Save and submit
               </button>
-              {isEdit && (
+              
                 <button
                   type="button"
                   className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
@@ -140,10 +140,14 @@ const AddBlogPage = () => {
                 >
                   Cancel
                 </button>
-              )}
+              
             </div>
-          </div>
-        </div>
+
+            </div>
+          </PageHeaderpart>
+        </header>
+      <div className="pb-80 overflow-y-auto h-full px-6 scrollbar-hide">
+       
         <form id="Blog-form" onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex flex-col lg:flex-row gap-6 mb-6">

@@ -10,6 +10,8 @@ import { bannerRoute, uploadBanner } from "../../utils/Endpoint";
 import { toast } from "react-toastify";
 import LoadingScreen from "../../components/common/LoadingScreen";
 import { FiEdit } from "react-icons/fi";
+import PageHeaderpart from "../../components/common/PageHeaderpart";
+import SearchInput from "../../components/common/SearchInput";
 
 const ImageCard = ({ data, onDelete, onEdit }) => {
   return (
@@ -71,7 +73,7 @@ const BannerCo = () => {
 
   const [loading, setLoading] = useState(true);
   const { panel } = useParams();
-
+  const [search, setSearch] = useState('')
   const breadcrumbsItems = [
     { label: "Banner management", href: "/banner-management" },
     { label: `${panel}`, href: `/banner-management/${panel}` },
@@ -129,19 +131,26 @@ const BannerCo = () => {
   )
 
   return (
-    <div className="px-4 pt-4 w-full h-screen overflow-auto relative">
+    <div className="h-screen w-full overflow-hidden  mx-auto ">
       {/* Title */}
-      <h1 className="text-2xl font-bold text-primaryColor lg:hidden mb-4 mt-[-15px] text-left lg:ml-[-16px] ml-[-12px]">
+      {/* <h1 className="text-2xl font-bold text-primaryColor lg:hidden mb-4 mt-[-15px] text-left lg:ml-[-16px] ml-[-12px]">
         Banner
-      </h1>
+      </h1> */}
+      
+      <header>
+        <PageHeaderpart
+          items={breadcrumbsItems}
+          pageTitle={"Home Banner"}
+        >
+          <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+            <SearchInput
+              setSearch={setSearch}
+            />
 
-      {/* Breadcrumbs and Button */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mt-[-25px] mb-4">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center space-y-2 lg:space-y-0 space-x-0 lg:space-x-2 mb-2 mt-2 lg:mb-0 text-left lg:ml-[-16px] ml-[-12px]">
-          <Breadcrumbs items={breadcrumbsItems} />
-        </div>
-
-      </div>
+          </div>
+        </PageHeaderpart>
+      </header>
+      <div className="pb-80 px-4 pt-4 overflow-y-auto h-full scrollbar-hide">
 
       {/* Image Grid */}
       <div className="w-full h-full">
@@ -151,22 +160,14 @@ const BannerCo = () => {
               key={index}
               data={item}
               onDelete={() => handleDelete(item._id)}
-              onEdit={()=> navigate(`/banner-management/edit/${item._id}`)}
+              onEdit={() => navigate(`/banner-management/edit/${item._id}`)}
             />
           ))}
         </div>
       </div>
+      </div>
 
-      {/* Hidden scrollbar styling */}
-      <style jsx global>{`
-        body {
-          overflow: auto;
-          scrollbar-width: none; /* Firefox */
-        }
-        ::-webkit-scrollbar {
-          display: none; /* Safari and Chrome */
-        }
-      `}</style>
+    
     </div>
   );
 };

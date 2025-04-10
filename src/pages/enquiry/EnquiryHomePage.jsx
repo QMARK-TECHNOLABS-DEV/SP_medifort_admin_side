@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ContentCard from '../../components/contentManagement/ContentCards';
 import ContentCardSkeleton from '../../components/common/ContentCardSkeleton';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
+import SearchInput from '../../components/common/SearchInput';
 
 const EnquiryHomePage = () => {
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('')
   const contentItems = [
     { id: 1, imageSrc: '/enquiries/enquiriescard1.png', title: 'Home care ', url:"/enquiry/homecare"},
         { id: 2, imageSrc: '/enquiries/enquiriescard2.png', title: 'Insurance', url:"/enquiry/insurance"},
@@ -16,11 +19,28 @@ const EnquiryHomePage = () => {
     const timer = setTimeout(() => setLoading(false), 2000);
     return () => clearTimeout(timer);
 }, []);
+const breadcrumbsItems = [
+  { label: "Home", href: "/" },
+  { label: "Enquirie", href: "/enquiry" },
+];
 
   return (
     <div className="h-screen w-full overflow-hidden">
-    <div className="flex-1 h-full pb-32 overflow-y-auto scrollbar-hide">
-      <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Enquiries</h1>
+      <header>
+    <PageHeaderpart
+    items={breadcrumbsItems}
+    pageTitle={"Enquiries"}
+    >
+      <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+        <SearchInput
+        setSearch={setSearch}
+        />
+
+      </div>
+    </PageHeaderpart>
+    </header>
+    <div className="flex-1 h-full pb-80 overflow-y-auto scrollbar-hide">
+      {/* <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Enquiries</h1> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2px">
         {loading
           ? // Show skeletons if loading

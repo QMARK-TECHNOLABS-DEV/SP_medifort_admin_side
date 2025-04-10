@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { uploadNews } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import imageCompression from "browser-image-compression";
+import PageHeaderpart from "../../components/common/PageHeaderpart";
 
 const AddNewsPage = () => {
   const navigate = useNavigate();
@@ -32,26 +33,26 @@ const AddNewsPage = () => {
   }, [location]);
 
   const breadcrumbsItems = [
-    { label: "Content Management", href: "/content-management" },
-    { label: isEdit ? "Update news" : "New news", href: "/content-management/news/new-news" },
+    { label: "our News", href: "/content-management/news" },
+    { label: isEdit ? "Update news" : "Add news", href: "/content-management/news/new-news" },
   ];
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
-        if (file.size > 5 * 1024 * 1024) {
-              toast.error("File size exceeds 5MB. Please upload a smaller file.");
-              return;
-            }
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("File size exceeds 5MB. Please upload a smaller file.");
+        return;
+      }
       try {
-         // Compression options
-                const options = {
-                  maxSizeMB: 1, // Target file size
-                  maxWidthOrHeight: 1024, // Resize if needed
-                  useWebWorker: true,
-                };
-          
-                const compressedFile = await imageCompression(file, options);
+        // Compression options
+        const options = {
+          maxSizeMB: 1, // Target file size
+          maxWidthOrHeight: 1024, // Resize if needed
+          useWebWorker: true,
+        };
+
+        const compressedFile = await imageCompression(file, options);
         const uploadResponse = await uploadFile(compressedFile);
         setImage({
           key: uploadResponse.key,
@@ -82,7 +83,7 @@ const AddNewsPage = () => {
     }
   };
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (!title || !content) {
       alert("Please fill in all required fields.");
@@ -92,38 +93,37 @@ const AddNewsPage = () => {
     const newNews = {
       id: isEdit ? location.state.news.id : Date.now(),
       title,
-      description :content,
+      description: content,
       image: image,
-      file : pdf,
+      file: pdf,
       date: new Date().toLocaleDateString(),
     };
 
- 
-      // Send the news data to the server
-      const response = await axiosPrivateHook({
-        method: isEdit ? "PUT" : "POST",
-        url: isEdit
-          ? `${uploadNews}/${location.state.news._id}`
-          : uploadNews,
-        data: newNews,
-        headers: { "Content-Type": "application/json" },
-      });
-      if (response.status === 200) {
-        toast.success("Article uploaded successfully");
-      }
+
+    // Send the news data to the server
+    const response = await axiosPrivateHook({
+      method: isEdit ? "PUT" : "POST",
+      url: isEdit
+        ? `${uploadNews}/${location.state.news._id}`
+        : uploadNews,
+      data: newNews,
+      headers: { "Content-Type": "application/json" },
+    });
+    if (response.status === 200) {
+      toast.success("Article uploaded successfully");
+    }
 
     navigate("/content-management/news");
   };
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      <div className="pb-36 overflow-y-auto h-full px-6 scrollbar-hide">
-        <div className="flex flex-col -ml-4 mb-6">
-          <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
-            {isEdit ? "Update News" : "New News"}
-          </h1>
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-            <Breadcrumbs items={breadcrumbsItems} />
+      <header>
+        <PageHeaderpart
+          items={breadcrumbsItems}
+          pageTitle={isEdit ? "Update News" : "New News"}
+        >
+          <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-4 mt-4 sm:mt-0">
               <button
                 type="submit"
@@ -132,7 +132,7 @@ const AddNewsPage = () => {
               >
                 Save and submit
               </button>
-              {isEdit && (
+              
                 <button
                   type="button"
                   className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
@@ -140,10 +140,13 @@ const AddNewsPage = () => {
                 >
                   Cancel
                 </button>
-              )}
+             
             </div>
+
           </div>
-        </div>
+        </PageHeaderpart>
+      </header>
+      <div className="pb-36 overflow-y-auto h-full px-6 scrollbar-hide">
         <form id="news-form" onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex flex-col lg:flex-row gap-6 mb-6">

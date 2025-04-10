@@ -37,7 +37,7 @@ const PatientContent = () => {
   ) 
   return (
     <div className="w-full overflow-hidden h-screen">
-      <div className="flex-1 h-full w-full pb-20 overflow-y-auto scrollbar-hidden">
+      <div className="flex-1 h-full w-full pb-80 overflow-y-auto scrollbar-hidden">
         <div className="flex flex-col min-h-screen w-full pb-20 mt-4">
           <div className="grid grid-cols-1 sm:grid-cols-2  w-full mt-5  gap-6  ">
             {

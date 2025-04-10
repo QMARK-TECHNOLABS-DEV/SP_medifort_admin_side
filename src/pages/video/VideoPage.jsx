@@ -7,6 +7,7 @@ import { uploadHealthVideos } from "../../utils/Endpoint";
 import { toast } from "react-toastify";
 import LoadingScreen from "../../components/common/LoadingScreen";
 import useHealthVideos from "../../hooks/healthTalkHook/useHealthVideos";
+import PageHeaderpart from "../../components/common/PageHeaderpart";
 
 const breadcrumbsItems = [
   { label: "Health Talk", href: "/content-management/health-talk" },
@@ -30,12 +31,12 @@ const VideoPage = () => {
   useEffect(() => {
     const loadWithDelay = async () => {
       setDelayedLoading(true);
-    await fetchVideos();
-    setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
-  };
-  
-  loadWithDelay();
-}, []);
+      await fetchVideos();
+      setTimeout(() => setDelayedLoading(false), 2000); // Add a 2-second delay
+    };
+
+    loadWithDelay();
+  }, []);
 
 
   const handleAddNewClick = () => {
@@ -126,20 +127,21 @@ const VideoPage = () => {
     resetForm();
   };
 
-  if (delayedLoading) return(
+  if (delayedLoading) return (
     <div className="h-screen w-full overflow-hidden">
 
-      <LoadingScreen/>
+      <LoadingScreen />
     </div>
-  ) 
+  )
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      <div className="pb-36 overflow-y-auto h-full scrollbar-hide">
-        <div className="flex flex-col mb-6">
-          <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Video</h1>
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center px-4px">
-            <Breadcrumbs items={breadcrumbsItems} className="custom-breadcrumbs" />
+      <header>
+        <PageHeaderpart
+          items={breadcrumbsItems}
+          pageTitle={"Videos"}
+        >
+          <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
             <button
               className="p-2 px-4px mr-5px lg:w-[150px] flex items-center justify-center bg-white border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
               onClick={handleAddNewClick}
@@ -147,7 +149,16 @@ const VideoPage = () => {
               + Add video
             </button>
           </div>
-        </div>
+        </PageHeaderpart>
+      </header>
+      <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
+        {/* <div className="flex flex-col mb-6">
+          <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">Video</h1>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center px-4px">
+            <Breadcrumbs items={breadcrumbsItems} className="custom-breadcrumbs" />
+
+          </div>
+        </div> */}
         {videosItems.length === 0 ? (
           <div className="text-center mt-10 text-lg text-gray-500">
             No videos available.

@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useGetAllDoctors from "../../hooks/doctor/useGetAllDoctors";
 import imageCompression from "browser-image-compression";
+import PageHeaderpart from "../../components/common/PageHeaderpart";
 
 const NewArticlePage = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const NewArticlePage = () => {
       setImage(article.image);
       setPdf(article.file);
       setIsEdit(true);
-  
+
       // Check if the author is a doctor ID
       const doctorExists = doctors.some(doctor => doctor._id === article.author);
       if (doctorExists) {
@@ -48,22 +49,22 @@ const NewArticlePage = () => {
   }, [location, doctors]);
 
   const breadcrumbsItems = [
-    { label: "Health Talk", href: "/content-management/health-talk" },
+    { label: "Article", href: "/content-management/article" },
     {
-      label: isEdit ? "Update Article" : "New Article",
+      label: isEdit ? "Update Article" : "Add Article",
       href: "/content-management/article/new-article",
     },
   ];
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
-  
+
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
         toast.error("File size exceeds 5MB. Please upload a smaller file.");
         return;
       }
-  
+
       try {
         // Compression options
         const options = {
@@ -71,16 +72,16 @@ const NewArticlePage = () => {
           maxWidthOrHeight: 1024, // Resize if needed
           useWebWorker: true,
         };
-  
+
         const compressedFile = await imageCompression(file, options);
-  
+
         const uploadResponse = await uploadFile(compressedFile);
         setImage({
           key: uploadResponse.key,
           name: uploadResponse.name,
           location: uploadResponse.location,
         });
-  
+
         toast.success("Image uploaded successfully!");
       } catch (error) {
         console.error("Image upload failed", error);
@@ -88,7 +89,7 @@ const NewArticlePage = () => {
       }
     }
   };
-  
+
   const handlePdfUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -151,15 +152,13 @@ const NewArticlePage = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden">
-      <div className="pb-36 overflow-y-auto h-full px-6 scrollbar-hide">
-        <div className="flex flex-col mb-6">
-          <h1
-            className={`text-2xl font-bold text-primaryColor mb-2 text-left `}
-          >
-            {isEdit ? "Update Article" : "New Article"}
-          </h1>
-          <div className={`flex flex-col sm:flex-row sm:justify-between`}>
-            <Breadcrumbs items={breadcrumbsItems} />
+      <header>
+        <PageHeaderpart
+          items={breadcrumbsItems}
+          pageTitle={isEdit ? "Update Article" : "New Article"}
+        >
+          <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+
             <div className="flex flex-col sm:flex-row gap-4 mt-4 sm:mt-0">
               <button
                 type="submit"
@@ -168,7 +167,7 @@ const NewArticlePage = () => {
               >
                 Save and submit
               </button>
-              {isEdit && (
+              
                 <button
                   type="button"
                   className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
@@ -176,10 +175,23 @@ const NewArticlePage = () => {
                 >
                   Cancel
                 </button>
-              )}
+              
             </div>
           </div>
-        </div>
+        </PageHeaderpart>
+      </header>
+      <div className="pb-80 overflow-y-auto h-full px-6 scrollbar-hide">
+        {/* <div className="flex flex-col mb-6">
+          <h1
+            className={`text-2xl font-bold text-primaryColor mb-2 text-left `}
+          >
+
+          </h1>
+          <div className={`flex flex-col sm:flex-row sm:justify-between`}>
+            <Breadcrumbs items={breadcrumbsItems} />
+
+          </div>
+        </div> */}
         <form id="article-form" onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex flex-col lg:flex-row mb-4 gap-4">

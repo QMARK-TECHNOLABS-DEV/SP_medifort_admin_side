@@ -7,6 +7,8 @@ import EnquiryTable from '../../components/enquiry/EnquiryTable';
 import InternationalPatientEnquiryTop from '../../components/enquiry/InternationalPatientEnquiryTop';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { inquiryRoute } from '../../utils/Endpoint';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
+import SearchInput from '../../components/common/SearchInput';
 
 
 const InternationalPatientEnquiryPage = () => {
@@ -16,6 +18,12 @@ const InternationalPatientEnquiryPage = () => {
 
   const itemsPerPage = 9; // Number of items per page
   const [totalItems, setTotalItems] = useState(0)
+  const [isEdit, setIsEdit] = useState(false);
+
+  const breadcrumbsItems = [
+    { label: "Enquiries", href: "/enquiry" },
+    { label: isEdit ? "Edit Article" : "International patient enquiry", href: "/enquiry/international-patient-enquiry" },
+  ];
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -65,9 +73,22 @@ const InternationalPatientEnquiryPage = () => {
 
   return (
     <div className='w-full'>
-      <InternationalPatientEnquiryTop
+      <header>
+        <PageHeaderpart
+          items={breadcrumbsItems}
+          pageTitle={"Feedback enquiry"}
+        >
+          <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+            <SearchInput
+              setSearch={setSearch}
+            />
+
+          </div>
+        </PageHeaderpart>
+      </header>
+      {/* <InternationalPatientEnquiryTop
         onSearchChange={handleSearchChange}
-      />
+      /> */}
       <section>
         <EnquiryTableFilter
           currentPage={currentPage}

@@ -7,12 +7,14 @@ import { TableData } from '../../data/TableData';
 import EnquiryTable from '../../components/enquiry/EnquiryTable';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { inquiryRoute } from '../../utils/Endpoint';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
+import SearchInput from '../../components/common/SearchInput';
 
 const HomeCareEnquiryPage = () => {
   const [sort, setSort] = useState('latest');
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [isEdit, setIsEdit] = useState(false);
   const itemsPerPage = 9; 
   const [totalItems, setTotalItems] = useState(0)
 
@@ -62,16 +64,32 @@ const HomeCareEnquiryPage = () => {
     }
   };
 
-
+  const breadcrumbsItems = [
+    { label: "Enquiries", href: "/enquiry" },
+    { label: isEdit ? "Edit Article" : "Home care enquiry", href: "/enquiry/homecare" },
+  ];
   
 
   return (
     <div className='w-full'>
-      <EnquiryHomeCareTop
+         <header>
+          <PageHeaderpart
+            items={breadcrumbsItems}
+            pageTitle={"Home care enquiry"}
+          >
+            <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+              <SearchInput
+                setSearch={setSearch}
+              />
+
+            </div>
+          </PageHeaderpart>
+        </header>
+      {/* <EnquiryHomeCareTop
         title={"Enquiries"}
         type={{ name: "search" }}
         onSearchChange={handleSearchChange}
-      />
+      /> */}
       <section>
         <EnquiryTableFilter
           currentPage={currentPage}

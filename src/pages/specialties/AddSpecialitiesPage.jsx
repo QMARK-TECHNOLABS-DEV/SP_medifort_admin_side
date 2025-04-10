@@ -13,6 +13,7 @@ import uploadFile from '../../hooks/uploadFile';
 import ImageDropAndPaste from "quill-image-drop-and-paste";
 import imageResizeMin from "quill-image-resize-module-react";
 import useGetAllDepartment from '../../hooks/departmentHook/useGetAllDepartment';
+import PageHeaderpart from '../../components/common/PageHeaderpart';
 
 // Register the image resize module
 Quill.register('modules/imageResize', imageResizeMin);
@@ -37,8 +38,8 @@ const AddSpecialitiesPage = () => {
     const { compressImage } = useImageCompression()
     const { department, loading, error } = useGetAllDepartment()
     const breadcrumbsItems = [
-        { label: "Specialties", href: "/content-management/specialities" },
-        { label: isEdit ? "Update specialities" : "New specialities", href: "/content-management/specialities/new-speciality" },
+        { label: "Our Specialties", href: "/content-management/specialities" },
+        { label: isEdit ? "Update specialities" : "Add specialities", href: "/content-management/specialities/new-speciality" },
     ];
     useEffect(() => {
         if (location.state?.isEdit && location.state?.speciality) {
@@ -164,13 +165,12 @@ const AddSpecialitiesPage = () => {
 
     return (
         <div className="h-screen w-full overflow-hidden">
-            <div className="pb-36 overflow-y-auto h-full px-6 scrollbar-hide">
-                <div className="flex flex-col -ml-4 mb-6">
-                    <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
-                        {isEdit ? "Update Blog" : "New Blog"}
-                    </h1>
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                        <Breadcrumbs items={breadcrumbsItems} />
+            <header>
+                <PageHeaderpart
+                    items={breadcrumbsItems}
+                    pageTitle={isEdit ? "Update specialities" : "New specialities"}
+                >
+                    <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
                         <div className="flex flex-col lg:flex-row gap-4 lg:gap-4 mt-4 sm:mt-0">
                             <button
                                 type="submit"
@@ -179,18 +179,20 @@ const AddSpecialitiesPage = () => {
                             >
                                 Save and submit
                             </button>
-                            {isEdit && (
-                                <button
-                                    type="button"
-                                    className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
-                                    onClick={() => navigate("/content-management/specialities")}
-                                >
-                                    Cancel
-                                </button>
-                            )}
+
+                            <button
+                                type="button"
+                                className="p-2 px-6 lg:w-[150px] flex items-center justify-center bg-[#F8F9FA] border border-[#9C2677] text-[#9C2677] hover:text-gray-800 font-medium rounded-lg"
+                                onClick={() => navigate("/content-management/specialities")}
+                            >
+                                Cancel
+                            </button>
                         </div>
                     </div>
-                </div>
+                </PageHeaderpart>
+            </header>
+            <div className="pb-80 overflow-y-auto h-full px-6 scrollbar-hide">
+              
                 <form id="Specialities-form" onSubmit={handleSubmit}>
                     <div className="pt-6">
                         <div className="flex flex-col lg:flex-row  gap-6 mb-6">
@@ -308,7 +310,7 @@ const AddSpecialitiesPage = () => {
                                 value={specialities.content}
                                 onChange={handleEditorChange}
                                 placeholder="Write your speciality content here..."
-                               className="mb-12 [&_.ql-editor]:h-[450px] [&_.ql-editor]:overflow-y-auto"
+                                className="mb-12 [&_.ql-editor]:h-[450px] [&_.ql-editor]:overflow-y-auto"
                             />
                             {uploading && (
                                 <div className="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-10">
