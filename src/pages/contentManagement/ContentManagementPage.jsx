@@ -51,6 +51,7 @@ const ContentManagementPage = () => {
             </div>
           </PageHeaderpart>
         </header>
+        
         <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
           {/* <h1 className="text-left text-xl lg:text-3xl text-[#424242] md:font-[350]">Content Management</h1> */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2px">
