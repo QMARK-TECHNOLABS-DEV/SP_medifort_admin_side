@@ -75,12 +75,8 @@ const DoctorHomePage = () => {
   return (
     <div className="w-full">
       <header>
-        <PageHeaderpart
-          items={breadcrumbsItems}
-          pageTitle="Our Doctors"
-
-        >
-          <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+        <PageHeaderpart items={breadcrumbsItems} pageTitle="Our Doctors" >
+          <div className="flex md:flex-row flex-col md:items-end gap-4 w-full items-start justify-start ">
             {/* Doctor Filter */}
             <DoctorFilter
               onAddDoctor={addNewDoctor}
@@ -95,10 +91,6 @@ const DoctorHomePage = () => {
         </PageHeaderpart>
       </header>
 
-
-
-      {/* <TopPart title={"Doctor profile"} type={{ name: "search" }} setSearch={setSearch} /> */}
-      {/* <DoctorFilter onAddDoctor={addNewDoctor} setDeptId={setDeptId} setSort={setSort} /> */}
       <DoctorsPhotos data={doctors} loading={loading} />
     </div>
   );
