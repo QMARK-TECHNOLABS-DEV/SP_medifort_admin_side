@@ -14,7 +14,7 @@ const DoctorsPhotos = ({ data, loading }) => {
     navigate(`/doctors/edit/${id}`); // Navigate to the edit page when the icon is clicked
   };
 
-  if (data.length > 0) {
+  if (data.length < 0) {
     return <NoData text={"No Data Available"} />
   }
 
