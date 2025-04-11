@@ -22,7 +22,7 @@ const InternationalPatientEnquiryPage = () => {
 
   const breadcrumbsItems = [
     { label: "Enquiries", href: "/enquiry" },
-    { label: isEdit ? "Edit Article" : "International patient enquiry", href: "/enquiry/international-patient-enquiry" },
+    { label: isEdit ? "International patient enquiry" : "International patient enquiry", href: "/enquiry/international-patient-enquiry" },
   ];
 
   const handleSearchChange = (e) => {
@@ -76,7 +76,7 @@ const InternationalPatientEnquiryPage = () => {
       <header>
         <PageHeaderpart
           items={breadcrumbsItems}
-          pageTitle={"Feedback enquiry"}
+          pageTitle={"International patient enquiry"}
         >
           <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
             <SearchInput

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
     format,
     startOfMonth,
-    endOfMonth,
     startOfWeek,
     addDays,
     addMonths,
@@ -33,7 +32,8 @@ const getEventColor = (type) => {
 };
 
 const CalendarWidget = () => {
-    const [currentDate, setCurrentDate] = useState(new Date(2023, 5, 9)); // Default: June 2023
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(null);
 
     const monthStart = startOfMonth(currentDate);
     const startDate = startOfWeek(monthStart, { weekStartsOn: 0 });
@@ -49,21 +49,33 @@ const CalendarWidget = () => {
             const days = [];
 
             for (let i = 0; i < 7; i++) {
-                const formatted = format(day, 'd');
-                const iso = format(day, 'yyyy-MM-dd');
+                const currentDay = day;
+                const formatted = format(currentDay, 'd');
+                const iso = format(currentDay, 'yyyy-MM-dd');
                 const events = eventTypes[iso] || [];
-                const isToday = isSameDay(day, new Date());
+                const isToday = isSameDay(currentDay, new Date());
+                const isSelected = selectedDate && isSameDay(currentDay, selectedDate);
 
                 days.push(
-                    <div key={day} className="flex justify-center items-center h-10">
+                    <div
+                        key={currentDay.toISOString()}
+                        className="flex justify-center items-center h-10"
+                    >
                         <div
-                            className={`flex flex-col items-center justify-center h-8 w-8 rounded-md text-[12px] leading-tight ${isToday ? 'border border-blue-500' : ''
-                                } ${!isSameMonth(day, monthStart) ? 'text-gray-300' : 'text-gray-800'}`}
+                            onClick={() => setSelectedDate(currentDay)}
+                            className={`
+                                flex flex-col items-center justify-center h-8 w-8 rounded-md text-[12px] leading-tight cursor-pointer transition
+                                ${isSelected ? 'border-2 border-blue-600' : isToday ? 'border border-blue-400' : ''}
+                                ${!isSameMonth(currentDay, monthStart) ? 'text-gray-300' : 'text-gray-800'}
+                            `}
                         >
                             {formatted}
                             <div className="flex gap-[2px] mt-[2px]">
                                 {events.map((e, idx) => (
-                                    <span key={idx} className={`w-1.5 h-1.5 rounded-full ${getEventColor(e)}`}></span>
+                                    <span
+                                        key={idx}
+                                        className={`w-1.5 h-1.5 rounded-full ${getEventColor(e)}`}
+                                    ></span>
                                 ))}
                             </div>
                         </div>
@@ -92,12 +104,15 @@ const CalendarWidget = () => {
                     <button onClick={goToPrevMonth} className="text-gray-500 hover:text-black">
                         <FiChevronLeft size={18} />
                     </button>
-                    <p className="text-sm text-gray-800 font-medium">{format(currentDate, 'MMMM yyyy')}</p>
+                    <p className="text-sm text-gray-800 font-medium">
+                        {format(currentDate, 'MMMM yyyy')}
+                    </p>
                     <button onClick={goToNextMonth} className="text-gray-500 hover:text-black">
                         <FiChevronRight size={18} />
                     </button>
                 </div>
             </div>
+
             {/* Legend */}
             <div className="flex border-y-[1px] justify-start gap-3 py-2 mb-4 text-[12px] text-gray-700">
                 <div className="flex items-center gap-1">
@@ -110,6 +125,7 @@ const CalendarWidget = () => {
                     <span className="w-2 h-2 bg-purple-500 rounded-full"></span> Polyclinic
                 </div>
             </div>
+
             {/* Days of week */}
             <div className="grid grid-cols-7 text-[10px] text-center text-gray-500 mb-2 font-semibold">
                 {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((day, idx) => (
@@ -119,8 +135,6 @@ const CalendarWidget = () => {
 
             {/* Days grid */}
             {renderCells()}
-
-
         </div>
     );
 };
