@@ -65,7 +65,6 @@ const DoctorHomePage = () => {
     setDoctors(data)
   }, [sort])
 
-  console.log({ sort })
 
   const breadcrumbsItems = [
     { label: "Home", href: "/" },

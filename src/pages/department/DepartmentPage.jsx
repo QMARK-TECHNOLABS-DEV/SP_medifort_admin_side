@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Breadcrumbs from "../../components/common/Breadcrumbs";
 import DepartmentCard from "../../components/department/DepartmentCard";
 import { useLocation, useNavigate } from "react-router-dom";
 import DeleteModal from "../../components/common/DeleteModal";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { department_admin_route, list_departments } from "../../utils/Endpoint";
-import LoadingScreen from "../../components/common/LoadingScreen";
+import { department_admin_route } from "../../utils/Endpoint";
 import PageHeaderpart from "../../components/common/PageHeaderpart";
 import SearchInput from "../../components/common/SearchInput";
 import ContentCardSkeleton from '../../components/common/ContentCardSkeleton';
+import LoadingScreen from "../../components/common/LoadingScreen";
+import Breadcrumbs from "../../components/common/Breadcrumbs";
+
 const breadcrumbsItems = [
   { label: "Home", href: "/" },
   { label: "Manage Departments", href: "/department" },
@@ -21,8 +22,10 @@ const DepartmentPage = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState('');
+
+
   useEffect(() => {
     if (location.state?.updatedDepartments) {
       setDepartmentItems(location.state.updatedDepartments);
@@ -61,6 +64,7 @@ const DepartmentPage = () => {
   const axiosPrivate = useAxiosPrivate();
 
   const getData = async () => {
+    setLoading(true)
     try {
       const response = await axiosPrivate.get(department_admin_route)
       if (response?.status === 200) {
@@ -69,91 +73,63 @@ const DepartmentPage = () => {
       }
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false)
     }
   }
 
-  useEffect(()=>{
-getData()
-setTimeout(() => {
-  setLoading(false);
-}, 2000);
-  },[])
+  useEffect(() => {
+    getData()
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, [])
 
-  // if (loading) return(
-  //   <div className="h-screen w-full overflow-hidden">
-
-  //     <LoadingScreen/>
-  //   </div>
-  // ) 
 
   return (
     <main className="w-full">
       <div className="h-screen w-full overflow-hidden mx-auto">
-    <header>
-    <PageHeaderpart
-    items={breadcrumbsItems}
-    pageTitle={"Our Departments"}
-    >
-      <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
-        <SearchInput
-        setSearch={setSearch}
-        />
-
-      </div>
-    </PageHeaderpart>
-  </header>
-    
-      <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
-        {/* <div className="flex flex-col"> */}
-          {/* ----- Mobile view only--------- */}
-          {/* <h1 className="flex text-2xl font-bold text-primaryColor lg:hidden">
-            Departments
-          </h1> */}
-          {/* <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-            <Breadcrumbs items={breadcrumbsItems} /> */}
-
-            {/* <div className="flex flex-col lg:flex-row gap-2 lg:gap-2">
-              <button
-                className="p-2 px-4 mr-1 lg:mr-2 lg:w-[150px] flex items-center text-primaryColor justify-center bg-white border border-[#9C2677] font-medium rounded-lg mt-2 sm:mt-4 lg:mt-0"
-
-                onClick={handleAddNewClick}
-              >
-                + Add new
-              </button>
-            </div> */}
-
-          {/* </div>
-        </div> */}
-       
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
-          {loading
-                        ? // Show skeleton if loading
-                          Array.from({ length: departmentItems.length }).map((_, index) => (
-                              <ContentCardSkeleton key={index} />
-                          ))
-                        : 
-          departmentItems.map((item, index) => (
-            <div className="custom-item-spacing ">
-              <DepartmentCard
-                key={index}
-                data={item}
-                onEditClick={() => handleEditClick(item)}
-                onDeleteClick={() => handleDeleteClick(item)}
+        <header>
+          <PageHeaderpart
+            items={breadcrumbsItems}
+            pageTitle={"Our Departments"}
+          >
+            <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+              <SearchInput
+                setSearch={setSearch}
               />
+
             </div>
-          ))}
+          </PageHeaderpart>
+        </header>
+
+        <div className="pb-80 overflow-y-auto h-full scrollbar-hide">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5 mt-3">
+            {loading
+              ? // Show skeleton if loading
+              Array.from({ length: 8 }).map((_, index) => (
+                <ContentCardSkeleton key={index} />
+              ))
+              :
+              departmentItems.map((item, index) => (
+                <div >
+                  <DepartmentCard
+                    key={index}
+                    data={item}
+                    onEditClick={() => handleEditClick(item)}
+                    onDeleteClick={() => handleDeleteClick(item)}
+                  />
+                </div>
+              ))}
+          </div>
         </div>
 
-
-
-
+        <DeleteModal
+          show={showDeleteModal}
+          onClose={handleCloseModal}
+          onConfirm={handleDeleteConfirm}
+        />
       </div>
-      <DeleteModal
-        show={showDeleteModal}
-        onClose={handleCloseModal}
-        onConfirm={handleDeleteConfirm}
-      />
-    </div>
     </main>
   );
 };
