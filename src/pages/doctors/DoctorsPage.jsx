@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import TopPart from "../../components/doctors/TopPart";
 import DoctorFilter from "../../components/doctors/DoctorFilter";
 import DoctorsPhotos from "../../components/doctors/DoctorsPhotos";
-import axios from "../../axios-folder/axios";
-import { doc_in_dept_route, doctor_admin_route } from "../../utils/Endpoint";
+import { doctor_admin_route } from "../../utils/Endpoint";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import PageHeaderpart from "../../components/common/PageHeaderpart";
-import { CiSearch } from "react-icons/ci";
 import SearchInput from "../../components/common/SearchInput";
 
 const DoctorHomePage = () => {
@@ -30,7 +27,7 @@ const DoctorHomePage = () => {
 
   const getData = async () => {
     try {
-      setLoading(true); 
+      setLoading(true);
       const response = await axiosPrivate.get(`${doctor_admin_route}?search=${search}&deptId=${deptId}`)
 
       console.log(response.data);
@@ -41,15 +38,15 @@ const DoctorHomePage = () => {
           data = data?.sort((a, b) => a.doctor_name.localeCompare(b.doctor_name))
         }
         else if (sort === 'desc') {
-         data = data?.sort((a, b) => b.doctor_name.localeCompare(a.doctor_name))
+          data = data?.sort((a, b) => b.doctor_name.localeCompare(a.doctor_name))
         }
         setDoctors(data)
       }
 
     } catch (error) {
       console.log(error)
-    }finally {
-      setLoading(false); 
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -63,12 +60,12 @@ const DoctorHomePage = () => {
       data = data?.sort((a, b) => a.doctor_name.localeCompare(b.doctor_name))
     }
     else if (sort === 'desc') {
-     data = data?.sort((a, b) => b.doctor_name.localeCompare(a.doctor_name))
+      data = data?.sort((a, b) => b.doctor_name.localeCompare(a.doctor_name))
     }
     setDoctors(data)
   }, [sort])
 
-  console.log({sort})
+  console.log({ sort })
 
   const breadcrumbsItems = [
     { label: "Home", href: "/" },
@@ -77,30 +74,30 @@ const DoctorHomePage = () => {
 
   return (
     <div className="w-full">
-<header>
-  <PageHeaderpart
-    items={breadcrumbsItems}
-    pageTitle="Our Doctors"
-    
-  >
-    <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
-       {/* Doctor Filter */}
-       <DoctorFilter
-        onAddDoctor={addNewDoctor}
-        setDeptId={setDeptId}
-        setSort={setSort}
-      />
-      {/* Search Input */}
-      <SearchInput 
-      setSearch={setSearch}
-      />
-    </div>
-  </PageHeaderpart>
-</header>
+      <header>
+        <PageHeaderpart
+          items={breadcrumbsItems}
+          pageTitle="Our Doctors"
+
+        >
+          <div className="flex md:flex-row flex-col md:items-end  gap-4 w-full items-start justify-start ">
+            {/* Doctor Filter */}
+            <DoctorFilter
+              onAddDoctor={addNewDoctor}
+              setDeptId={setDeptId}
+              setSort={setSort}
+            />
+            {/* Search Input */}
+            <SearchInput
+              setSearch={setSearch}
+            />
+          </div>
+        </PageHeaderpart>
+      </header>
 
 
 
-        {/* <TopPart title={"Doctor profile"} type={{ name: "search" }} setSearch={setSearch} /> */}
+      {/* <TopPart title={"Doctor profile"} type={{ name: "search" }} setSearch={setSearch} /> */}
       {/* <DoctorFilter onAddDoctor={addNewDoctor} setDeptId={setDeptId} setSort={setSort} /> */}
       <DoctorsPhotos data={doctors} loading={loading} />
     </div>
