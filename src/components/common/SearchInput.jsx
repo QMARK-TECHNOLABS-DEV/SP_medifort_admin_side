@@ -8,7 +8,7 @@ const SearchInput = ({ setSearch }) => {
         type="text"
         name="search"
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full rounded-lg text-sm bg-lightGray p-3 px-5 pl-12 placeholder:text-[#475467] placeholder:font-[500] placeholder:text-sm focus:outline-none"
+        className="w-full rounded-lg text-sm bg-lightGray p-2.5 pl-12 placeholder:text-[#888e97] placeholder:font-[500] placeholder:text-sm focus:outline-none"
         placeholder="Search"
       />
       <CiSearch size={25} className="absolute top-2 left-4" />

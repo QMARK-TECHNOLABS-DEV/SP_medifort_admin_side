@@ -19,11 +19,10 @@ const PageHeaderpart = ({ items, pageTitle, children }) => {
               {index > 0 && <span className="mx-2">›</span>}
               <a
                 href={item.href}
-                className={`${
-                  currentPath === item.href
+                className={`${currentPath === item.href
                     ? "text-[#424242] font-semibold"
                     : "text-[#848484]"
-                } hover:text-[#424242] lg:text-lg`}
+                  } hover:text-[#424242] text-sm`}
               >
                 {item.label}
               </a>
@@ -33,8 +32,8 @@ const PageHeaderpart = ({ items, pageTitle, children }) => {
       </nav>
 
       <div className="">
-  {children}
-</div>
+        {children}
+      </div>
 
     </main>
   );
