@@ -91,7 +91,7 @@ const BlogPage = () => {
                 setSearch={setSearch}
               /> */}
             <button
-             className="w-full sm:w-auto p-2 px-4 lg:w-[150px] flex items-center justify-center bg-white border border-primaryColor text-primaryColor font-medium rounded-lg"
+              className="w-full sm:w-auto p-2 px-4 lg:w-[150px] flex items-center justify-center bg-white border border-primaryColor text-primaryColor font-medium rounded-lg"
               onClick={handleAddNewClick}
             >
               + Add new
@@ -110,8 +110,8 @@ const BlogPage = () => {
           </div>
         </div> */}
         {delayedLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 lg:gap-6">
-            {Array.from({ length: 4 }).map((_, index) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+            {Array.from({ length: 8 }).map((_, index) => (
               <SkeletonCard key={index} />
             ))}
           </div>
@@ -120,7 +120,7 @@ const BlogPage = () => {
             No articles available.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-2px py-1px">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
             {blogWithAuthors.map((item) => (
               <CommonCard
                 key={item.id}
