@@ -333,7 +333,7 @@ const AddBlogPage = () => {
                     </div>
 
                     {/* Header Title */}
-                    <div className="w-full ">
+                    {/* <div className="w-full ">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Header Title
                       </label>
@@ -353,7 +353,7 @@ const AddBlogPage = () => {
                           }))
                         }
                       />
-                    </div>
+                    </div> */}
 
                     {/* Route */}
                     {/* <div className="w-full">
