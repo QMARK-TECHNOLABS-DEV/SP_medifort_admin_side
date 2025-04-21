@@ -7,7 +7,7 @@ const PageHeaderpart = ({ items, pageTitle, children }) => {
   const currentPath = location.pathname;
 
   return (
-    <main className="flex flex-col sticky lg:flex-row lg:justify-between items-start lg:items-center my-2 p-5 w-full gap-2 lg:gap-4 bg-white rounded-xl shadow-md ">
+    <main className="flex flex-col sticky lg:flex-row lg:justify-between items-start lg:items-center my-2 p-5 w-full gap-2 lg:gap-4 bg-white rounded-xl shadow-md mb-5 md:mb-7">
       {/* Title & Breadcrumbs */}
       <nav className="text-left text-[#424242] md:font-[350] capitalize">
         <h1 className="text-left text-xl lg:text-3xl text-[#424242] font-semibold">
@@ -31,7 +31,7 @@ const PageHeaderpart = ({ items, pageTitle, children }) => {
         </ol>
       </nav>
 
-      <div className="">
+      <div className="w-full md:w-fit">
         {children}
       </div>
 

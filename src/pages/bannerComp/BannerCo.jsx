@@ -136,7 +136,7 @@ const BannerCo = () => {
       {/* <h1 className="text-2xl font-bold text-primaryColor lg:hidden mb-4 mt-[-15px] text-left lg:ml-[-16px] ml-[-12px]">
         Banner
       </h1> */}
-      
+
       <header>
         <PageHeaderpart
           items={breadcrumbsItems}
@@ -152,22 +152,22 @@ const BannerCo = () => {
       </header>
       <div className="pb-80 px-4 pt-4 overflow-y-auto h-full scrollbar-hide">
 
-      {/* Image Grid */}
-      <div className="w-full h-full">
-        <div className="grid grid-cols-1 gap-6 -ml-3 -mr-3 py-2 pb-56">
-          {data.map((item, index) => (
-            <ImageCard
-              key={index}
-              data={item}
-              onDelete={() => handleDelete(item._id)}
-              onEdit={() => navigate(`/banner-management/edit/${item._id}`)}
-            />
-          ))}
+        {/* Image Grid */}
+        <div className="w-full h-full">
+          <div className="grid grid-cols-1 gap-6 -ml-3 -mr-3 py-2 pb-56">
+            {data.map((item, index) => (
+              <ImageCard
+                key={index}
+                data={item}
+                onDelete={() => handleDelete(item._id)}
+                onEdit={() => navigate(`/banner-management/edit/${item._id}`)}
+              />
+            ))}
+          </div>
         </div>
       </div>
-      </div>
 
-    
+
     </div>
   );
 };
