@@ -26,7 +26,14 @@ const AddBlogPage = () => {
     title: '',
     kind: '',
     author: '',
-    image: ''
+    image: '',
+    metadata: {
+      metaTitle: "",
+      metaDescription: "",
+      metaKeywords: "",
+      headerTitle: "",
+      route: "",
+    },
   };
 
   const [blog, setBlog] = useState(initialState);
@@ -151,11 +158,11 @@ const AddBlogPage = () => {
         <form id="Blog-form" onSubmit={handleSubmit}>
           <div className="p-6">
             <div className="flex flex-col lg:flex-row gap-6 mb-6">
-              <div className="relative lg:w-1/2">
+              <div className="relative lg:w-1/2 lg:h-[600px]">
                 <img
                   src={blog?.image?.location ? blog?.image.location : BlogPlaceholder}
                   alt="Blog"
-                  className="w-full h-full bg-[#B0BAC366] object-contain rounded-lg"
+                  className="w-full h-full bg-[#B0BAC366] object-cover rounded-lg"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <label htmlFor="image-upload" className="cursor-pointer">
@@ -171,7 +178,7 @@ const AddBlogPage = () => {
                 </div>
               </div>
 
-              <div className="lg:w-1/2 sm:mt-32 flex flex-col gap-2">
+              <div className="lg:w-1/2 mt-10 flex flex-col gap-2">
                 <div className="">
                   <label className="block text-sm text-left font-medium text-gray-700 mb-2">
                     Title
@@ -248,6 +255,129 @@ const AddBlogPage = () => {
                       />
                     )}
                   </div>
+                </div>
+              <div className="w-full border-t border-gray-300 mt-2 pt-2">
+                  <h2 className="text-lg font-semibold text-gray-800 mb-2">
+                    Meta Data
+                  </h2>
+                  <div className="flex flex-col lg:flex-row gap-4 mb-4">
+                    {/* Meta Title */}
+                    <div className="w-full lg:w-1/2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Meta Title
+                      </label>
+                      <input
+                        type="text"
+                        name="metaTitle"
+                        className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                        placeholder="Enter Meta Title"
+                        value={blog?.metadata?.metaTitle}
+                        onChange={(e) =>
+                          setBlog((prev) => ({
+                            ...prev,
+                            metadata: {
+                              ...prev.metadata,
+                              metaTitle: e.target.value,
+                            },
+                          }))
+                        }
+                      />
+                    </div>
+
+                    {/* Meta Description */}
+                    <div className="w-full lg:w-1/2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Meta Description
+                      </label>
+                      <input
+                        type="text"
+                        name="metaDescription"
+                        className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                        placeholder="Enter Meta Description"
+                        value={blog?.metadata?.metaDescription}
+                        onChange={(e) =>
+                          setBlog((prev) => ({
+                            ...prev,
+                            metadata: {
+                              ...prev.metadata,
+                              metaDescription: e.target.value,
+                            },
+                          }))
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row gap-4 mb-4">
+                    {/* Meta Keywords */}
+                    <div className="w-full">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Meta Keywords
+                      </label>
+                      <input
+                        type="text"
+                        name="metaKeywords"
+                        className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                        placeholder="Enter Meta Keywords"
+                        value={blog?.metadata?.metaKeywords}
+                        onChange={(e) =>
+                          setBlog((prev) => ({
+                            ...prev,
+                            metadata: {
+                              ...prev.metadata,
+                              metaKeywords: e.target.value,
+                            },
+                          }))
+                        }
+                      />
+                    </div>
+
+                    {/* Header Title */}
+                    <div className="w-full ">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Header Title
+                      </label>
+                      <input
+                        type="text"
+                        name="headerTitle"
+                        className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                        placeholder="Enter Header Title"
+                        value={blog?.metadata?.headerTitle}
+                        onChange={(e) =>
+                          setBlog((prev) => ({
+                            ...prev,
+                            metadata: {
+                              ...prev.metadata,
+                              headerTitle: e.target.value,
+                            },
+                          }))
+                        }
+                      />
+                    </div>
+                  {/* Route */}
+                  <div className="w-full">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Route
+                    </label>
+                    <input
+                      type="text"
+                      name="route"
+                      className="w-full p-2 border bg-[#B0BAC366] border-gray-300 rounded-lg"
+                      placeholder="Enter Route"
+                      value={blog?.metadata?.route}
+                      onChange={(e) =>
+                        setBlog((prev) => ({
+                          ...prev,
+                          metadata: {
+                            ...prev.metadata,
+                            route: e.target.value,
+                          },
+                        }))
+                      }
+                    />
+                  </div>
+                  </div>
+
                 </div>
               </div>
             </div>
